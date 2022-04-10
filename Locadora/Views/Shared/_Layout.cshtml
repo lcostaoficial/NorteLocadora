@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Title Page -->
+    <title>Norte Locadora</title>
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="~/styles/style.css?v=1">
+
+    <!-- Themify Icon -->
+    <link rel="stylesheet" href="~/fonts/themify-icons/themify-icons.css?v=1">
+
+    <!-- mCustomScrollbar -->
+    <link rel="stylesheet" href="~/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css?v=1">
+
+    <!-- Waves Effect -->
+    <link rel="stylesheet" href="~/plugin/waves/waves.min.css?v=1">
+
+    <!-- Sweet Alert -->
+    <link rel="stylesheet" href="~/plugin/sweet-alert/sweetalert.css?v=1">
+
+    <!-- Validations -->
+    <link href="~/styles/validation.css?v=1" rel="stylesheet" />
+
+    @RenderSection("styles", required: false)
+
+</head>
+
+<body>
+    <div class="main-menu">
+
+        <header class="header">
+            <a href="@Url.Action("Index", "Caso")" class="logo">
+                <span style="color:#a5bb94"></span> Norte Locadora
+            </a>
+            <button type="button" class="button-close fa fa-times js__menu_close"></button>
+        </header>
+
+        <div class="content">
+            <div class="navigation">
+                <h5 class="title">Operacional</h5>
+                <ul class="menu js__accordion">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect"><i class="menu-icon ti-bar-chart-alt"></i><span>Painel</span></a>
+                    </li>
+                    <li>
+                        <a class="waves-effect" href="#"><i class="menu-icon ti-clipboard"></i><span>Locação</span></a>
+                    </li>
+                    <li>
+                        <a class="waves-effect" href="#"><i class="menu-icon ti-id-badge"></i><span>Clientes</span></a>
+                    </li>
+                </ul>
+                <h5 class="title">Garagem</h5>
+                <ul class="menu js__accordion">
+                    <li>
+                        <a class="waves-effect" href="#"><i class="menu-icon ti ti-car"></i><span>Veículos</span></a>
+                    </li>
+                    <li>
+                        <a class="waves-effect" href="#"><i class="menu-icon ti-star"></i><span>Categorias</span></a>
+                    </li>
+                </ul>
+                <h5 class="title">Administrativo</h5>
+                <ul class="menu js__accordion">
+                    <li>
+                        <a class="waves-effect" href="#"><i class="menu-icon ti ti-user"></i><span>Funcionários</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-navbar">
+        <div class="pull-left">
+            <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+            <h1 class="page-title">
+                @DateTime.Now.ToShortDateString()
+            </h1>
+        </div>
+        <div class="pull-right">
+            <div class="ico-item">
+                <i class="ti-user"></i>
+                <ul class="sub-ico-item">
+                    <li><a href="#" onclick="AlterarSenha.abrirModal()">Alterar Senha</a></li>
+                    <li><a href="@Url.Action("Sair", "Conta")">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pull-right">
+            <div style="margin-left: 15px; line-height: 50px;">
+                <p>Nome</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper">
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/scripts/jquery.min.js?v=1"></script>
+    <script src="~/scripts/modernizr.min.js?v=1"></script>
+    <script src="~/plugin/bootstrap/js/bootstrap.min.js?v=1"></script>
+    <script src="~/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js?v=1"></script>
+    <script src="~/plugin/nprogress/nprogress.js?v=1"></script>
+    <script src="~/plugin/sweet-alert/sweetalert.min.js?v=1"></script>
+    <script src="~/plugin/waves/waves.min.js?v=1"></script>
+    <script src="~/plugin/chart/sparkline/jquery.sparkline.min.js?v=1"></script>
+    <script src="~/scripts/chart.sparkline.init.min.js?v=1"></script>
+    <script src="~/scripts/main.min.js?v=1"></script>
+    <script src="~/scripts/global.js?v=1"></script>
+    <script src="~/plugin/jquery-mask/jquery.mask.js?v=1"></script>
+    <script src="~/scripts/globalmask.js?v=1"></script>
+
+    <script>
+        $(function () {
+
+            "use strict";
+
+            window.AlterarSenha = window.AlterarSenha || {};
+
+            AlterarSenha.abrirModal = function () {
+                $("#modalAlterarSenha").modal("show");
+            };
+
+            AlterarSenha.salvarSenha = function () {
+                var novaSenha = $("#NovaSenha").val();
+                var url = $("#modalAlterarSenha").data("url");
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: { novaSenha: novaSenha },
+                    success: function (result) {
+                        if (result.Success) {
+                            swal("Mensagem", result.Success, "success");
+                            $("#modalAlterarSenha").modal("hide");
+                        }
+                        if (result.Error) {
+                            swal("Mensagem", result.Error, "warning");
+                        }
+                    },
+                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                        swal("Mensagem", errorThrown, "error");
+                    }
+                });
+
+                $("#modalAlterarSenha").modal("show");
+            };
+        });
+    </script>
+    @await RenderSectionAsync("scripts", required: false)
+    @await RenderSectionAsync("modal", required: false)
+    @*<partial name="_Message" />*@
+    @*<partial name="_AlterarSenha" />*@
+</body>
+</html>
+
+
+@*<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Locadora</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Locadora</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2022 - Locadora - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+    </html>*@
