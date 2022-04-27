@@ -108,3 +108,9 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.RazorTargetAssemblyInfo.
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.Views.pdb
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.csproj.CopyComplete
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.genruntimeconfig.cache
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Veiculo\_AnexarFoto.cshtml.g.cs

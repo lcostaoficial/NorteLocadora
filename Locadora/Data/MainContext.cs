@@ -8,7 +8,6 @@ namespace Locadora.Data
     {
         public MainContext(DbContextOptions options) : base(options) {}
 
-        public DbSet<CategoriaDoVeiculo> CategoriaDoVeiculos { get; set; }
         public DbSet<FotoDeGaragem> FotosDeGaragem { get; set; }
         public DbSet<Veiculo> Veiculos { get; set; }
 

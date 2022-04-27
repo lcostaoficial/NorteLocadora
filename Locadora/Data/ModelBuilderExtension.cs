@@ -34,7 +34,7 @@ namespace Locadora.Data
 
         private static void AplicarConfiguracoesDeMapeamento(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CategoriaDoVeiculoMap());
+            modelBuilder.ApplyConfiguration(new VeiculoMap());
         }
     }
 }
