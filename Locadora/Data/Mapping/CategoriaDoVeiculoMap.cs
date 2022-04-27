@@ -10,7 +10,7 @@ namespace Locadora.Data.Mapping
         {
             builder.HasKey(x => x.Id);
             builder.Property(X => X.Nome).IsRequired().HasMaxLength(250);
-            builder.Property(X => X.CustoDoValorDaDiaria).IsRequired();
+            builder.Property(X => X.CustoDoValorDaDiaria).HasColumnType("decimal(18,2)").IsRequired();
         }
     }
 }
