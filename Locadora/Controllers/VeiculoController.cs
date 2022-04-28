@@ -13,13 +13,13 @@ namespace Locadora.Controllers
 {
     public class VeiculoController : Controller
     {
-        private readonly MainContext _db;      
-        private readonly IHostingEnvironment _hostingEnvironment;
-    
-        public VeiculoController(MainContext context, IHostingEnvironment hostingEnvironment)
+        private readonly MainContext _db;
+        private IWebHostEnvironment _hostEnvironment;
+
+        public VeiculoController(MainContext context, IWebHostEnvironment hostEnvironment)
         {
             _db = context;
-            _hostingEnvironment = hostingEnvironment;
+            _hostEnvironment = hostEnvironment;
         }
 
         public ActionResult Index()
@@ -72,89 +72,107 @@ namespace Locadora.Controllers
         [HttpPost]
         public ActionResult SalvarFoto(FotoDeGaragem model, IFormFile arquivoBinario)
         {
-            try
-            {
-                if (arquivoBinario == null) throw new Exception("Por favor anexe o arquivo!");
-                
-                model.Descricao = arquivoBinario.FileName;
-                model = AnexarDocumento(model, arquivoBinario);
+            //try
+            //{
+            if (arquivoBinario == null) throw new Exception("Por favor anexe o arquivo!");
 
-                if (model.ArquivoId == 0)
-                {
-                    _db.Arquivos.Add(model);
-                }
-                else
-                {
-                    var novo = _db.Arquivos.Find(model.ArquivoId);
-                    novo.AtualizarDocumento(model);
-                    _db.Entry(novo).State = EntityState.Modified;
-                }
+            model.Descricao = arquivoBinario.FileName;
+            model = AnexarDocumento(model, arquivoBinario);
 
-                var tiposArquivosObrigatorios = _db.TiposArquivos.Where(x => x.Obrigatorio && x.TiposBeneficios.Any(y => y.Casos.Any(z => z.CasoId == model.CasoId)) && x.Ativo);
+            return null;
 
-                var arquivosAnexadosObrigatorios = _db.Arquivos.Where(x => x.CasoId == model.CasoId && x.TipoArquivo.Obrigatorio);
+            //if (model.ArquivoId == 0)
+            //{
+            //    _db.Arquivos.Add(model);
+            //}
+            //else
+            //{
+            //    var novo = _db.Arquivos.Find(model.ArquivoId);
+            //    novo.AtualizarDocumento(model);
+            //    _db.Entry(novo).State = EntityState.Modified;
+            //}
 
-                var tipoDeArquivoAnexado = _db.TiposArquivos.Find(model.TipoArquivoId);
+            //var tiposArquivosObrigatorios = _db.TiposArquivos.Where(x => x.Obrigatorio && x.TiposBeneficios.Any(y => y.Casos.Any(z => z.CasoId == model.CasoId)) && x.Ativo);
 
-                var quantidadeTiposArquivos = tiposArquivosObrigatorios.Count();
+            //var arquivosAnexadosObrigatorios = _db.Arquivos.Where(x => x.CasoId == model.CasoId && x.TipoArquivo.Obrigatorio);
 
-                var quantidadeArquivosAnexados = arquivosAnexadosObrigatorios.Count() + (tipoDeArquivoAnexado.Obrigatorio ? 1 : 0);
+            //var tipoDeArquivoAnexado = _db.TiposArquivos.Find(model.TipoArquivoId);
 
-                if (quantidadeTiposArquivos == quantidadeArquivosAnexados)
-                {
-                    var encontrarTarefa = _db.Tarefas.FirstOrDefault(x => x.TipoTarefa == TipoTarefa.EntregaDocumentacao && x.CasoId == model.CasoId);
-                    if (encontrarTarefa != null && !encontrarTarefa.Finalizada)
-                    {
-                        encontrarTarefa.Solucao = "Tarefa atendida com o anexo de toda a documentação do caso";
-                        encontrarTarefa.DataFinalizacao = DateTime.Now;
-                        encontrarTarefa.FuncionarioResponsavelId = Funcionario.FuncionarioLogado().FuncionarioId;
-                        encontrarTarefa.Finalizada = true;
-                    }
-                }
+            //var quantidadeTiposArquivos = tiposArquivosObrigatorios.Count();
 
-                _db.SaveChanges();
-                return Json(new { Success = "Documento anexado com sucesso!" }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                return Json(new { Error = e.Message }, JsonRequestBehavior.AllowGet);
-            }
+            //var quantidadeArquivosAnexados = arquivosAnexadosObrigatorios.Count() + (tipoDeArquivoAnexado.Obrigatorio ? 1 : 0);
+
+            //if (quantidadeTiposArquivos == quantidadeArquivosAnexados)
+            //{
+            //    var encontrarTarefa = _db.Tarefas.FirstOrDefault(x => x.TipoTarefa == TipoTarefa.EntregaDocumentacao && x.CasoId == model.CasoId);
+            //    if (encontrarTarefa != null && !encontrarTarefa.Finalizada)
+            //    {
+            //        encontrarTarefa.Solucao = "Tarefa atendida com o anexo de toda a documentação do caso";
+            //        encontrarTarefa.DataFinalizacao = DateTime.Now;
+            //        encontrarTarefa.FuncionarioResponsavelId = Funcionario.FuncionarioLogado().FuncionarioId;
+            //        encontrarTarefa.Finalizada = true;
+            //    }
+            //}
+
+            //_db.SaveChanges();
+            //    return Json(new { Success = "Documento anexado com sucesso!" }, JsonRequestBehavior.AllowGet);
+            //}
+            //catch (Exception e)
+            //{
+            //    return Json(new { Error = e.Message }, JsonRequestBehavior.AllowGet);
+            //}
         }
 
         private FotoDeGaragem AnexarDocumento(FotoDeGaragem model, IFormFile arquivoBinario)
         {
             int ByteSize = 1048576;
             int SizeInBytesMax = ByteSize * 10;
-            var virtualPath = "~/Uploads/Fotos";
             var allowedExtensions = new List<string> { ".png", ".jpg", ".jpeg", ".gif" };
             var arquivo = new FotoDeGaragem();
+            var physicalPath = $"{_hostEnvironment.WebRootPath}\\Uploads\\Fotos";
+
             if (model.Id != 0) arquivo = _db.FotosDeGaragem.Find(model.Id);
             if (arquivoBinario != null && arquivoBinario.Length > 0)
             {
                 string extension = Path.GetExtension(arquivoBinario.FileName);
-                if (!allowedExtensions.Contains(extension.ToLower())) throw new Exception("Extensão não permitida");
-                
-                //var physicalPath = Server.MapPath(virtualPath);
-                var physicalPath = Server.MapPath(virtualPath);
-                
-                if (!Directory.Exists(physicalPath)) Directory.CreateDirectory(physicalPath);
-                if (!Directory.Exists(physicalPath)) throw new Exception($"Diretório {physicalPath} não existe!");
+                if (!allowedExtensions.Contains(extension.ToLower())) throw new Exception("Extensão não permitida");               
+
+                if (!Directory.Exists(physicalPath))
+                    Directory.CreateDirectory(physicalPath);
+
+                if (!Directory.Exists(physicalPath))
+                    throw new Exception($"Diretório {physicalPath} não existe!");
+
                 string fileName = $"{Guid.NewGuid()}{extension}";
+
                 string filePath = Path.Combine(physicalPath, fileName);
-                if (model.ArquivoId != 0)
+
+                if (model.Id != 0)
                 {
-                    var fileOld = Server.MapPath(arquivo.Caminho);
-                    if (System.IO.File.Exists(fileOld)) System.IO.File.Delete(fileOld);
+                    var fileOld = $"{physicalPath}\\Uploads\\Fotos\\{arquivo.Caminho}";
+
+                    if (System.IO.File.Exists(fileOld))
+                        System.IO.File.Delete(fileOld);
+
                 }
-                arquivoBinario.SaveAs(filePath);
-                model.Caminho = $"{virtualPath}/{fileName}";
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    arquivoBinario.CopyTo(stream);
+                }
+
+                model.Caminho = $"{fileName}";
+
+                model.Descricao = arquivoBinario.FileName;
+
             }
-            else if (model.ArquivoId != 0)
+            else if (model.Id != 0)
             {
-                var fileOld = Server.MapPath(arquivo.Caminho);
+                var fileOld = $"{physicalPath}\\Uploads\\Fotos\\{arquivo.Caminho}";
                 if (System.IO.File.Exists(fileOld)) System.IO.File.Delete(fileOld);
                 model.Caminho = string.Empty;
             }
+
             return model;
         }
     }
