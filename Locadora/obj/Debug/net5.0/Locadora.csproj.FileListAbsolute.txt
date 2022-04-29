@@ -434,3 +434,8 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\Index.cshtml.
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\_Tabela.cshtml.g.cs

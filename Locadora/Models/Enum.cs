@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Locadora.Models
 {
+    public enum Perfil
+    {
+        Administrador = 1,
+        Funcionario = 2
+    }
+
     public enum EstadoCivil
     {
         Solteiro = 1,

@@ -13,7 +13,7 @@ namespace Locadora.Controllers
 
         public ActionResult Index()
         {
-            var list = _db.Clientes.ToList();
+            var list = _db.Clientes.Where(x => x.Ativo).ToList();
             return View(list);
         }
 
@@ -39,6 +39,7 @@ namespace Locadora.Controllers
                 var cpfJaExiste = _db.Clientes.Any(x => x.Cpf == model.Cpf);
                 if (cpfJaExiste) throw new Exception("O CPF informado já foi utilizado!");
                 _db.Clientes.Add(model);
+                model.Ativo = true;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
