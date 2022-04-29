@@ -429,3 +429,8 @@ C:\Git\NorteLocadora\Locadora\bin\Debug\net5.0\tr\Microsoft.CodeAnalysis.CSharp.
 C:\Git\NorteLocadora\Locadora\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Git\NorteLocadora\Locadora\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.MvcApplicationPartsAssemblyInfo.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Cliente\_Tabela.cshtml.g.cs

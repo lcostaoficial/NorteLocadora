@@ -10,6 +10,7 @@ namespace Locadora.Data
 
         public DbSet<FotoDeGaragem> FotosDeGaragem { get; set; }
         public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,10 +19,7 @@ namespace Locadora.Data
                 property.SetColumnType("varchar(200)");
             }
 
-
             modelBuilder.ConfigureModels();
         }
-
-
     }
 }
