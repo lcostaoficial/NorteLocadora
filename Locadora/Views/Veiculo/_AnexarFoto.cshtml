@@ -10,15 +10,33 @@
             <div class="modal-body">
                 @using (Html.BeginForm("SalvarFoto", "Veiculo", FormMethod.Post, new { @class = "form", id = "frmSalvarFoto", enctype = "multipart/form-data" }))
                 {
-                    @Html.HiddenFor(m => m.Id)
                     @Html.HiddenFor(m => m.VeiculoId)
 
-                    <div class="row">
-                        <div class="col-md-12" id="div-modelo-arquivo">
-                            <label>Arquivo</label>
-                            <input type="file" id="ArquivoBinario" name="ArquivoBinario">
-                        </div>
+                <div class="row">
+
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(m => m.Descricao) <label style="color: red" title="Este campo é obrigatório">*</label>
+                        @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control", required = "" })
+                        @Html.ValidationMessageFor(m => m.Descricao)
                     </div>
+
+                    <div class="form-group col-md-12">
+                        @Html.Label("Esta foto é a principal?") <label style="color: red" title="Este campo é obrigatório">*</label>
+                        @Html.DropDownListFor(m => m.Principal, new SelectList(
+                        new[]
+                        {
+                            new { Value = "", Text = "Selecione..." },
+                            new { Value = "true", Text = "Sim" },
+                            new { Value = "false", Text = "Não" },
+                        }, "Value", "Text"),
+                        new { @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-12" id="div-modelo-arquivo">
+                        <label>Arquivo</label>
+                        <input type="file" id="ArquivoBinario" name="ArquivoBinario" required="">
+                    </div>
+                </div>
                 }
             </div>
             <div class="modal-footer">

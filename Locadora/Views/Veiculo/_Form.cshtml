@@ -37,292 +37,57 @@
     @Html.ValidationMessageFor(m => m.Placa)
 </div>
 
-<div class="form-group col-md-12" style="margin-bottom: 0px">
-    <h4>Fotos do veículo</h4>
-    <hr class="my-4">
-</div>
-
-<div class="form-group col-md-12">
-    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar alterações</button>
-    <button onclick="$('#modalAnexarFoto').modal('show')" type="button" class="btn btn-success btn-sm waves-effect waves-light">Incluir fotos</button>
-</div>
-
-<div class="form-group col-md-12">
-
-    <div class="prj-list row">
-
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/184x170" alt="">
-                    </div>
-                    <h3>Bold Meida</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Bold Meida</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 407
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 40.6k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/192x187" alt="">
-                    </div>
-                    <h3>Helperia</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Helperia</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 265
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 16.5k
-                        </div>
-                        <span class="feedable-time timeago">about a year ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/233x233" alt="">
-                    </div>
-                    <h3>Tutum</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Tutum</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 96
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 47.3k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/184x170" alt="">
-                    </div>
-                    <h3>Bold Meida</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Bold Meida</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 407
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 40.6k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/192x187" alt="">
-                    </div>
-                    <h3>Helperia</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Helperia</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 265
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 16.5k
-                        </div>
-                        <span class="feedable-time timeago">about a year ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/233x233" alt="">
-                    </div>
-                    <h3>Tutum</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Tutum</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 96
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 47.3k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/184x170" alt="">
-                    </div>
-                    <h3>Bold Meida</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Bold Meida</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 407
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 40.6k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/192x187" alt="">
-                    </div>
-                    <h3>Helperia</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Helperia</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 265
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 16.5k
-                        </div>
-                        <span class="feedable-time timeago">about a year ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/233x233" alt="">
-                    </div>
-                    <h3>Tutum</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Tutum</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 96
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 47.3k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- .col-lg-4 col-md-6 project-item -->
-        <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
-            <a href="#" class="prj-item">
-                <div class="top-project-section">
-                    <div class="project-icon">
-                        <img src="http://placehold.it/233x233" alt="">
-                    </div>
-                    <h3>Tutum</h3>
-                    <div class="meta">
-                        <p class="author">
-                            by <span>Tutum</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="bottom-project-section">
-                    <div class="meta">
-                        <div class="points">
-                            <i class="fa fa-heart-o"></i> 96
-                        </div>
-                        <div class="views">
-                            <i class="fa fa-eye"></i> 47.3k
-                        </div>
-                        <span class="feedable-time timeago">2 years ago</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
+@if (Model != null)
+{
+    <div class="form-group col-md-12" style="margin-bottom: 0px">
+        <h4>Fotos do veículo</h4>
+        <hr class="my-4">
     </div>
 
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar alterações</button>
+        <button onclick="$('#modalAnexarFoto').modal('show')" type="button" class="btn btn-success btn-sm waves-effect waves-light">Incluir fotos</button>
+    </div>
+}
+else
+{
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar alterações</button>
+    </div>
+}
 
+<div class="form-group col-md-12">
+    <div class="prj-list row">
+        @if (Model != null && Model.FotosDeGaragem != null && Model.FotosDeGaragem.Any())
+        {
+            foreach (var item in Model.FotosDeGaragem.Where(x => x.Ativo).OrderByDescending(x => x.DataDeRegistro))
+            {
+                <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
+                    <div class="prj-item">
+                        <div class="top-project-section">
+                            <a target="_blank" href="@Url.Content($"~/Uploads/Fotos/{item.Caminho}")" class="project-icon">
+                                <img src="@Url.Content($"~/Uploads/Fotos/{item.Caminho}")" width="184" height="170" alt="">
+                            </a>
+                            <h3>@item.Descricao</h3>
+                            <div class="meta">
+                                <p class="author">
+                                    Data: <span>@item.DataDeRegistro.ToShortDateString()</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bottom-project-section">
+                            <div class="meta">
+                                <div class="points @(item.Principal ? "success" : "danger")">
+                                    <i class="fa fa-image"></i> @(item.Principal ? "Principal" : "Imagem")
+                                </div>
+                                <span class="feedable-time timeago">
+                                    <a href="@Url.Action("ExcluirFoto", new { id = item.Id })"> Excluir</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>
-
