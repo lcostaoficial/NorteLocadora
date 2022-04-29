@@ -128,6 +128,13 @@ namespace Locadora.Models
         [Display(Name = "Documento do estrangeiro")]
         public string DocumentoIdentificacaoEstrangeiro { get; set; }
 
+        public bool Ativo { get; set; }
+
+        public void Inativar()
+        {
+            Ativo = false;
+        }
+
         public string EstadoCivilFormatado => EstadoCivil.ToString();
         public string EstadoFormatado => Estado.ToString();
         public string OrgaoExpedidorRgFormatado => OrgaoExpedidorRg.ToString();

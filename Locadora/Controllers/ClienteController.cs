@@ -80,7 +80,7 @@ namespace Locadora.Controllers
             try
             {
                 var cliente = _db.Clientes.Find(id);
-                _db.Entry(cliente).State = EntityState.Deleted;
+                cliente.Inativar();
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }

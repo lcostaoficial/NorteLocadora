@@ -16,7 +16,7 @@
                 @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { @class = "form" }))
                 {
                     @Html.HiddenFor(m => m.ClienteId)
-                    @Html.PartialAsync("_Form")
+                    @await Html.PartialAsync("_Form")
                 }
             </div>
         </div>

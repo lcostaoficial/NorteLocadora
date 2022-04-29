@@ -15,7 +15,7 @@
             <div class="card-content">
                 @using (Html.BeginForm("Novo", "Cliente", FormMethod.Post, new { @class = "form" }))
                 {
-                    @Html.PartialAsync("_Form")
+                    @await Html.PartialAsync("_Form")
                 }
             </div>
         </div>

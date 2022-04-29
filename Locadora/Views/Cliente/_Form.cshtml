@@ -3,7 +3,7 @@
 @Html.AntiForgeryToken()
 
 <div class="form-group col-md-12" style="margin-bottom: 0px">
-    <h4>Beneficiário</h4>
+    <h4>Dados Gerais</h4>
     <hr class="my-4">
 </div>
 
@@ -44,7 +44,7 @@ else
 
 <div class="form-group col-md-2">
     @Html.LabelFor(m => m.EstadoCivil) <label style="color: red" title="Este campo é obrigatório">*</label>
-    @Html.DropDownListFor(m => m.EstadoCivil, Html.GetEnumSelectList(Model.GetType()));
+    @Html.DropDownListFor(m => m.EstadoCivil, new SelectList(Enum.GetValues(typeof(EstadoCivil))), "Selecione...", new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.EstadoCivil)
 </div>
 
@@ -56,7 +56,7 @@ else
 
 <div class="form-group col-md-2">
     @Html.LabelFor(m => m.EstadoNascimento) <label style="color: red" title="Este campo é obrigatório">*</label>
-    @Html.DropDownListFor(m => m.EstadoNascimento, Html.GetEnumSelectList(Model.GetType()));
+    @Html.DropDownListFor(m => m.EstadoNascimento, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.EstadoNascimento)
 </div>
 
@@ -101,13 +101,13 @@ else
 
     <div class="form-group col-md-3">
         @Html.LabelFor(m => m.OrgaoExpedidorRg) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.OrgaoExpedidorRg, Html.GetEnumSelectList(Model.GetType()));
+        @Html.DropDownListFor(m => m.OrgaoExpedidorRg, new SelectList(Enum.GetValues(typeof(OrgaoExpedidorRg))), "Selecione...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.OrgaoExpedidorRg)
     </div>
 
     <div class="form-group col-md-2">
         @Html.LabelFor(m => m.EstadoOrgaoExpedidor) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.EstadoOrgaoExpedidor, Html.GetEnumSelectList(Model.GetType()));
+        @Html.DropDownListFor(m => m.EstadoOrgaoExpedidor, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EstadoOrgaoExpedidor)
     </div>
 }
@@ -127,13 +127,13 @@ else
 
     <div class="form-group col-md-3">
         @Html.LabelFor(m => m.OrgaoExpedidorRg) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.OrgaoExpedidorRg, Html.GetEnumSelectList(Model.GetType()));
+        @Html.DropDownListFor(m => m.OrgaoExpedidorRg, new SelectList(Enum.GetValues(typeof(OrgaoExpedidorRg))), "Selecione...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.OrgaoExpedidorRg)
     </div>
 
     <div class="form-group col-md-2">
         @Html.LabelFor(m => m.EstadoOrgaoExpedidor) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.EstadoOrgaoExpedidor, Html.GetEnumSelectList(Model.GetType()));
+        @Html.DropDownListFor(m => m.EstadoOrgaoExpedidor, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.EstadoOrgaoExpedidor)
     </div>
 }
@@ -198,7 +198,7 @@ else
 
 <div class="form-group col-md-2">
     @Html.LabelFor(m => m.Estado) <label style="color: red" title="Este campo é obrigatório">*</label>
-    @Html.DropDownListFor(m => m.Estado, Html.GetEnumSelectList(Model.GetType()))
+    @Html.DropDownListFor(m => m.Estado, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Estado)
 </div>
 

@@ -1,7 +1,7 @@
 ﻿@using Locadora.Models
 @model IEnumerable<Cliente>
 @{
-    ViewBag.Title = "Clientes ativos em casos";
+    ViewBag.Title = "Clientes";
 }
 
 @section styles
@@ -21,7 +21,7 @@
         $(document).on("click", "#btn-excluir", function () {
             var url = $(this).data("url");
             swal({
-                title: 'Deseja realmente excluir este cliente e tudo relacionado a ele?',
+                title: 'Deseja realmente excluir este cliente?',
                 text: 'Essa alteração só se efetivará após confirmação',
                 type: 'warning',
                 showCancelButton: true,
@@ -54,6 +54,6 @@
         <div class="dropdown js__drop_down">
             <a href="@Url.Action("Novo")" class="btn btn-primary btn-circle btn-sm waves-effect waves-light"><i class="ico fa fa-plus"></i></a>
         </div>
-        @Html.PartialAsync("_Tabela")
+        @await Html.PartialAsync("_Tabela")
     </div>
 </div>
