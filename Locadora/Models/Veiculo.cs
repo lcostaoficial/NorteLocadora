@@ -24,6 +24,9 @@ namespace Locadora.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Modelo { get; set; }
 
+        [Display(Name = "Tipo de Veículo")]
+        public TipoDeVeiculo TipoDeVeiculo { get; set; }
+
         [Display(Name = "Placa")]
         [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
         [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]

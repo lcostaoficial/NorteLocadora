@@ -1,6 +1,7 @@
 ﻿using Locadora.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Locadora.Data.Mapping
 {
@@ -15,7 +16,8 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.AnoDeFabricacao).IsRequired();
             builder.Property(X => X.AnoDeModelo).IsRequired();
             builder.Property(X => X.Ativo).IsRequired();
-            //builder.Property(X => X.CustoDoValorDaDiaria).HasColumnType("decimal(18,2)").IsRequired();
+
+            builder.Property(x => x.TipoDeVeiculo).HasConversion(x => x.ToString(), x => (TipoDeVeiculo)Enum.Parse(typeof(TipoDeVeiculo), x));
         }
     }
 }
