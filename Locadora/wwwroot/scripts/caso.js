@@ -20,36 +20,36 @@
         $("#ClienteId").val(id);
     };
 
-    Caso.habilitarEnvioDocumento = function () {
-        $("#menu-documentos").removeClass("disabled");
-        $("#documentos").removeClass("disabled");
-    };
+    //Caso.habilitarEnvioDocumento = function () {
+    //    $("#menu-documentos").removeClass("disabled");
+    //    $("#documentos").removeClass("disabled");
+    //};
 
-    Caso.habilitarEnvioQuestionario = function () {
-        $("#menu-questionario").removeClass("disabled");
-        $("#questionario").removeClass("disabled");
-    };
+    //Caso.habilitarEnvioQuestionario = function () {
+    //    $("#menu-questionario").removeClass("disabled");
+    //    $("#questionario").removeClass("disabled");
+    //};
 
-    Caso.habilitarImpressao = function () {
-        $("#menu-impressao").removeClass("disabled");
-        $("#impressao").removeClass("disabled");
-    };
+    //Caso.habilitarImpressao = function () {
+    //    $("#menu-impressao").removeClass("disabled");
+    //    $("#impressao").removeClass("disabled");
+    //};
 
-    Caso.habilitarAcompanhamento = function () {
-        $("#menu-acompanhamento").removeClass("disabled");
-        $("#acompanhamento").removeClass("disabled");
-    };
+    //Caso.habilitarAcompanhamento = function () {
+    //    $("#menu-acompanhamento").removeClass("disabled");
+    //    $("#acompanhamento").removeClass("disabled");
+    //};
 
-    Caso.habilitarTarefas = function () {
-        $("#menu-tarefas").removeClass("disabled");
-        $("#tarefas").removeClass("disabled");
-    };
+    //Caso.habilitarTarefas = function () {
+    //    $("#menu-tarefas").removeClass("disabled");
+    //    $("#tarefas").removeClass("disabled");
+    //};
 
     Caso.iniciarCarregamento = function () {
         swal({
             title: "",
             text: "Aguarde por favor",
-            imageUrl: "../../Assets/images/loading.gif",
+            imageUrl: "../../images/loading.gif",
             showConfirmButton: false
         });
     };
@@ -58,14 +58,14 @@
         swal.close();
     };
 
-    Caso.dadosPessoais = function (casoId = 0) {
+    Caso.dadosPessoais = function (locacaoId = 0) {
         Caso.iniciarCarregamento();
         var url = $("#dadospessoais").data("url");
 
         $.ajax({
             method: "GET",
             url: url,
-            data: { casoId: casoId },
+            data: { locacaoId: locacaoId },
             dataType: "html",
             success: function success(result) {
 
@@ -74,9 +74,9 @@
 
                 GlobalMask.carregarMascaras();
 
-                if (casoId !== 0) {
-                    Caso.Controles.CarregarPaginaGrupoFamiliar();
-                }
+                //if (locacaoId !== 0) {
+                //    Caso.Controles.CarregarPaginaGrupoFamiliar();
+                //}
 
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
@@ -88,111 +88,111 @@
         });
     };
 
-    Caso.anexarArquivo = function (tipoArquivoId, arquivoId) {
-        var casoId = $("#CasoId").val();
-        $("form#frmSalvarCasoComAnexo #ArquivoId").val(arquivoId);
-        $("form#frmSalvarCasoComAnexo #CasoId").val(casoId);
-        $("form#frmSalvarCasoComAnexo #TipoArquivoId").val(tipoArquivoId);
-        $("#modalAnexarDocumento").modal("show");
-    };
+    //Caso.anexarArquivo = function (tipoArquivoId, arquivoId) {
+    //    var casoId = $("#CasoId").val();
+    //    $("form#frmSalvarCasoComAnexo #ArquivoId").val(arquivoId);
+    //    $("form#frmSalvarCasoComAnexo #CasoId").val(casoId);
+    //    $("form#frmSalvarCasoComAnexo #TipoArquivoId").val(tipoArquivoId);
+    //    $("#modalAnexarDocumento").modal("show");
+    //};
 
-    Caso.novoAcompanhamento = function () {
-        var casoId = $("#CasoId").val();
-        $("form#frmSalvarCasoComMovimentacao #CasoId").val(casoId);
-        $("#modalNovoAcompanhamento").modal("show");
-    };
+    //Caso.novoAcompanhamento = function () {
+    //    var casoId = $("#CasoId").val();
+    //    $("form#frmSalvarCasoComMovimentacao #CasoId").val(casoId);
+    //    $("#modalNovoAcompanhamento").modal("show");
+    //};
 
-    Caso.novaTarefa = function () {
-        var casoId = $("#CasoId").val();
-        $("form#frmSalvarCasoComTarefa #CasoId").val(casoId);
-        $("#modalNovaTarefa").modal("show");
-    };
+    //Caso.novaTarefa = function () {
+    //    var casoId = $("#CasoId").val();
+    //    $("form#frmSalvarCasoComTarefa #CasoId").val(casoId);
+    //    $("#modalNovaTarefa").modal("show");
+    //};
 
-    Caso.finalizarTarefa = function (tarefaId) {
-        $("#modalDetalhesTarefa").modal("hide");
-        $("form#frmFinalizarTarefa #TarefaId").val(tarefaId);
-        $("#modalFinalizarTarefa").modal("show");
-    };
+    //Caso.finalizarTarefa = function (tarefaId) {
+    //    $("#modalDetalhesTarefa").modal("hide");
+    //    $("form#frmFinalizarTarefa #TarefaId").val(tarefaId);
+    //    $("#modalFinalizarTarefa").modal("show");
+    //};
 
-    Caso.alterarResponsavel = function (tarefaId) {
-        $("#modalDetalhesTarefa").modal("hide");
-        $("form#frmAlteracaoResponsavel #TarefaId").val(tarefaId);
-        $("#modalAlterarResponsavel").modal("show");
-    };
+    //Caso.alterarResponsavel = function (tarefaId) {
+    //    $("#modalDetalhesTarefa").modal("hide");
+    //    $("form#frmAlteracaoResponsavel #TarefaId").val(tarefaId);
+    //    $("#modalAlterarResponsavel").modal("show");
+    //};
 
-    Caso.alterarPrazo = function (tarefaId) {
-        $("#modalDetalhesTarefa").modal("hide");
-        $("form#frmAlterarPrazo #TarefaId").val(tarefaId);
-        $("#modalAlterarPrazo").modal("show");
-    };
+    //Caso.alterarPrazo = function (tarefaId) {
+    //    $("#modalDetalhesTarefa").modal("hide");
+    //    $("form#frmAlterarPrazo #TarefaId").val(tarefaId);
+    //    $("#modalAlterarPrazo").modal("show");
+    //};
 
-    Caso.novaTarefaComData = function (data) {
-        var casoId = $("#CasoId").val();
-        $("form#frmSalvarCasoComTarefa #CasoId").val(casoId);
-        $("form#frmSalvarCasoComTarefa #DataExpiracao").val(data);
-        $("#modalNovaTarefa").modal("show");
-    };
+    //Caso.novaTarefaComData = function (data) {
+    //    var casoId = $("#CasoId").val();
+    //    $("form#frmSalvarCasoComTarefa #CasoId").val(casoId);
+    //    $("form#frmSalvarCasoComTarefa #DataExpiracao").val(data);
+    //    $("#modalNovaTarefa").modal("show");
+    //};
 
-    Caso.carregarQuestionario = function (casoId) {
-        Caso.iniciarCarregamento();
-        var url = $("#questionario").data("url");
-        $.ajax({
-            method: "GET",
-            url: url,
-            data: { casoId: casoId },
-            dataType: "html",
-            success: function success(result) {
-                $("#frm-conteudo-questionario").html(result);
-                $(".selectpicker").selectpicker();
-            },
-            error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                swal("Mensagem", errorThrown, "error");
-            },
-            complete: function complete() {
-                Caso.pararCarregamento();
-            }
-        });
-    };
+    //Caso.carregarQuestionario = function (casoId) {
+    //    Caso.iniciarCarregamento();
+    //    var url = $("#questionario").data("url");
+    //    $.ajax({
+    //        method: "GET",
+    //        url: url,
+    //        data: { casoId: casoId },
+    //        dataType: "html",
+    //        success: function success(result) {
+    //            $("#frm-conteudo-questionario").html(result);
+    //            $(".selectpicker").selectpicker();
+    //        },
+    //        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+    //            swal("Mensagem", errorThrown, "error");
+    //        },
+    //        complete: function complete() {
+    //            Caso.pararCarregamento();
+    //        }
+    //    });
+    //};
 
-    Caso.carregarDocumentos = function (casoId) {
-        Caso.iniciarCarregamento();
-        var url = $("#documentos").data("url");
-        $.ajax({
-            method: "GET",
-            url: url,
-            data: { casoId: casoId },
-            dataType: "html",
-            success: function success(result) {
-                $("#frm-conteudo-documento").html(result);
-            },
-            error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                swal("Mensagem", errorThrown, "error");
-            },
-            complete: function complete() {
-                Caso.pararCarregamento();
-            }
-        });
-    };
+    //Caso.carregarDocumentos = function (casoId) {
+    //    Caso.iniciarCarregamento();
+    //    var url = $("#documentos").data("url");
+    //    $.ajax({
+    //        method: "GET",
+    //        url: url,
+    //        data: { casoId: casoId },
+    //        dataType: "html",
+    //        success: function success(result) {
+    //            $("#frm-conteudo-documento").html(result);
+    //        },
+    //        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+    //            swal("Mensagem", errorThrown, "error");
+    //        },
+    //        complete: function complete() {
+    //            Caso.pararCarregamento();
+    //        }
+    //    });
+    //};
 
-    Caso.carregarAcompanhamentos = function (casoId) {
-        Caso.iniciarCarregamento();
-        var url = $("#acompanhamento").data("url");
-        $.ajax({
-            method: "GET",
-            url: url,
-            data: { casoId: casoId },
-            dataType: "html",
-            success: function success(result) {
-                $("#frm-conteudo-acompanhamento").html(result);
-            },
-            error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                swal("Mensagem", errorThrown, "error");
-            },
-            complete: function complete() {
-                Caso.pararCarregamento();
-            }
-        });
-    };
+    //Caso.carregarAcompanhamentos = function (casoId) {
+    //    Caso.iniciarCarregamento();
+    //    var url = $("#acompanhamento").data("url");
+    //    $.ajax({
+    //        method: "GET",
+    //        url: url,
+    //        data: { casoId: casoId },
+    //        dataType: "html",
+    //        success: function success(result) {
+    //            $("#frm-conteudo-acompanhamento").html(result);
+    //        },
+    //        error: function error(XMLHttpRequest, textStatus, errorThrown) {
+    //            swal("Mensagem", errorThrown, "error");
+    //        },
+    //        complete: function complete() {
+    //            Caso.pararCarregamento();
+    //        }
+    //    });
+    //};
 
     Caso.validarCpf = function (cpf) {
         var numeros, digitos, soma, i, resultado, digitos_iguais;
@@ -296,117 +296,117 @@
         else {
             Caso.dadosPessoais(casoId);
             Caso.desabilitarCpf();
-            Caso.habilitarEnvioQuestionario();
-            Caso.habilitarEnvioDocumento();
-            Caso.habilitarImpressao();
-            Caso.habilitarAcompanhamento();
-            Caso.habilitarTarefas();
-            Caso.carregarQuestionario(casoId);
-            Caso.carregarDocumentos(casoId);
-            Caso.carregarAcompanhamentos(casoId);
+            //Caso.habilitarEnvioQuestionario();
+            //Caso.habilitarEnvioDocumento();
+            //Caso.habilitarImpressao();
+            //Caso.habilitarAcompanhamento();
+            //Caso.habilitarTarefas();
+            //Caso.carregarQuestionario(casoId);
+            //Caso.carregarDocumentos(casoId);
+            //Caso.carregarAcompanhamentos(casoId);
         }
     };
 
-    Caso.Controles = {
-        CarregarPaginaGrupoFamiliar: function CarregarPaginaGrupoFamiliar() {
-            var urlCarregarGruposFamiliaresNaoExistente = $("#gruposfamiliares").data("url");
-            var urlCarregarGruposFamiliaresExistente = $("#CasoId").data("url");
-            var quantidadeGrupoFamiliar = $("#CasoId").data("count");
+    //Caso.Controles = {
+    //    CarregarPaginaGrupoFamiliar: function CarregarPaginaGrupoFamiliar() {
+    //        var urlCarregarGruposFamiliaresNaoExistente = $("#gruposfamiliares").data("url");
+    //        var urlCarregarGruposFamiliaresExistente = $("#CasoId").data("url");
+    //        var quantidadeGrupoFamiliar = $("#CasoId").data("count");
 
-            var inputTipoBeneficio = $("#TipoBeneficioId");
-            var tipoBeneficioId = inputTipoBeneficio.val();
-            var url = inputTipoBeneficio.data("url");
+    //        var inputTipoBeneficio = $("#TipoBeneficioId");
+    //        var tipoBeneficioId = inputTipoBeneficio.val();
+    //        var url = inputTipoBeneficio.data("url");
 
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: { tipoBeneficioId: tipoBeneficioId },
-                success: function success(result) {
+    //        $.ajax({
+    //            type: "GET",
+    //            url: url,
+    //            data: { tipoBeneficioId: tipoBeneficioId },
+    //            success: function success(result) {
 
-                    if (result.Success === true) {
+    //                if (result.Success === true) {
 
-                        if (quantidadeGrupoFamiliar > 0) {
-                            $.ajax({
-                                method: "GET",
-                                url: urlCarregarGruposFamiliaresExistente,
-                                success: function (result) {
-                                    $("#gruposfamiliares").html(result);
-                                    Caso.adicionarGrupoFamiliar();
-                                    Caso.removerGrupoFamiliar();
-                                    GlobalMask.carregarMascaras();
-                                }
-                            });
-                        }
-                        else {
-                            $.ajax({
-                                method: "GET",
-                                url: urlCarregarGruposFamiliaresNaoExistente,
-                                success: function (result) {
-                                    $("#gruposfamiliares").html(result);
-                                    Caso.adicionarGrupoFamiliar();
-                                    Caso.removerGrupoFamiliar();
-                                    GlobalMask.carregarMascaras();
-                                }
-                            });
-                        }
-                    }
+    //                    if (quantidadeGrupoFamiliar > 0) {
+    //                        $.ajax({
+    //                            method: "GET",
+    //                            url: urlCarregarGruposFamiliaresExistente,
+    //                            success: function (result) {
+    //                                $("#gruposfamiliares").html(result);
+    //                                Caso.adicionarGrupoFamiliar();
+    //                                Caso.removerGrupoFamiliar();
+    //                                GlobalMask.carregarMascaras();
+    //                            }
+    //                        });
+    //                    }
+    //                    else {
+    //                        $.ajax({
+    //                            method: "GET",
+    //                            url: urlCarregarGruposFamiliaresNaoExistente,
+    //                            success: function (result) {
+    //                                $("#gruposfamiliares").html(result);
+    //                                Caso.adicionarGrupoFamiliar();
+    //                                Caso.removerGrupoFamiliar();
+    //                                GlobalMask.carregarMascaras();
+    //                            }
+    //                        });
+    //                    }
+    //                }
 
-                    if (result.Error) {
-                        swal("Mensagem", result.Error, "warning");
-                    }
-                },
-                error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                    swal("Mensagem", errorThrown, "error");
-                }
-            });
-        },
-        DescarregarPaginaGrupoFamiliar: function DescarregarPaginaGrupoFamiliar() {
-            $("#gruposfamiliares").html("");
-        }
-    };
+    //                if (result.Error) {
+    //                    swal("Mensagem", result.Error, "warning");
+    //                }
+    //            },
+    //            error: function error(XMLHttpRequest, textStatus, errorThrown) {
+    //                swal("Mensagem", errorThrown, "error");
+    //            }
+    //        });
+    //    },
+    //    DescarregarPaginaGrupoFamiliar: function DescarregarPaginaGrupoFamiliar() {
+    //        $("#gruposfamiliares").html("");
+    //    }
+    //};
 
-    Caso.adicionarGrupoFamiliar = function () {
-        $(document).on("click", ".add-grupofamiliar", function (e) {
-            e.preventDefault();
-            var url = $(this).attr("href");
-            var form = $(this).closest("form");
-            $.ajax({
-                method: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function (result) {
-                    if (result.Success) {
-                        $(".lista-gruposfamiliares").html(result.Success);
-                        GlobalMask.carregarMascaras();
-                    }
-                    if (result.Error) {
-                        swal("Mensagem", result.Error, "warning");
-                    }
-                },
-                error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                    swal("Mensagem", errorThrown, "error");
-                }
-            });
-        });
-    };
+    //Caso.adicionarGrupoFamiliar = function () {
+    //    $(document).on("click", ".add-grupofamiliar", function (e) {
+    //        e.preventDefault();
+    //        var url = $(this).attr("href");
+    //        var form = $(this).closest("form");
+    //        $.ajax({
+    //            method: "POST",
+    //            url: url,
+    //            data: form.serialize(),
+    //            success: function (result) {
+    //                if (result.Success) {
+    //                    $(".lista-gruposfamiliares").html(result.Success);
+    //                    GlobalMask.carregarMascaras();
+    //                }
+    //                if (result.Error) {
+    //                    swal("Mensagem", result.Error, "warning");
+    //                }
+    //            },
+    //            error: function error(XMLHttpRequest, textStatus, errorThrown) {
+    //                swal("Mensagem", errorThrown, "error");
+    //            }
+    //        });
+    //    });
+    //};
 
-    Caso.removerGrupoFamiliar = function () {
-        $(document).on("click", ".remove-grupofamiliar", function (e) {
-            e.preventDefault();
-            var url = $(this).attr("href");
-            var form = $(this).closest("form");
-            $("#index").val($(this).data("index"));
-            $.ajax({
-                method: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function (data) {
-                    $(".lista-gruposfamiliares").html(data);
-                    GlobalMask.carregarMascaras();
-                }
-            });
-        });
-    };
+    //Caso.removerGrupoFamiliar = function () {
+    //    $(document).on("click", ".remove-grupofamiliar", function (e) {
+    //        e.preventDefault();
+    //        var url = $(this).attr("href");
+    //        var form = $(this).closest("form");
+    //        $("#index").val($(this).data("index"));
+    //        $.ajax({
+    //            method: "POST",
+    //            url: url,
+    //            data: form.serialize(),
+    //            success: function (data) {
+    //                $(".lista-gruposfamiliares").html(data);
+    //                GlobalMask.carregarMascaras();
+    //            }
+    //        });
+    //    });
+    //};
 
     Caso.Eventos = {
         Carregar: function Carregar() {
@@ -490,11 +490,11 @@
                                 success: function success(result) {
                                     if (result.Success) {
                                         Caso.desabilitarCpf();
-                                        Caso.habilitarEnvioQuestionario();
-                                        Caso.habilitarEnvioDocumento();
-                                        Caso.habilitarImpressao();
-                                        Caso.habilitarAcompanhamento();
-                                        Caso.habilitarTarefas();
+                                        //Caso.habilitarEnvioQuestionario();
+                                        //Caso.habilitarEnvioDocumento();
+                                        //Caso.habilitarImpressao();
+                                        //Caso.habilitarAcompanhamento();
+                                        //Caso.habilitarTarefas();
                                         Caso.fixarCasoId(result.CasoId);
                                         swal({
                                             title: "Mensagem",

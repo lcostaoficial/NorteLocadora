@@ -22,7 +22,7 @@ namespace Locadora
         {
             services.AddControllersWithViews();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddDbContext<MainContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=Locadora;Persist Security Info=True;User ID=sa;Password=123456;"));
+            services.AddDbContext<MainContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-37BFH3E\SQLEXPRESS_2017;Initial Catalog=Locadora;Persist Security Info=True;User ID=sa;Password=123456;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,6 +12,7 @@ namespace Locadora.Data
         public DbSet<Veiculo> Veiculos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Locacao> Locacoes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

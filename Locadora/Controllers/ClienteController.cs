@@ -11,16 +11,16 @@ namespace Locadora.Controllers
     {
         private readonly MainContext _db;
 
+        public ClienteController(MainContext context)
+        {
+            _db = context;
+        }
+
         public ActionResult Index()
         {
             var list = _db.Clientes.Where(x => x.Ativo).ToList();
             return View(list);
-        }
-
-        public ClienteController(MainContext context)
-        {
-            _db = context;            
-        }
+        }       
 
         public ActionResult Novo()
         {
