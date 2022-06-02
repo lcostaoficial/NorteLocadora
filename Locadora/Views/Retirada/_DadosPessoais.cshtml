@@ -1,8 +1,6 @@
 ﻿@model Locacao
 
-@Html.AntiForgeryToken()
-
-<input type="hidden" id="CasoId" name="CasoId" value="@(Model != null ? Model.Id : 0)" />
+<input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
 <input type="hidden" id="ClienteId" name="ClienteId" value="@(Model != null ? Model.ClienteId : 0)" />
 
 <div class="form-group col-md-12" style="margin-bottom: 0px">

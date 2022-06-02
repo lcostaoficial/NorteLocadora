@@ -137,6 +137,7 @@ namespace Locadora.Models
 
         public string EstadoCivilFormatado => EstadoCivil.ToString();
         public string EstadoFormatado => Estado.ToString();
+        public string EstadoNascimentoFormatado => EstadoNascimento.ToString();
         public string OrgaoExpedidorRgFormatado => OrgaoExpedidorRg.ToString();
         public string EstadoOrgaoExpedidorFormatado => EstadoOrgaoExpedidor.ToString();
         public string DataNascimentoFormatado => DataNascimento.ToString("dd/MM/yyyy");

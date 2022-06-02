@@ -18,7 +18,7 @@ namespace Locadora.Controllers
 
         public ActionResult Index()
         {
-            var list = _db.Clientes.Where(x => x.Ativo).ToList();
+            var list = _db.Clientes.ToList();
             return View(list);
         }       
 

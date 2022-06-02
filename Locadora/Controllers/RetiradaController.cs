@@ -36,8 +36,7 @@ namespace Locadora.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SalvarCasoComDadosPessoais(Locacao model)
+        public ActionResult SalvarLocacaoComDadosPessoais(Locacao model)
         {
             try
             {
@@ -46,10 +45,21 @@ namespace Locadora.Controllers
                 ModelState.Remove("Nome");
                 ModelState.Remove("Cpf");
                 ModelState.Remove("DataNascimento");
-               
-                if (model.Id == 0) ModelState.Remove("CasoId");
-                if (model.Id != 0) ModelState.Remove("Cliente.Cpf");
-                if (model.Id != 0) ModelState.Remove("Cliente.Cpf");
+
+                if (model.Id == 0) ModelState.Remove("Id");
+
+                if (model.ClienteId != 0) ModelState.Remove("Cliente.Cpf");
+
+                if (model.Cliente.ClienteEstrangeiro == true)
+                {
+                    ModelState.Remove("Cliente.Rg");
+                    ModelState.Remove("Cliente.OrgaoExpedidorRg");
+                    ModelState.Remove("Cliente.EstadoOrgaoExpedidor");
+                }
+                else
+                {
+                    ModelState.Remove("DocumentoEstrangeiro");
+                }
 
                 if (!ModelState.IsValid) throw new Exception("Preencha todos os campos corretamente!");
                 if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
@@ -67,7 +77,7 @@ namespace Locadora.Controllers
                     //model.Data = DateTime.Now;
                     //model.SituacaoCaso = SituacaoCaso.Pendente;
                     //model.Ativo = true;
-                  
+
                     var retorno = _db.Locacoes.Add(model);
 
                     _db.SaveChanges();
@@ -77,7 +87,7 @@ namespace Locadora.Controllers
                 else
                 {
                     var novo = _db.Locacoes.Include(x => x.Cliente).First(x => x.Id == model.Id);
-                   
+
                     novo.AtualizarCliente(model);
 
                     _db.Entry(novo).State = EntityState.Modified;
