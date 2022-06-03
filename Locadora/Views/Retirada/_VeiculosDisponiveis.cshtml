@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Veiculo>
+@{
+    var i = 0;
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="prj-list row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6 col-xs-12 margin-bottom-30">
+                <a href="#" class="prj-item">
+                    <div class="top-project-section">
+                        <div class="project-icon">
+                            <img height="170" width="184" src="@Url.Content(item.FotosDeGaragem.FirstOrDefault(x => x.Principal).CaminhoVirtual)" alt="">
+                        </div>
+                        <h3>@item.Marca - @item.Modelo - @item.AnoDeModelo</h3>
+                        <div class="meta">
+                            <p class="author">
+                                Placa: <span>@item.Placa</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bottom-project-section">
+                        <div class="form-check">
+                            <label><input type="radio" id="VeiculoId" name="Veiculos[0].Ids" value="@item.Id"> Escolher</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            i++;
+        }
+
+    </div>
+}
+else
+{
+    <p>Nenhum veículo disponível</p>
+}

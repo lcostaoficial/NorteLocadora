@@ -402,3 +402,5 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.Views.pdb
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.csproj.CopyComplete
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.genruntimeconfig.cache
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.csprojAssemblyReference.cache
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_Locacao.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_VeiculosDisponiveis.cshtml.g.cs

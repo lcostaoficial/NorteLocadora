@@ -49,13 +49,13 @@
 @section modal
 {
     @*@await Html.PartialAsync("_NovoAcompanhamento")
-    @await Html.PartialAsync("_NovaTarefa")
-    @await Html.PartialAsync("_FinalizarTarefa")
-    @await Html.PartialAsync("_AlterarResponsavel")
-    @await Html.PartialAsync("_AlterarPrazo")
-    @await Html.PartialAsync("_AnexarDocumento")
-    @await Html.PartialAsync("_ParametrosContrato")
-    <div data-url="@Url.Action("DetalhesTarefa", "Tarefa")" class="modal fade" id="modalDetalhesTarefa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>*@
+        @await Html.PartialAsync("_NovaTarefa")
+        @await Html.PartialAsync("_FinalizarTarefa")
+        @await Html.PartialAsync("_AlterarResponsavel")
+        @await Html.PartialAsync("_AlterarPrazo")
+        @await Html.PartialAsync("_AnexarDocumento")
+        @await Html.PartialAsync("_ParametrosContrato")
+        <div data-url="@Url.Action("DetalhesTarefa", "Tarefa")" class="modal fade" id="modalDetalhesTarefa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>*@
 }
 
 <div class="col-md-12 col-xs-12">
@@ -65,10 +65,10 @@
             <li id="menu-dadospessoais" class="active" data-locacao-id="0"><a data-toggle="tab" href="#dadospessoais">Dados Pessoais</a></li>
             <li id="menu-locacao" class="disabled"><a data-toggle="tab" href="#locacao">Locação</a></li>
         </ul>
-        <div class="tab-content">            
+        <div class="tab-content">
             <div id="dadospessoais" class="tab-pane fade in active" data-url="@Url.Action("DadosPessoais", "Retirada")">
                 <div class="row">
-                    @using (Html.BeginForm("SalvarLocacaoComDadosPessoais", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDadosPessoais" }))
+                    @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDadosPessoais" }))
                     {
                         <div id="frm-conteudo-dadospessoais"></div>
                     }

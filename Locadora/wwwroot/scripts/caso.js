@@ -63,15 +63,36 @@
 
     Locacao.carregarLocacao = function (lotacaoId) {
         Locacao.iniciarCarregamento();
-        var url = $("#lotacao").data("url");
+        var url = $("#locacao").data("url");
         $.ajax({
             method: "GET",
             url: url,
             data: { lotacaoId: lotacaoId },
             dataType: "html",
             success: function success(result) {
-                $("#frm-conteudo-lotacao").html(result);
+                $("#frm-conteudo-locacao").html(result);
                 $(".selectpicker").selectpicker();
+                GlobalMask.carregarMascaras();               
+            },
+            error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                swal("Mensagem", errorThrown, "error");
+            },
+            complete: function complete() {
+                Locacao.pararCarregamento();
+                Locacao.carregarVeiculosDisponiveis();
+            }
+        });
+    };
+
+    Locacao.carregarVeiculosDisponiveis = function () {
+        Locacao.iniciarCarregamento();
+        var url = $("#veiculos-disponiveis").data("url");
+        $.ajax({
+            method: "GET",
+            url: url,            
+            dataType: "html",
+            success: function success(result) {
+                $("#veiculos-disponiveis").html(result);          
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
                 swal("Mensagem", errorThrown, "error");

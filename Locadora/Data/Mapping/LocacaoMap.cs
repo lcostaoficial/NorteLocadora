@@ -22,8 +22,8 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.DocumentoDeComprovanteDeEndereco).IsRequired(false);
             builder.Property(X => X.Devolvido).IsRequired();
 
-            builder.HasOne(x => x.Veiculo).WithMany().HasForeignKey(x => x.VeiculoId).IsRequired(false);
-            builder.HasOne(x => x.Cliente).WithMany().HasForeignKey(x => x.ClienteId).IsRequired(true);
+            builder.HasOne(x => x.Veiculo).WithMany(x => x.Locacoes).HasForeignKey(x => x.VeiculoId).IsRequired(false);
+            builder.HasOne(x => x.Cliente).WithMany(x => x.Locacoes).HasForeignKey(x => x.ClienteId).IsRequired(true);
         }
     }
 }

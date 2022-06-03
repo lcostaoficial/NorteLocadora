@@ -7,6 +7,8 @@
         public bool Principal { get; set; }
         public bool Ativo { get; set; }
 
+        public string CaminhoVirtual => $"~/Uploads/Fotos/{Caminho}";
+
         public void TornarFotoNaoPrincipal()
         {
             Principal = false;

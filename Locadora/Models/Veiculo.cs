@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Locadora.Models
 {
@@ -63,5 +64,8 @@ namespace Locadora.Models
         }
 
         public ICollection<FotoDeGaragem> FotosDeGaragem { get; set; }
+
+        [NotMapped]
+        public ICollection<Locacao> Locacoes { get; set; }
     }
 }

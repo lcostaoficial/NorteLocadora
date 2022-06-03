@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Locadora.Models
 {
@@ -128,7 +130,7 @@ namespace Locadora.Models
         [Display(Name = "Documento do estrangeiro")]
         public string DocumentoIdentificacaoEstrangeiro { get; set; }
 
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
 
         public void Inativar()
         {
@@ -142,6 +144,9 @@ namespace Locadora.Models
         public string EstadoOrgaoExpedidorFormatado => EstadoOrgaoExpedidor.ToString();
         public string DataNascimentoFormatado => DataNascimento.ToString("dd/MM/yyyy");
         public string PortadorDocumento => ClienteEstrangeiro ? $"portador do documento de identificação {DocumentoIdentificacaoEstrangeiro}" : $"portador do RG {Rg} {OrgaoExpedidorRgFormatado}/{EstadoOrgaoExpedidor}";
+
+        [NotMapped]
+        public ICollection<Locacao> Locacoes { get; set; }
 
         public void Atualizar(Cliente model)
         {

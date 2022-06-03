@@ -39,6 +39,14 @@
             }
         });
         $('.selectonfocus').mask("00/00/0000", { selectOnFocus: true });
+
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            language: 'pt-BR',
+            todayHighlight: true
+        });
+
     };
 
     GlobalMask.carregarMascaras();

@@ -35,8 +35,22 @@ namespace Locadora.Controllers
             }
         }
 
+        public ActionResult Locacao(int? locacaoId = 0)
+        {
+            if (locacaoId != 0)
+            {
+                var caso = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+                return PartialView("_Locacao", caso);
+            }
+            else
+
+            {
+                return PartialView("_Locacao");
+            }
+        }
+
         [HttpPost]
-        public ActionResult SalvarLocacaoComDadosPessoais(Locacao model)
+        public ActionResult SalvarLocacao(Locacao model)
         {
             try
             {
@@ -45,6 +59,9 @@ namespace Locadora.Controllers
                 ModelState.Remove("Nome");
                 ModelState.Remove("Cpf");
                 ModelState.Remove("DataNascimento");
+                ModelState.Remove("DataRetirada");
+                ModelState.Remove("DataPrevistaDeDevolucao");
+                ModelState.Remove("PrecoCombinado");
 
                 if (model.Id == 0) ModelState.Remove("Id");
 
@@ -74,10 +91,6 @@ namespace Locadora.Controllers
                         model.Cliente = null;
                     }
 
-                    //model.Data = DateTime.Now;
-                    //model.SituacaoCaso = SituacaoCaso.Pendente;
-                    //model.Ativo = true;
-
                     var retorno = _db.Locacoes.Add(model);
 
                     _db.SaveChanges();
@@ -99,7 +112,7 @@ namespace Locadora.Controllers
             {
                 return Json(new { Error = e.Message });
             }
-        }
+        }        
 
         public ActionResult BuscarCpfExistente(string cpf)
         {
@@ -112,6 +125,12 @@ namespace Locadora.Controllers
             {
                 return Json(new { Error = e.Message });
             }
+        }
+
+        public ActionResult ObterVeiculosDisponiveis()
+        {
+            var veiculosDisponiveis = _db.Veiculos.Include(x => x.FotosDeGaragem).Where(x => x.Locacoes.All(x => x.Devolvido));
+            return PartialView("_VeiculosDisponiveis", veiculosDisponiveis);
         }
 
         public void ValidarEstrangeiro(Locacao model)
