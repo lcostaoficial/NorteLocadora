@@ -43,19 +43,6 @@
     <script src="~/plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/plugin/datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
-    @*<script src="~/scripts/tarefas.js"></script>*@
-}
-
-@section modal
-{
-    @*@await Html.PartialAsync("_NovoAcompanhamento")
-        @await Html.PartialAsync("_NovaTarefa")
-        @await Html.PartialAsync("_FinalizarTarefa")
-        @await Html.PartialAsync("_AlterarResponsavel")
-        @await Html.PartialAsync("_AlterarPrazo")
-        @await Html.PartialAsync("_AnexarDocumento")
-        @await Html.PartialAsync("_ParametrosContrato")
-        <div data-url="@Url.Action("DetalhesTarefa", "Tarefa")" class="modal fade" id="modalDetalhesTarefa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>*@
 }
 
 <div class="col-md-12 col-xs-12">
@@ -70,6 +57,14 @@
                 <div class="row">
                     @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDadosPessoais" }))
                     {
+                        <input type="hidden" id="Step" name="Step" value="DadosPessoais" />
+
+                        <span class="identificador-locacao">
+                            <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                        </span>
+
+                        <input type="hidden" id="ClienteId" name="ClienteId" value="@(Model != null ? Model.ClienteId : 0)" />
+
                         <div id="frm-conteudo-dadospessoais"></div>
                     }
                 </div>
@@ -77,6 +72,12 @@
             <div id="locacao" class="tab-pane fade disabled" data-url="@Url.Action("Locacao", "Retirada")">
                 @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacao" }))
                 {
+                    <input type="hidden" id="Step" name="Step" value="Locacao" />
+
+                    <span class="identificador-locacao">
+                        <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                    </span>
+
                     <div id="frm-conteudo-locacao" class="row"></div>
                 }
             </div>

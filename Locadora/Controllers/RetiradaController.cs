@@ -50,63 +50,89 @@ namespace Locadora.Controllers
         }
 
         [HttpPost]
-        public ActionResult SalvarLocacao(Locacao model)
+        public ActionResult SalvarLocacao(Locacao model, string Step)
         {
             try
             {
-                ValidarEstrangeiro(model);
+                if (string.IsNullOrEmpty(Step))
+                    throw new Exception("Step inválido");
 
-                ModelState.Remove("Nome");
-                ModelState.Remove("Cpf");
-                ModelState.Remove("DataNascimento");
-                ModelState.Remove("DataRetirada");
-                ModelState.Remove("DataPrevistaDeDevolucao");
-                ModelState.Remove("PrecoCombinado");
-
-                if (model.Id == 0) ModelState.Remove("Id");
-
-                if (model.ClienteId != 0) ModelState.Remove("Cliente.Cpf");
-
-                if (model.Cliente.ClienteEstrangeiro == true)
+                ActionResult AtualizarDadosPessoais()
                 {
-                    ModelState.Remove("Cliente.Rg");
-                    ModelState.Remove("Cliente.OrgaoExpedidorRg");
-                    ModelState.Remove("Cliente.EstadoOrgaoExpedidor");
-                }
-                else
-                {
-                    ModelState.Remove("DocumentoEstrangeiro");
-                }
+                    ValidarEstrangeiro(model);
 
-                if (!ModelState.IsValid) throw new Exception("Preencha todos os campos corretamente!");
-                if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
-                if (model.Id == 0)
-                {
-                    var cliente = model.ClienteId != 0 ? _db.Clientes.Find(model.ClienteId) : null;
+                    ModelState.Remove("Nome");
+                    ModelState.Remove("Cpf");
+                    ModelState.Remove("DataNascimento");
+                    ModelState.Remove("DataRetirada");
+                    ModelState.Remove("DataPrevistaDeDevolucao");
+                    ModelState.Remove("PrecoCombinado");
 
-                    if (model.ClienteId != 0)
+                    if (model.Id == 0) ModelState.Remove("Id");
+
+                    if (model.ClienteId != 0) ModelState.Remove("Cliente.Cpf");
+
+                    if (model.Cliente.ClienteEstrangeiro == true)
                     {
-                        cliente.Atualizar(model.Cliente);
-                        _db.Entry(cliente).State = EntityState.Modified;
-                        model.Cliente = null;
+                        ModelState.Remove("Cliente.Rg");
+                        ModelState.Remove("Cliente.OrgaoExpedidorRg");
+                        ModelState.Remove("Cliente.EstadoOrgaoExpedidor");
+                    }
+                    else
+                    {
+                        ModelState.Remove("DocumentoEstrangeiro");
                     }
 
-                    var retorno = _db.Locacoes.Add(model);
+                    if (!ModelState.IsValid) throw new Exception("Preencha todos os campos corretamente!");
+                    if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
+                    if (model.Id == 0)
+                    {
+                        var cliente = model.ClienteId != 0 ? _db.Clientes.Find(model.ClienteId) : null;
 
-                    _db.SaveChanges();
+                        if (model.ClienteId != 0)
+                        {
+                            cliente.Atualizar(model.Cliente);
+                            _db.Entry(cliente).State = EntityState.Modified;
+                            model.Cliente = null;
+                        }
 
-                    return Json(new { Success = "Os dados pessoais foram salvos com sucesso!", model.Id });
+                        var retorno = _db.Locacoes.Add(model);
+
+                        _db.SaveChanges();
+
+                        return Json(new { Success = "Os dados pessoais foram salvos com sucesso!", model.Id });
+                    }
+                    else
+                    {
+                        var novo = _db.Locacoes.Include(x => x.Cliente).First(x => x.Id == model.Id);
+
+                        novo.AtualizarCliente(model);
+
+                        _db.Entry(novo).State = EntityState.Modified;
+                        _db.SaveChanges();
+                        return Json(new { Success = "Os dados pessoais foram alterados com sucesso!", model.Id, novo.ClienteId });
+                    }
                 }
-                else
-                {
-                    var novo = _db.Locacoes.Include(x => x.Cliente).First(x => x.Id == model.Id);
 
-                    novo.AtualizarCliente(model);
+                ActionResult AtualizarLocacao()
+                {
+                    var novo = _db.Locacoes.First(x => x.Id == model.Id);
+                    var validacao = novo.AtualizarLocacao(model);
+
+                    if (!validacao) throw new Exception("Preencha todos os campos corretamente!");                   
 
                     _db.Entry(novo).State = EntityState.Modified;
                     _db.SaveChanges();
-                    return Json(new { Success = "Os dados pessoais foram alterados com sucesso!", model.Id, novo.ClienteId });
+                    return Json(new { Success = "A locação foi salva com sucesso!" });
                 }
+
+                if (Step == "DadosPessoais")
+                    return AtualizarDadosPessoais();
+
+                if (Step == "Locacao")
+                    return AtualizarLocacao();
+
+                throw new Exception($"O step {Step} não foi localizado!");
             }
             catch (Exception e)
             {

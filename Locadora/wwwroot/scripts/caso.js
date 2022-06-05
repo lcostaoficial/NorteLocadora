@@ -13,7 +13,7 @@
     };
 
     Locacao.fixarLocacaoId = function (id) {
-        $("#Id").val(id);
+        $(".identificador-locacao input").val(id);
     };
 
     Locacao.fixarClienteId = function (id) {
@@ -253,7 +253,7 @@
                         if (result.success) {
                             Locacao.desabilitarCpf();
                             Locacao.habilitarEnvioLocacao();
-                            Locacao.fixarLocacaoId(result.Id);
+                            Locacao.fixarLocacaoId(result.id);
                             swal({
                                 title: "Mensagem",
                                 text: result.success,
@@ -279,25 +279,27 @@
 
 
             $(document).on("submit", "form#frmSalvarLocacao", function (e) {
-                e.preventDefault();
+
+                e.preventDefault();  
+
                 $.ajax({
                     type: "POST",
                     url: $(this).attr("action"),
                     data: $(this).serialize(),
                     success: function success(result) {
-                        if (result.Success) {
+                        if (result.success) {
 
                             swal({
                                 title: "Mensagem",
-                                text: result.Success,
+                                text: result.success,
                                 type: "success"
                             }, function () {
                                 Locacao.carregarLocacao(result.locacaoId);
                             });
 
                         }
-                        if (result.Error) {
-                            swal("Mensagem", result.Error, "warning");
+                        if (result.error) {
+                            swal("Mensagem", result.error, "warning");
                         }
                     },
                     error: function error(XMLHttpRequest, textStatus, errorThrown) {
