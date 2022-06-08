@@ -87,6 +87,11 @@ namespace Locadora.Controllers
                     if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
                     if (model.Id == 0)
                     {
+                        var existemVeiculosDisponiveis = _db.Veiculos.Any(x => x.Locacoes.All(y => y.Devolvido));
+
+                        if (!existemVeiculosDisponiveis)
+                            throw new Exception("Não existem veículos disponíveis no sistema!");
+
                         var cliente = model.ClienteId != 0 ? _db.Clientes.Find(model.ClienteId) : null;
 
                         if (model.ClienteId != 0)
@@ -100,7 +105,7 @@ namespace Locadora.Controllers
 
                         _db.SaveChanges();
 
-                        return Json(new { Success = "Os dados pessoais foram salvos com sucesso!", model.Id });
+                        return Json(new { Success = "Os dados pessoais foram salvos com sucesso!", model.Id, veiculoId = model.VeiculoId ?? 0 });
                     }
                     else
                     {
@@ -110,7 +115,7 @@ namespace Locadora.Controllers
 
                         _db.Entry(novo).State = EntityState.Modified;
                         _db.SaveChanges();
-                        return Json(new { Success = "Os dados pessoais foram alterados com sucesso!", model.Id, novo.ClienteId });
+                        return Json(new { Success = "Os dados pessoais foram alterados com sucesso!", model.Id, novo.ClienteId, novo.VeiculoId });
                     }
                 }
 
@@ -123,7 +128,7 @@ namespace Locadora.Controllers
 
                     _db.Entry(novo).State = EntityState.Modified;
                     _db.SaveChanges();
-                    return Json(new { Success = "A locação foi salva com sucesso!" });
+                    return Json(new { Success = "A locação foi salva com sucesso!", LocacaoId = novo.Id, novo.VeiculoId });
                 }
 
                 if (Step == "DadosPessoais")
@@ -153,10 +158,20 @@ namespace Locadora.Controllers
             }
         }
 
-        public ActionResult ObterVeiculosDisponiveis()
+        public ActionResult ObterVeiculosDisponiveis(int? veiculoId = 0)
         {
-            var veiculosDisponiveis = _db.Veiculos.Include(x => x.FotosDeGaragem).Where(x => x.Locacoes.All(x => x.Devolvido));
-            return PartialView("_VeiculosDisponiveis", veiculosDisponiveis);
+            ViewBag.VeiculoId = veiculoId;
+
+            if (veiculoId == 0)
+            {
+                var veiculosDisponiveis = _db.Veiculos.Include(x => x.FotosDeGaragem).Where(x => x.Locacoes.All(x => x.Devolvido));
+                return PartialView("_VeiculosDisponiveis", veiculosDisponiveis);
+            }
+            else
+            {
+                var veiculosDisponiveis = _db.Veiculos.Where(x => x.Id == veiculoId);
+                return PartialView("_VeiculosDisponiveis", veiculosDisponiveis);
+            }
         }
 
         public void ValidarEstrangeiro(Locacao model)

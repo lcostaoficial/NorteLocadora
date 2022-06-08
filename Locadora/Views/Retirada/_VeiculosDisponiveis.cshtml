@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Veiculo>
 @{
-    var i = 0;
+    int veiculoSelecionadoId = (int)ViewBag.VeiculoId;
 }
 
 @if (Model != null && Model.Any())
@@ -13,7 +13,7 @@
                 <a href="#" class="prj-item">
                     <div class="top-project-section">
                         <div class="project-icon">
-                            <img height="170" width="184" src="@Url.Content(item.FotosDeGaragem.FirstOrDefault(x => x.Principal).CaminhoVirtual)" alt="">
+                            <img height="170" width="184" src="@Url.Content(item.FotoPrincipal)" alt="">
                         </div>
                         <h3>@item.Marca - @item.Modelo - @item.AnoDeModelo</h3>
                         <div class="meta">
@@ -24,13 +24,12 @@
                     </div>
                     <div class="bottom-project-section">
                         <div class="form-check">
-                            <label><input type="radio" id="VeiculoId" name="VeiculoId" value="@item.Id"> Escolher</label>
+                            <label><input @(veiculoSelecionadoId == item.Id ? Html.Raw("disabled=\"\"") : string.Empty) type="radio" id="VeiculoId" name="VeiculoId" value="@item.Id"> Escolher</label>
                         </div>
                     </div>
                 </a>
             </div>
 
-            i++;
         }
 
     </div>

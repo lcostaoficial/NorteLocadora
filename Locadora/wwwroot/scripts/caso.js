@@ -34,6 +34,14 @@
         });
     };
 
+    Locacao.iconeDeCompletoDosDadosPessoais = function () {
+        $("#icone-dados-pessoais").attr("class", "fa fa-check-circle text-success")
+    };
+
+    Locacao.iconeDeCompletoDaLocacao = function () {
+        $("#icone-locacao").attr("class", "fa fa-check-circle text-success")
+    };
+
     Locacao.pararCarregamento = function () {
         swal.close();
     };
@@ -61,38 +69,43 @@
         });
     };
 
-    Locacao.carregarLocacao = function (lotacaoId) {
+    Locacao.carregarLocacao = function (locacaoId, carregarVeiculosDisponiveis = false, veiculoId = 0) {
         Locacao.iniciarCarregamento();
         var url = $("#locacao").data("url");
         $.ajax({
             method: "GET",
             url: url,
-            data: { lotacaoId: lotacaoId },
+            data: { locacaoId: locacaoId },
             dataType: "html",
             success: function success(result) {
                 $("#frm-conteudo-locacao").html(result);
                 $(".selectpicker").selectpicker();
-                GlobalMask.carregarMascaras();               
+                GlobalMask.carregarMascaras();
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
                 swal("Mensagem", errorThrown, "error");
             },
             complete: function complete() {
+
                 Locacao.pararCarregamento();
-                Locacao.carregarVeiculosDisponiveis();
+
+                if (carregarVeiculosDisponiveis === true) {
+                    Locacao.carregarVeiculosDisponiveis(veiculoId);
+                }
             }
         });
     };
 
-    Locacao.carregarVeiculosDisponiveis = function () {
+    Locacao.carregarVeiculosDisponiveis = function (veiculoId = 0) {
         Locacao.iniciarCarregamento();
         var url = $("#veiculos-disponiveis").data("url");
         $.ajax({
             method: "GET",
-            url: url,            
+            data: { veiculoId: veiculoId },
+            url: url,
             dataType: "html",
             success: function success(result) {
-                $("#veiculos-disponiveis").html(result);          
+                $("#veiculos-disponiveis").html(result);
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
                 swal("Mensagem", errorThrown, "error");
@@ -197,15 +210,16 @@
     };
 
     Locacao.inicializar = function () {
-        var lotacaoId = $("#menu-dadospessoais").data("locacaoId");
-        if (lotacaoId === 0) {
+        var locacaoId = $("#menu-dadospessoais").data("locacaoId");
+        if (locacaoId === 0) {
             Locacao.dadosPessoais();
         }
         else {
-            Locacao.dadosPessoais(lotacaoId);
+            Locacao.dadosPessoais(locacaoId);
             Locacao.desabilitarCpf();
             Locacao.habilitarEnvioLocacao();
-            Locacao.carregarLocacao(lotacaoId);
+            //Locacao.carregarLocacao(locacaoId);
+            //Locacao.carregarVeiculosDisponiveis();
         }
     };
 
@@ -260,7 +274,8 @@
                                 type: "success"
                             }, function () {
                                 Locacao.dadosPessoais(result.id);
-                                Locacao.carregarLocacao(result.id); //verificar
+                                Locacao.carregarLocacao(result.id, true, result.veiculoId);
+                                Locacao.iconeDeCompletoDosDadosPessoais();
 
                                 //Próxima aba após salvar os dados pessoais
                                 $('.nav-tabs a[href="#locacao"]').tab('show')
@@ -280,7 +295,7 @@
 
             $(document).on("submit", "form#frmSalvarLocacao", function (e) {
 
-                e.preventDefault();  
+                e.preventDefault();
 
                 $.ajax({
                     type: "POST",
@@ -294,7 +309,8 @@
                                 text: result.success,
                                 type: "success"
                             }, function () {
-                                Locacao.carregarLocacao(result.locacaoId);
+                                Locacao.carregarLocacao(result.locacaoId, true, result.veiculoId);
+                                Locacao.iconeDeCompletoDaLocacao();
                             });
 
                         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Locadora.Models
 {
@@ -64,6 +65,21 @@ namespace Locadora.Models
         }
 
         public ICollection<FotoDeGaragem> FotosDeGaragem { get; set; }
+
+        public string FotoPrincipal
+        {
+            get
+            {
+                if (FotosDeGaragem != null && FotosDeGaragem.Any())
+                {
+                    return FotosDeGaragem.FirstOrDefault(x => x.Principal).CaminhoVirtual;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         [NotMapped]
         public ICollection<Locacao> Locacoes { get; set; }

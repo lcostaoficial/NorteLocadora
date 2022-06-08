@@ -49,8 +49,16 @@
     <div class="box-content">
         <h4 class="box-title">@ViewBag.Title</h4>
         <ul class="nav nav-tabs">
-            <li id="menu-dadospessoais" class="active" data-locacao-id="0"><a data-toggle="tab" href="#dadospessoais">Dados Pessoais</a></li>
-            <li id="menu-locacao" class="disabled"><a data-toggle="tab" href="#locacao">Locação</a></li>
+            <li id="menu-dadospessoais" class="active" data-locacao-id="0">
+                <a data-toggle="tab" href="#dadospessoais">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-dados-pessoais" class="fa fa-circle-o text-warning"></i> Dados Pessoais
+                </a>
+            </li>
+            <li id="menu-locacao" class="disabled">
+                <a data-toggle="tab" href="#locacao">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-locacao" class="fa fa-circle-o text-warning"></i>  Locação
+                </a>
+            </li>
         </ul>
         <div class="tab-content">
             <div id="dadospessoais" class="tab-pane fade in active" data-url="@Url.Action("DadosPessoais", "Retirada")">

@@ -13,9 +13,9 @@ namespace Locadora.Models
 
         [Display(Name = "Data de Devolução")]
         [Required(ErrorMessage = "Campo obrigatório")]
-        public DateTime? DataPrevistaDeDevolucao { get; set; }   
+        public DateTime? DataPrevistaDeDevolucao { get; set; }
 
-        [Display(Name = "Preço combinado")]    
+        [Display(Name = "Preço combinado")]
         public decimal? PrecoCombinado { get; set; }
 
         public DateTime? DataDeDevolucao { get; set; }
@@ -28,7 +28,10 @@ namespace Locadora.Models
         public string DocumentoDeContrato { get; set; }
         public string DocumentoDeNadaConstaDetran { get; set; }
         public string DocumentoDeNadaConstaCriminal { get; set; }
-        public string DocumentoDeCheckList { get; set; }
+        public string DocumentoDeCheckListSaida { get; set; }
+        public string DocumentoDeCheckListChegada { get; set; }
+        public string ObservacoesDeSaida { get; set; }
+        public string ObservacoesDeChegada { get; set; }
         public string DocumentoDeIdentificacao { get; set; }
         public string DocumentoDeComprovanteDeEndereco { get; set; }
 
@@ -38,7 +41,29 @@ namespace Locadora.Models
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
+        public bool Finalizada { get; set; } = false;
+
         public bool Devolvido { get; set; }
+
+        public bool ValidarCampos()
+        {
+            if (DataRetirada == null)
+                return false;
+
+            if (DataPrevistaDeDevolucao == null)
+                return false;
+
+            if (PrecoCombinado == null)
+                return false;
+
+            if (QuilometragemAtual == null)
+                return false;
+
+            if (VeiculoId == null || VeiculoId == 0)
+                return false;
+
+            return true;
+        }
 
         public bool AtualizarLocacao(Locacao model)
         {
@@ -46,28 +71,7 @@ namespace Locadora.Models
             DataPrevistaDeDevolucao = model.DataPrevistaDeDevolucao;
             PrecoCombinado = model.PrecoCombinado;
             QuilometragemAtual = model.QuilometragemAtual;
-            VeiculoId = model.VeiculoId;
-
-            bool ValidarCampos()
-            {
-                if (DataRetirada == null)
-                    return false;
-
-                if (DataPrevistaDeDevolucao == null)
-                    return false;
-
-                if (PrecoCombinado == null)
-                    return false;
-
-                if (QuilometragemAtual == null)
-                    return false;
-
-                if (VeiculoId == null || VeiculoId == 0)
-                    return false;
-
-                return true;
-            }
-
+            VeiculoId = model.VeiculoId;  
             return ValidarCampos();
         }
 
