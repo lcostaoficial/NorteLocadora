@@ -1,6 +1,6 @@
 ﻿@model Locacao
 @{
-    ViewBag.Title = "Nova Locação";
+    ViewBag.Title = "Retirada de veículo";
 }
 
 @section styles
@@ -15,6 +15,12 @@
     <!-- FullCalendar -->
     <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.min.css">
     <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.print.css" media='print'>
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="~/plugin/datepicker/css/bootstrap-datepicker.min.css">
+
+    <!-- Timepicker -->
+    <link href="~/plugin/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
 }
 
 @section scripts
@@ -37,12 +43,17 @@
     <script src="~/plugin/fullcalendar/locale/pt-br.js"></script>
 
     <!-- Datepicker -->
-    <link rel="stylesheet" href="~/plugin/datepicker/css/bootstrap-datepicker.min.css">
-
-    <!-- Datepicker -->
     <script src="~/plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="~/plugin/datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
+    <!-- Timepicker -->
+    <script src="~/plugin/timepicker/bootstrap-timepicker.min.js"></script>
+
+}
+
+@section modal
+{
+    @await Html.PartialAsync("_AnexarDocumento")
 }
 
 <div class="col-md-12 col-xs-12">
@@ -59,8 +70,14 @@
                     <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-locacao" class="fa fa-circle-o text-warning"></i>  Locação
                 </a>
             </li>
+            <li id="menu-documentacao" class="disabled">
+                <a data-toggle="tab" href="#documentacao">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-documentacao" class="fa fa-circle-o text-warning"></i>  Documentação
+                </a>
+            </li>
         </ul>
         <div class="tab-content">
+
             <div id="dadospessoais" class="tab-pane fade in active" data-url="@Url.Action("DadosPessoais", "Retirada")">
                 <div class="row">
                     @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDadosPessoais" }))
@@ -77,6 +94,7 @@
                     }
                 </div>
             </div>
+
             <div id="locacao" class="tab-pane fade disabled" data-url="@Url.Action("Locacao", "Retirada")">
                 @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacao" }))
                 {
@@ -87,6 +105,19 @@
                     </span>
 
                     <div id="frm-conteudo-locacao" class="row"></div>
+                }
+            </div>
+
+            <div id="documentacao" class="tab-pane fade disabled" data-url="@Url.Action("Documentacao", "Retirada")">
+                @using (Html.BeginForm("SalvarDocumentacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDocumentacao" }))
+                {
+                    <input type="hidden" id="Step" name="Step" value="Documentacao" />
+
+                    <span class="identificador-locacao">
+                        <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                    </span>
+
+                    <div id="frm-conteudo-documentacao" class="row"></div>
                 }
             </div>
         </div>

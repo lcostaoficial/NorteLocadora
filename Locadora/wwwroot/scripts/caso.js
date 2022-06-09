@@ -25,6 +25,11 @@
         $("#locacao").removeClass("disabled");
     };
 
+    Locacao.habilitarEnvioDocumentacao = function () {
+        $("#menu-documentacao").removeClass("disabled");
+        $("#documentacao").removeClass("disabled");
+    };
+
     Locacao.iniciarCarregamento = function () {
         swal({
             title: "",
@@ -92,6 +97,27 @@
                 if (carregarVeiculosDisponiveis === true) {
                     Locacao.carregarVeiculosDisponiveis(veiculoId);
                 }
+            }
+        });
+    };
+
+    Locacao.carregarDocumentacao = function (locacaoId) {
+        Locacao.iniciarCarregamento();
+        var url = $("#documentacao").data("url");
+        $.ajax({
+            method: "GET",
+            url: url,
+            data: { locacaoId: locacaoId },
+            dataType: "html",
+            success: function success(result) {
+                $("#frm-conteudo-documentacao").html(result);
+                GlobalMask.carregarMascaras();
+            },
+            error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                swal("Mensagem", errorThrown, "error");
+            },
+            complete: function complete() {
+                Locacao.pararCarregamento();
             }
         });
     };
@@ -209,6 +235,14 @@
         });
     };
 
+    Locacao.anexarArquivo = function (identificador) {
+        var id = $("form#frmSalvarLocacaoComDocumentacao #Id").val();
+
+        $("form#frmSalvarAnexo #Id").val(id);
+        $("form#frmSalvarAnexo #Identificador").val(identificador);
+        $("#modalAnexarDocumento").modal("show");
+    };
+
     Locacao.inicializar = function () {
         var locacaoId = $("#menu-dadospessoais").data("locacaoId");
         if (locacaoId === 0) {
@@ -248,7 +282,7 @@
             $("a[data-toggle='tab']").on("show.bs.tab", function (e) {
                 var $target = $(e.target);
                 if ($target.parent().hasClass("disabled")) {
-                    swal("Mensagem", "Antes desta etapa preencha e salve todos os dados pessoais.", "warning");
+                    swal("Mensagem", "Etapa ainda não disponível", "warning");
                     return false;
                 }
             });
@@ -304,15 +338,57 @@
                     success: function success(result) {
                         if (result.success) {
 
+                            Locacao.habilitarEnvioDocumentacao();
+
                             swal({
                                 title: "Mensagem",
                                 text: result.success,
                                 type: "success"
                             }, function () {
                                 Locacao.carregarLocacao(result.locacaoId, true, result.veiculoId);
+                                Locacao.carregarDocumentacao(result.locacaoId);
                                 Locacao.iconeDeCompletoDaLocacao();
+
+                                //Próxima aba após salvar os dados pessoais
+                                $('.nav-tabs a[href="#documentacao"]').tab('show')
                             });
 
+                        }
+                        if (result.error) {
+                            swal("Mensagem", result.error, "warning");
+                        }
+                    },
+                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                        swal("Mensagem", errorThrown, "error");
+                    }
+                });
+            });
+
+            $(document).on("submit", "form#frmSalvarAnexo", function (e) {
+                e.preventDefault();
+                var id = $("form#frmSalvarAnexo #Id").val();
+                var formData = new FormData();
+                var arquivo = $("form#frmSalvarAnexo #ArquivoBinario")[0].files[0];
+                formData.append("id", id);
+                formData.append("identificador", $("form#frmSalvarAnexo #Identificador").val());
+                formData.append("arquivoBinario", arquivo);
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr("action"),
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function success(result) {
+                        if (result.success) {
+                            $("#modalAnexarDocumento").modal("hide");
+                            swal({
+                                title: "Mensagem",
+                                text: result.success,
+                                type: "success"
+                            }, function () {
+                                Locacao.carregarDocumentacao(id);
+                            });
                         }
                         if (result.error) {
                             swal("Mensagem", result.error, "warning");

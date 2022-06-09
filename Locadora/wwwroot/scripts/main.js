@@ -137,7 +137,7 @@
 							title : "Logout success", 
 							text: "See you later!", 
 							type: "success",
-							confirmButtonColor: '#004f6c',
+							confirmButtonColor: '#b9430a',
 						});   
 					} else {    
 					} 
@@ -306,7 +306,7 @@
 							case "circle": 
 								options = {
 									chartArea:{left:0,top:0,width:'100%',height:'75%'},
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes,
 									legend:{
@@ -342,7 +342,7 @@
 											color: '#484848'
 										}
 									},
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes
 								}
@@ -351,7 +351,7 @@
 							case "column":
 								options = {
 									chartArea:{left:30,top:10,width:'100%',height:'80%'},
-									colors: ["#004f6c"],
+									colors: ["#b9430a"],
 									fontName: 'Poppins',
 									backgroundColor: themes,
 									vAxis: {
@@ -375,7 +375,7 @@
 								options = {
 									chartArea:{left:30,top:10,width:'90%',height:'80%'},
 									curveType: 'function',
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes,
 									vAxis: {
@@ -451,7 +451,7 @@
 									legend:{
 										position: 'bottom'
 									},
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes
 								}
@@ -464,7 +464,7 @@
 									legend:{
 										position: 'bottom',
 									},
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes
 								}
@@ -473,7 +473,7 @@
 							case "column":
 								options = {
 									chartArea:{left:30,top:10,width:'100%',height:'80%'},
-									colors: ["#004f6c"],
+									colors: ["#b9430a"],
 									fontName: 'Poppins',
 									backgroundColor: themes
 								}
@@ -483,7 +483,7 @@
 								options = {
 									chartArea:{left:30,top:10,width:'90%',height:'80%'},
 									curveType: 'function',
-									colors: ["#004f6c", "#f60e0e","#ffa000"],
+									colors: ["#b9430a", "#f60e0e","#ffa000"],
 									fontName: 'Poppins',
 									backgroundColor: themes
 								}

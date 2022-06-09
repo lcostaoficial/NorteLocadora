@@ -147,7 +147,7 @@ $(function() {
 
 	$('#treeview1').treeview({
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',
@@ -157,7 +157,7 @@ $(function() {
 	$('#treeview2').treeview({
 		levels: 1,
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',
@@ -167,7 +167,7 @@ $(function() {
 	$('#treeview3').treeview({
 		levels: 99,
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',
@@ -175,9 +175,9 @@ $(function() {
 	});
 
 	$('#treeview4').treeview({
-		color: "#004f6c",
+		color: "#b9430a",
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',
@@ -185,31 +185,31 @@ $(function() {
 	});
 
 	$('#treeview5').treeview({
-		color: "#004f6c",
+		color: "#b9430a",
 		expandIcon: 'fa fa-chevron-right',
 		collapseIcon: 'fa fa-chevron-down',
 		nodeIcon: 'fa fa-bookmark',
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 	});
 
 	$('#treeview6').treeview({
-		color: "#004f6c",
+		color: "#b9430a",
 		expandIcon: "fa fa-square",
 		collapseIcon: "fa fa-square-o",
 		nodeIcon: "fa fa-user",
 		showTags: true,
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 	});
 
 	$('#treeview10').treeview({
-		color: "#004f6c",
+		color: "#b9430a",
 		enableLinks: true,
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',
@@ -220,7 +220,7 @@ $(function() {
 
 	var $searchableTree = $('#treeview-searchable').treeview({
 		data: defaultData,
-		selectedBackColor: "#004f6c",
+		selectedBackColor: "#b9430a",
 		onhoverColor: "rgba(0, 0, 0, 0.05)",
 		expandIcon: 'fa fa-plus',
 		collapseIcon: 'fa fa-minus',

@@ -24,7 +24,7 @@
                     </div>
                     <div class="bottom-project-section">
                         <div class="form-check">
-                            <label><input @(veiculoSelecionadoId == item.Id ? Html.Raw("disabled=\"\"") : string.Empty) type="radio" id="VeiculoId" name="VeiculoId" value="@item.Id"> Escolher</label>
+                            <label><input @(veiculoSelecionadoId == item.Id ? Html.Raw("checked disabled=\"\"") : string.Empty) type="radio" id="VeiculoId" name="VeiculoId" value="@item.Id"> Escolher</label>
                         </div>
                     </div>
                 </a>

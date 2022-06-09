@@ -7,54 +7,90 @@
 
 @if (!Model.ValidarCampos())
 {
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataRetirada) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataRetirada, new { @class = "form-control date datepicker", autocomplete = "off" })
         @Html.ValidationMessageFor(m => m.DataRetirada)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.HorarioDeSaida) <label style="color: red" title="Este campo é obrigatório">*</label>
+        @Html.TextBoxFor(m => m.HorarioDeSaida, new { @class = "form-control time timepicker", autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.HorarioDeSaida)
+    </div>
+
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataPrevistaDeDevolucao) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataPrevistaDeDevolucao, new { @class = "form-control date datepicker", autocomplete = "off" })
         @Html.ValidationMessageFor(m => m.DataPrevistaDeDevolucao)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.HorarioDeChegada) <label style="color: red" title="Este campo é obrigatório">*</label>
+        @Html.TextBoxFor(m => m.HorarioDeChegada, new { @class = "form-control time timepicker", autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.HorarioDeChegada)
+    </div>
+
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.PrecoCombinado) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.PrecoCombinado, new { @class = "form-control money" })
         @Html.ValidationMessageFor(m => m.PrecoCombinado)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.QuilometragemAtual) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.QuilometragemAtual, new { @class = "form-control", type = "number" })
         @Html.ValidationMessageFor(m => m.QuilometragemAtual)
     </div>
+
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.ObservacoesDeSaida)
+        @Html.TextAreaFor(m => m.ObservacoesDeSaida, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(m => m.ObservacoesDeSaida)
+    </div>
 }
 else
 {
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataRetirada) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataRetirada, new { @class = "form-control date datepicker", autocomplete = "off", disabled = "" })
         @Html.ValidationMessageFor(m => m.DataRetirada)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.HorarioDeSaida) <label style="color: red" title="Este campo é obrigatório">*</label>
+        @Html.TextBoxFor(m => m.HorarioDeSaida, new { @class = "form-control time", autocomplete = "off", disabled = "" })
+        @Html.ValidationMessageFor(m => m.HorarioDeSaida)
+    </div>
+
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataPrevistaDeDevolucao) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataPrevistaDeDevolucao, new { @class = "form-control date datepicker", autocomplete = "off", disabled = "" })
         @Html.ValidationMessageFor(m => m.DataPrevistaDeDevolucao)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.HorarioDeChegada) <label style="color: red" title="Este campo é obrigatório">*</label>
+        @Html.TextBoxFor(m => m.HorarioDeChegada, new { @class = "form-control time", autocomplete = "off", disabled = "" })
+        @Html.ValidationMessageFor(m => m.HorarioDeChegada)
+    </div>
+
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.PrecoCombinado) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.PrecoCombinado, new { @class = "form-control money", disabled = "" })
         @Html.ValidationMessageFor(m => m.PrecoCombinado)
     </div>
 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.QuilometragemAtual) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.QuilometragemAtual, new { @class = "form-control", type = "number", disabled = "" })
         @Html.ValidationMessageFor(m => m.QuilometragemAtual)
+    </div>
+
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.ObservacoesDeSaida)
+        @Html.TextAreaFor(m => m.ObservacoesDeSaida, new { @class = "form-control", type = "number", disabled = "" })
+        @Html.ValidationMessageFor(m => m.ObservacoesDeSaida)
     </div>
 }
 

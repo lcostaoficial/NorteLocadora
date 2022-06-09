@@ -1,8 +1,13 @@
 ﻿using Locadora.Data;
 using Locadora.Models;
+using Locadora.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Locadora.Controllers
@@ -10,10 +15,12 @@ namespace Locadora.Controllers
     public class RetiradaController : Controller
     {
         private readonly MainContext _db;
+        private IWebHostEnvironment _hostEnvironment;
 
-        public RetiradaController(MainContext context)
+        public RetiradaController(MainContext context, IWebHostEnvironment hostEnvironment)
         {
             _db = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
@@ -25,8 +32,8 @@ namespace Locadora.Controllers
         {
             if (locacaoId != 0)
             {
-                var caso = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
-                return PartialView("_DadosPessoais", caso);
+                var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+                return PartialView("_DadosPessoais", loc);
             }
             else
 
@@ -39,13 +46,33 @@ namespace Locadora.Controllers
         {
             if (locacaoId != 0)
             {
-                var caso = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
-                return PartialView("_Locacao", caso);
+                var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+                return PartialView("_Locacao", loc);
             }
             else
 
             {
                 return PartialView("_Locacao");
+            }
+        }
+
+        public ActionResult Documentacao(int locacaoId = 0)
+        {
+            if (locacaoId != 0)
+            {
+                var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+
+                var documentacaoVm = new DocumentacaoVm();
+
+                documentacaoVm.IncluirRotasSaida(loc.DocumentoDeContrato, loc.DocumentoDeNadaConstaDetran, loc.DocumentoDeNadaConstaCriminal, loc.DocumentoDeCheckListSaida, loc.DocumentoDeIdentificacao, loc.DocumentoDeComprovanteDeEndereco);
+
+                documentacaoVm.LocacaoId = loc.Id;
+
+                return PartialView("_Documentacao", documentacaoVm);
+            }
+            else
+            {
+                throw new Exception("Ocorreu um erro ao carregar a documentação");
             }
         }
 
@@ -123,8 +150,10 @@ namespace Locadora.Controllers
                 {
                     var novo = _db.Locacoes.First(x => x.Id == model.Id);
                     var validacao = novo.AtualizarLocacao(model);
+                    if (!validacao) throw new Exception("Preencha todos os campos corretamente!");
 
-                    if (!validacao) throw new Exception("Preencha todos os campos corretamente!");                   
+                    if (model.DataRetirada.Value.Date > model.DataPrevistaDeDevolucao.Value.Date) throw new Exception("A data de retirada não pode ser maior do que a data prevista para devolução!");
+
 
                     _db.Entry(novo).State = EntityState.Modified;
                     _db.SaveChanges();
@@ -143,7 +172,55 @@ namespace Locadora.Controllers
             {
                 return Json(new { Error = e.Message });
             }
-        }        
+        }
+
+        [HttpPost]
+        public ActionResult SalvarAnexo(int id, IdentificadoDocumentacaoVm identificador, IFormFile arquivoBinario)
+        {
+            try
+            {
+                if (identificador == IdentificadoDocumentacaoVm.Nenhum)
+                    throw new Exception("Identificador do arquivo não encontrado!");
+
+                if (arquivoBinario == null) throw new Exception("Por favor anexe o arquivo!");
+             
+                var rota = AnexarDocumento(arquivoBinario, id);
+
+                var locacao = _db.Locacoes.Find(id);
+
+                switch (identificador)
+                {
+                    case IdentificadoDocumentacaoVm.DocumentoDeContrato:
+                        locacao.AtualizarContrato(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran:
+                        locacao.AtualizarNadaConstaDetran(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal:
+                        locacao.AtualizarNadaConstaCriminal(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeCheckListSaida:
+                        locacao.AtualizarCheckListSaida(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeCheckListChegada:
+                        locacao.AtualizarCheckListChegada(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeIdentificacao:
+                        locacao.AtualizarDocumentoDeIdentificacao(rota);
+                        break;
+                    case IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco:
+                        locacao.AtualizarComprovanteDeEndereco(rota);
+                        break;
+                }
+
+                _db.SaveChanges();
+                return Json(new { Success = "Documento anexado com sucesso!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Error = e.Message });
+            }
+        }
 
         public ActionResult BuscarCpfExistente(string cpf)
         {
@@ -185,6 +262,41 @@ namespace Locadora.Controllers
                 if (string.IsNullOrEmpty(model.Cliente.Rg)) throw new Exception("RG não preenchido!");
                 if (model.Cliente.OrgaoExpedidorRg == 0) throw new Exception("Orgão expedidor do RG não preenchido!");
                 if (model.Cliente.EstadoOrgaoExpedidor == 0) throw new Exception("Estado emissor do RG não preenchido!");
+            }
+        }
+
+        private string AnexarDocumento(IFormFile arquivoBinario, int locacaoId)
+        {
+            var allowedExtensions = new List<string> { ".pdf" };
+
+            var physicalPath = $"{_hostEnvironment.WebRootPath}\\Uploads\\Locacao\\{locacaoId}";
+
+            if (arquivoBinario != null && arquivoBinario.Length > 0)
+            {
+                string extension = Path.GetExtension(arquivoBinario.FileName);
+
+                if (!allowedExtensions.Contains(extension.ToLower()))
+                    throw new Exception("Extensão não permitida");
+
+                if (!Directory.Exists(physicalPath))
+                    Directory.CreateDirectory(physicalPath);
+
+                if (!Directory.Exists(physicalPath))
+                    throw new Exception($"Diretório {physicalPath} não existe!");
+
+                string fileName = $"{Guid.NewGuid()}{extension}";
+
+                string filePath = Path.Combine(physicalPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    arquivoBinario.CopyTo(stream);
+                }
+                return fileName;
+            }
+            else
+            {
+                throw new Exception("Foto não anexada");
             }
         }
     }

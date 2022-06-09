@@ -4,7 +4,7 @@
 
     GlobalMask.carregarMascaras = function () {
         $('.date').mask('00/00/0000');
-        $('.time').mask('00:00:00');
+        $('.time').mask('00:00');
         $('.date_time').mask('00/00/0000 00:00:00');
         $('.cep').mask('00.000-000');
         $('.phone').mask('0000-0000');
@@ -44,7 +44,14 @@
             format: 'dd/mm/yyyy',
             autoclose: true,
             language: 'pt-BR',
-            todayHighlight: true
+            todayHighlight: true,
+            startDate: new Date()
+        });
+
+        $('.timepicker').timepicker({
+            defaultTime: false,
+            minuteStep: 1,
+            showMeridian: false
         });
 
     };

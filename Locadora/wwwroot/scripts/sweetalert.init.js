@@ -26,7 +26,7 @@
 			$("#sal-basic").on("click",function(){
 				swal({
 					title: "Here's a message!",
-					confirmButtonColor: '#004f6c'
+					confirmButtonColor: '#b9430a'
 				});
 				return false;
 			});
@@ -37,7 +37,7 @@
 				swal({
 					title: "Here's a message!",
 					text: "It's pretty, isn't it?",
-					confirmButtonColor: '#004f6c'
+					confirmButtonColor: '#b9430a'
 				});
 				return false;
 			});
@@ -49,7 +49,7 @@
 					title: "Good job!",
 					text: "You clicked the button!",
 					type: 'success',
-					confirmButtonColor: '#004f6c'
+					confirmButtonColor: '#b9430a'
 				});
 				return false;
 			});
@@ -74,7 +74,7 @@
 							title : "Deleted!", 
 							text: "Your imaginary file has been deleted.", 
 							type: "success",
-							confirmButtonColor: '#004f6c',
+							confirmButtonColor: '#b9430a',
 						});
 					} else {  
 						swal({
@@ -95,7 +95,7 @@
 					title: "Sweet!",   
 					text: "Here's a custom image.",   
 					imageUrl: "http://placehold.it/80x80",
-					confirmButtonColor: '#004f6c',
+					confirmButtonColor: '#b9430a',
 				});
 				return false;
 			});
@@ -107,7 +107,7 @@
 					title: "HTML <small>Title</small>!",   
 					text: 'A custom <span style="color:#F8BB86">html<span> message.',   
 					html: true ,
-					confirmButtonColor: '#004f6c',
+					confirmButtonColor: '#b9430a',
 				});
 				return false;
 			});
@@ -134,7 +134,7 @@
 					closeOnConfirm: false,
 					animation: "slide-from-top",
 					inputPlaceholder: "Write something" ,
-					confirmButtonColor: '#004f6c',
+					confirmButtonColor: '#b9430a',
 				}, function(inputValue){
 					if (inputValue === false) return false;
 					if (inputValue === "") {
@@ -149,7 +149,7 @@
 							title: "Nice!",
 							text: "You wrote: " + inputValue,
 							type: 'success' ,
-							confirmButtonColor: '#004f6c',
+							confirmButtonColor: '#b9430a',
 						});
 				});
 				return false;
