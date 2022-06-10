@@ -13,13 +13,17 @@
                 <th>Documento exigido</th>
                 <th>Assistência</th>
                 <th>Documento anexado</th>
-                <th>Ação</th>
+
+                @if (!Model.Finalizada)
+                {
+                    <th>Ação</th>
+                }
             </tr>
         </thead>
         <tbody>
 
             <tr class="active">
-                <td>Documento 01 - Documento de Identificação</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeIdentificacaoGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Documento de Identificação</td>
                 <td>
                     Nenhuma
                 </td>
@@ -33,37 +37,43 @@
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeIdentificacao')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeIdentificacao')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
             <tr>
-                <td>Documento 02 - Comprovante de Endereço</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeComprovanteDeEnderecoGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Comprovante de Endereço</td>
                 <td>
                     Nenhuma
                 </td>
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeComprovanteDeEnderecoGet))
                     {
-                    <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeComprovanteDeEnderecoGet}")">Visualizar</a>
+                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeComprovanteDeEnderecoGet}")">Visualizar</a>
                     }
                     else
                     {
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
             <tr class="active">
-                <td>Documento 03 - Contrato de locação</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeContratoGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Contrato de locação</td>
                 <td>
                     <a target="_blank" href="#">Baixar modelo</a>
                 </td>
@@ -78,15 +88,18 @@
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeContrato')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeContrato')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
             <tr>
-                <td>Documento 04 - Nada Consta DETRAN</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeNadaConstaDetranGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Nada Consta DETRAN</td>
                 <td>
                     <a target="_blank" href="https://consulta.detran.ro.gov.br/CentralDeConsultasInternet/Internet/Habilitacao/ConsultaProcesso.asp">Acessar serviço</a>
                 </td>
@@ -100,15 +113,18 @@
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
             <tr class="active">
-                <td>Documento 05 - Nada Consta Criminal</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeNadaConstaCriminalGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Nada Consta Criminal</td>
                 <td>
                     <a target="_blank" href="https://webapp.tjro.jus.br/certidaoonline/pages/cnpg.xhtml">Acessar serviço</a>
                 </td>
@@ -122,15 +138,18 @@
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
             <tr>
-                <td>Documento 06 - Documento de Checklist de Retirada</td>
+                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeCheckListSaidaGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Documento de Checklist de Retirada</td>
                 <td>
                     <a target="_blank" href="#">Baixar modelo</a>
                 </td>
@@ -144,13 +163,23 @@
                         @Html.Raw("Nenhum documento anexado");
                     }
                 </td>
-                <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeCheckListSaida')">
-                        <i class="fa fa-paperclip" aria-hidden="true"></i>
-                    </a>
-                </td>
+                @if (!Model.Finalizada)
+                {
+                    <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeCheckListSaida')">
+                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                }
             </tr>
 
         </tbody>
     </table>
 </div>
+
+@if (Model.ValidarDocumentacaoRetirada() && !Model.Finalizada)
+{
+    <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light" onclick="javascript:void(0)">Finalizar</button>
+    </div>
+}

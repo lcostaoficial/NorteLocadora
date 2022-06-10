@@ -7,34 +7,46 @@
     <hr class="my-4">
 </div>
 
-<div class="form-group col-md-2">
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.Marca) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.Marca, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Marca)
 </div>
 
-<div class="form-group col-md-4">
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.Modelo) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.Modelo, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Modelo)
 </div>
 
-<div class="form-group col-md-2">
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.AnoDeModelo) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.AnoDeModelo, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.AnoDeModelo)
 </div>
 
-<div class="form-group col-md-2">
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.AnoDeFabricacao) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.AnoDeFabricacao, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.AnoDeFabricacao)
 </div>
 
-<div class="form-group col-md-2">
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.Placa) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.Placa, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Placa)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Cor) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Cor, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Cor)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Renavam) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Renavam, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Renavam)
 </div>
 
 @if (Model != null)
@@ -45,14 +57,14 @@
     </div>
 
     <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar alterações</button>
+        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar</button>
         <button onclick="$('#modalAnexarFoto').modal('show')" type="button" class="btn btn-success btn-sm waves-effect waves-light">Incluir fotos</button>
     </div>
 }
 else
 {
     <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar alterações</button>
+        <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Salvar</button>
     </div>
 }
 

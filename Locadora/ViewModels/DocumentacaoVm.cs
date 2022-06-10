@@ -39,6 +39,31 @@ namespace Locadora.ViewModels
         public IFormFile DocumentoDeComprovanteDeEndereco { get; set; }
         public string DocumentoDeComprovanteDeEnderecoGet { get; private set; }
 
+        public bool Finalizada { get; set; }
+
+        public bool ValidarDocumentacaoRetirada()
+        {
+            if (string.IsNullOrEmpty(DocumentoDeContratoGet))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeNadaConstaDetranGet))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeNadaConstaCriminalGet))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeCheckListSaidaGet))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeIdentificacaoGet))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeComprovanteDeEnderecoGet))
+                return false;
+
+            return true;
+        }
+
         public void IncluirRotasSaida(string contrato, string ndConstaDetran, string ndConstaCriminal, string docCheckListaSaida, string docIdentificacao, string comprovanteEndereco)
         {
             DocumentoDeContratoGet = contrato;

@@ -68,6 +68,8 @@ namespace Locadora.Controllers
 
                 documentacaoVm.LocacaoId = loc.Id;
 
+                documentacaoVm.Finalizada = loc.Finalizada;
+
                 return PartialView("_Documentacao", documentacaoVm);
             }
             else
@@ -215,6 +217,36 @@ namespace Locadora.Controllers
 
                 _db.SaveChanges();
                 return Json(new { Success = "Documento anexado com sucesso!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Error = e.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult FinalizarLocacao(int locacaoId)
+        {
+            try
+            {
+                var locacao = _db.Locacoes.Find(locacaoId);
+
+                var locacaoValidada = locacao.ValidarCamposLocacao();
+
+                var documentacaoValidada = locacao.ValidarDocumentacaoRetirada();
+
+                if (locacaoValidada && documentacaoValidada)
+                {
+                    locacao.FinalizarLocacao();
+
+                    _db.SaveChanges();
+
+                    return Json(new { Success = "Locação finalizada com sucesso!", Model = locacao });
+                }
+                else
+                {
+                    throw new Exception("Não foi possível finalizar a locação!");
+                }
             }
             catch (Exception e)
             {

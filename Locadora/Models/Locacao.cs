@@ -81,7 +81,7 @@ namespace Locadora.Models
         public string DocumentoDeCheckListSaida { get; set; }
         public string DocumentoDeCheckListChegada { get; set; }
         public string DocumentoDeIdentificacao { get; set; }
-        public string DocumentoDeComprovanteDeEndereco { get; set; }        
+        public string DocumentoDeComprovanteDeEndereco { get; set; }      
 
         public int? VeiculoId { get; set; }
         public Veiculo Veiculo { get; set; }
@@ -93,7 +93,12 @@ namespace Locadora.Models
 
         public bool Devolvido { get; set; }
 
-        public bool ValidarCampos()
+        public void FinalizarLocacao()
+        {
+            Finalizada = true;
+        }
+
+        public bool ValidarCamposLocacao()
         {
             if (DataRetirada == null)
                 return false;
@@ -113,6 +118,29 @@ namespace Locadora.Models
             return true;
         }
 
+        public bool ValidarDocumentacaoRetirada()
+        {
+            if (string.IsNullOrEmpty(DocumentoDeContrato))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeNadaConstaDetran))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeNadaConstaCriminal))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeCheckListSaida))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeIdentificacao))
+                return false;
+
+            if (string.IsNullOrEmpty(DocumentoDeComprovanteDeEndereco))
+                return false;
+
+            return true;
+        }
+
         public bool AtualizarLocacao(Locacao model)
         {
             DataRetirada = model.DataRetirada;     
@@ -121,7 +149,7 @@ namespace Locadora.Models
             QuilometragemAtual = model.QuilometragemAtual;
             ObservacoesDeSaida = model.ObservacoesDeSaida;
             VeiculoId = model.VeiculoId;  
-            return ValidarCampos();
+            return ValidarCamposLocacao();
         }
 
         public void AtualizarCliente(Locacao model)

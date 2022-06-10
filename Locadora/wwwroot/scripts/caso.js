@@ -47,6 +47,10 @@
         $("#icone-locacao").attr("class", "fa fa-check-circle text-success")
     };
 
+    Locacao.iconeDeCompletoDaDocumentacao = function () {
+        $("#icone-documentacao").attr("class", "fa fa-check-circle text-success")
+    };
+
     Locacao.pararCarregamento = function () {
         swal.close();
     };
@@ -388,6 +392,35 @@
                                 type: "success"
                             }, function () {
                                 Locacao.carregarDocumentacao(id);
+                            });
+                        }
+                        if (result.error) {
+                            swal("Mensagem", result.error, "warning");
+                        }
+                    },
+                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                        swal("Mensagem", errorThrown, "error");
+                    }
+                });
+            });
+
+
+            $(document).on("submit", "form#frmSalvarLocacaoComDocumentacao", function (e) {
+                e.preventDefault();
+                var id = $("form#frmSalvarLocacaoComDocumentacao #Id").val();
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr("action"),
+                    data: { locacaoId: id },
+                    success: function success(result) {
+                        if (result.success) {
+                            swal({
+                                title: "Mensagem",
+                                text: result.success,
+                                type: "success"
+                            }, function () {
+                                Locacao.carregarDocumentacao(id);
+                                Locacao.iconeDeCompletoDaDocumentacao();
                             });
                         }
                         if (result.error) {

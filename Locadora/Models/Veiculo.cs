@@ -20,6 +20,7 @@ namespace Locadora.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Marca { get; set; }
 
+
         [Display(Name = "Modelo")]
         [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
         [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]
@@ -34,6 +35,18 @@ namespace Locadora.Models
         [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Placa { get; set; }
+
+        [Display(Name = "Cor")]
+        [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
+        [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public string Cor { get; set; }
+
+        [Display(Name = "Renavam")]
+        [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
+        [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public string Renavam { get; set; }
 
         [Display(Name = "Ano de modelo")]
         [Required(ErrorMessage = "Campo obrigatório")]

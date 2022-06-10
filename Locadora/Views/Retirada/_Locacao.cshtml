@@ -5,7 +5,7 @@
     <hr class="my-4">
 </div>
 
-@if (!Model.ValidarCampos())
+@if (!Model.ValidarCamposLocacao())
 {
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataRetirada) <label style="color: red" title="Este campo é obrigatório">*</label>
@@ -94,7 +94,7 @@ else
     </div>
 }
 
-@if (!Model.ValidarCampos())
+@if (!Model.ValidarCamposLocacao())
 {
     <div class="form-group col-md-12" style="margin-bottom: 0px">
         <h4>Veículos disponíveis</h4>
@@ -111,7 +111,7 @@ else
 
 <div data-url="@Url.Action("ObterVeiculosDisponiveis", "Retirada")" id="veiculos-disponiveis" class="form-group col-md-12"></div>
 
-@if (!Model.ValidarCampos())
+@if (!Model.ValidarCamposLocacao())
 {
     <div class="form-group col-md-12">
         <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light" onclick="javascript:void(0)">Salvar</button>

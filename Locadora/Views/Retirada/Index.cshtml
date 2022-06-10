@@ -109,7 +109,7 @@
             </div>
 
             <div id="documentacao" class="tab-pane fade disabled" data-url="@Url.Action("Documentacao", "Retirada")">
-                @using (Html.BeginForm("SalvarDocumentacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDocumentacao" }))
+                @using (Html.BeginForm("FinalizarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDocumentacao" }))
                 {
                     <input type="hidden" id="Step" name="Step" value="Documentacao" />
 
