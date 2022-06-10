@@ -32,6 +32,23 @@ namespace Locadora.Models
         [Display(Name = "Observações de chegada")]
         public string ObservacoesDeChegada { get; set; }
 
+        public bool LocacaoAtrasada
+        {
+            get
+            {
+                if (DataPrevistaDeDevolucao.HasValue)
+                {
+                    if (DataPrevistaDeDevolucao.Value < DateTime.Now)
+                        return true;
+                    return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         [NotMapped]
         public TimeSpan HorarioDeSaida
         {

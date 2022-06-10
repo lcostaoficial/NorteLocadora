@@ -1,0 +1,36 @@
+﻿@using Locadora.Models
+@model IEnumerable<Locacao>
+
+<table id="example" class="table table-responsive table-striped table-bordered display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Protocolo</th>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>Data Prevista</th>
+            <th>Locação atrasada</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Cliente.Cpf</td>
+                <td>@item.Cliente.Nome</td>
+                <td>@item.DataPrevistaDeDevolucao.Value.ToShortDateString()</td>
+                <td>@(item.LocacaoAtrasada ? "Sim" : "Nâo")</td>
+                
+                <td class="text-nowrap" width="10">
+                    <a class="btn btn-circle btn-info btn-sm" title="Editar" href="@Url.Action("Editar", new { id = item.ClienteId })" data-togle="tooltip">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                    <a id="btn-excluir" class="btn btn-circle btn-danger btn-sm" title="Excluir" btn-sm" href="#" data-url="@Url.Action("Remover", new { id = item.ClienteId })" data-togle="tooltip">
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
