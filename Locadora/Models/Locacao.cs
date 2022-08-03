@@ -19,11 +19,13 @@ namespace Locadora.Models
         [Display(Name = "Preço combinado")]
         public decimal? PrecoCombinado { get; set; }
 
+        [Display(Name = "Data de Devolução")]
         public DateTime? DataDeDevolucao { get; set; }
 
         [Display(Name = "KM de Saída")]
         public int? QuilometragemAtual { get; set; }
 
+        [Display(Name = "KM de Chegada")]
         public int? QuilometragemDeDevolucao { get; set; }
 
         [Display(Name = "Observações de saída")]
@@ -98,7 +100,7 @@ namespace Locadora.Models
         public string DocumentoDeCheckListSaida { get; set; }
         public string DocumentoDeCheckListChegada { get; set; }
         public string DocumentoDeIdentificacao { get; set; }
-        public string DocumentoDeComprovanteDeEndereco { get; set; }      
+        public string DocumentoDeComprovanteDeEndereco { get; set; }
 
         public int? VeiculoId { get; set; }
         public Veiculo Veiculo { get; set; }
@@ -115,6 +117,11 @@ namespace Locadora.Models
             Finalizada = true;
         }
 
+        public void FinalizarDevolucao()
+        {
+            Devolvido = true;
+        }
+
         public bool ValidarCamposLocacao()
         {
             if (DataRetirada == null)
@@ -124,9 +131,6 @@ namespace Locadora.Models
                 return false;
 
             if (PrecoCombinado == null)
-                return false;
-
-            if (QuilometragemAtual == null)
                 return false;
 
             if (VeiculoId == null || VeiculoId == 0)
@@ -158,15 +162,34 @@ namespace Locadora.Models
             return true;
         }
 
+        public bool ValidarCamposDevolucaoLocacao()
+        {
+            if (DataDeDevolucao == null)
+                return false;
+
+            if (string.IsNullOrEmpty(ObservacoesDeChegada))
+                return false;
+
+            return true;
+        }
+
         public bool AtualizarLocacao(Locacao model)
         {
-            DataRetirada = model.DataRetirada;     
+            DataRetirada = model.DataRetirada;
             DataPrevistaDeDevolucao = model.DataPrevistaDeDevolucao;
             PrecoCombinado = model.PrecoCombinado;
             QuilometragemAtual = model.QuilometragemAtual;
             ObservacoesDeSaida = model.ObservacoesDeSaida;
-            VeiculoId = model.VeiculoId;  
+            VeiculoId = model.VeiculoId;
             return ValidarCamposLocacao();
+        }
+
+        public bool AtualizarDevolucaoDaLocacao(Locacao model)
+        {
+            DataDeDevolucao = model.DataDeDevolucao;
+            QuilometragemAtual = model.QuilometragemAtual;
+            ObservacoesDeChegada = model.ObservacoesDeChegada;
+            return ValidarCamposDevolucaoLocacao();
         }
 
         public void AtualizarCliente(Locacao model)

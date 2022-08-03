@@ -1,0 +1,44 @@
+﻿@model Locadora.Models.Locacao
+
+<div class="form-group col-md-12" style="margin-bottom: 0px">
+    <h4>Protocolo: @Model.Id</h4>
+    <hr class="my-4">
+</div>
+
+<div class="col-md-12 col-xs-12 margin-bottom-30">
+    <a href="#" class="prj-item">
+        <div class="top-project-section">
+            <div class="project-icon">
+                <img height="170" width="184" src="@Url.Content(Model.Veiculo.FotoPrincipal)" alt="">
+            </div>
+            <h3>@Model.Veiculo.Marca - @Model.Veiculo.Modelo - @Model.Veiculo.AnoDeModelo</h3>
+            <div class="meta">
+                <p class="author">
+                    Placa: <span>@Model.Veiculo.Placa</span>
+                </p>
+            </div>
+        </div>       
+    </a>
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.DataDeDevolucao) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.DataDeDevolucao, new { @class = "form-control date datepicker-basic", autocomplete = "off" })
+    @Html.ValidationMessageFor(m => m.DataDeDevolucao)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.QuilometragemDeDevolucao) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.QuilometragemDeDevolucao, new { @class = "form-control", type = "number" })
+    @Html.ValidationMessageFor(m => m.QuilometragemDeDevolucao)
+</div>
+
+<div class="form-group col-md-12">
+    @Html.LabelFor(m => m.ObservacoesDeChegada)
+    @Html.TextAreaFor(m => m.ObservacoesDeChegada, new { @class = "form-control", type = "number" })
+    @Html.ValidationMessageFor(m => m.ObservacoesDeChegada)
+</div>
+
+<div class="form-group col-md-12">
+    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light" onclick="javascript:void(0)">Salvar</button>
+</div>

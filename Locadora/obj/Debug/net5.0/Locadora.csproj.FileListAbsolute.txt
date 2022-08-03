@@ -408,3 +408,5 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.csproj.CopyComplete
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Locadora.genruntimeconfig.cache
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\Index.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\_Form.cshtml.g.cs

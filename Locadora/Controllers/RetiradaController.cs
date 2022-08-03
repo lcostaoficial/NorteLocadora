@@ -185,7 +185,7 @@ namespace Locadora.Controllers
                     throw new Exception("Identificador do arquivo não encontrado!");
 
                 if (arquivoBinario == null) throw new Exception("Por favor anexe o arquivo!");
-             
+
                 var rota = AnexarDocumento(arquivoBinario, id);
 
                 var locacao = _db.Locacoes.Find(id);
@@ -223,8 +223,7 @@ namespace Locadora.Controllers
                 return Json(new { Error = e.Message });
             }
         }
-
-        [HttpPost]
+      
         public ActionResult FinalizarLocacao(int locacaoId)
         {
             try
@@ -239,9 +238,14 @@ namespace Locadora.Controllers
                 {
                     locacao.FinalizarLocacao();
 
+                    var veiculo = _db.Veiculos.Find(locacao.VeiculoId);
+
+                    if (locacao.QuilometragemAtual.HasValue)
+                        veiculo.AtualizarQuilometragem(locacao.QuilometragemAtual.Value);
+
                     _db.SaveChanges();
 
-                    return Json(new { Success = "Locação finalizada com sucesso!", Model = locacao });
+                    return Json(new { Success = "Locação finalizada com sucesso!" });
                 }
                 else
                 {

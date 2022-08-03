@@ -1,0 +1,55 @@
+﻿@model Locadora.Models.Locacao
+@{
+    ViewBag.Title = "Devolução de veículo";
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="~/plugin/bootstrap-select/css/bootstrap-select.css" />
+    <style>
+        .box-content.card .dropdown {
+            top: 0px !important;
+        }
+    </style>
+
+    <!-- FullCalendar -->
+    <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.print.css" media='print'>
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="~/plugin/datepicker/css/bootstrap-datepicker.min.css">
+
+    <!-- Timepicker -->
+    <link href="~/plugin/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+}
+
+<div class="row small-spacing">
+    <div class="col-lg-12 col-xs-12">
+        <div class="box-content card white">
+            <h4 class="box-title">@ViewBag.Title</h4>
+            <div class="card-content">
+                @using (Html.BeginForm("Novo", "Devolucao", FormMethod.Post, new { @class = "form" }))
+                {
+                    @Html.HiddenFor(m => m.Id)
+                    @await Html.PartialAsync("_Form")
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{   
+    <!-- FullCalendar -->
+    <script src="~/plugin/moment/moment.js"></script>
+    <script src="~/plugin/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/plugin/fullcalendar/locale/pt-br.js"></script>
+
+    <!-- Datepicker -->
+    <script src="~/plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugin/datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <!-- Timepicker -->
+    <script src="~/plugin/timepicker/bootstrap-timepicker.min.js"></script>
+
+}

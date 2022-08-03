@@ -6396,10 +6396,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nuget.tjmt.jus.br/repository/nuget/": {},
-        "http://proget.tjmt.jus.br/nuget/nuget": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://nexus.tjmt.jus.br/repository/nuget-group/": {}
+        "https://nuget.okd.local/repository/nuget-group": {}
       },
       "frameworks": {
         "net5.0": {

@@ -384,6 +384,8 @@
                     contentType: false,
                     processData: false,
                     success: function success(result) {
+                        
+
                         if (result.success) {
                             $("#modalAnexarDocumento").modal("hide");
                             swal({
@@ -409,9 +411,10 @@
                 e.preventDefault();
                 var id = $("form#frmSalvarLocacaoComDocumentacao #Id").val();
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     url: $(this).attr("action"),
                     data: { locacaoId: id },
+                    dataType: "json",
                     success: function success(result) {
                         if (result.success) {
                             swal({

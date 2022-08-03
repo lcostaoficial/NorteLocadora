@@ -56,7 +56,16 @@ namespace Locadora.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public int AnoDeFabricacao { get; set; }
 
+        [Display(Name = "Quilometragem")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public int Quilometragem { get; set; }
+
         public bool Ativo { get; set; }
+
+        public void AtualizarQuilometragem(int quilometragemAtual)
+        {
+            Quilometragem = quilometragemAtual;
+        }
 
         public void Ativar()
         {
@@ -75,6 +84,7 @@ namespace Locadora.Models
             Placa = model.Placa;
             AnoDeModelo = model.AnoDeModelo;
             AnoDeFabricacao = model.AnoDeFabricacao;
+            Quilometragem = model.Quilometragem;
         }
 
         public ICollection<FotoDeGaragem> FotosDeGaragem { get; set; }

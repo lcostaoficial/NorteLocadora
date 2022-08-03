@@ -23,11 +23,8 @@
                 <td>@(item.LocacaoAtrasada ? "Sim" : "Nâo")</td>
                 
                 <td class="text-nowrap" width="10">
-                    <a class="btn btn-circle btn-info btn-sm" title="Editar" href="@Url.Action("Editar", new { id = item.ClienteId })" data-togle="tooltip">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </a>
-                    <a id="btn-excluir" class="btn btn-circle btn-danger btn-sm" title="Excluir" btn-sm" href="#" data-url="@Url.Action("Remover", new { id = item.ClienteId })" data-togle="tooltip">
-                        <i class="fa fa-close" aria-hidden="true"></i>
+                    <a class="btn btn-circle btn-info btn-sm" title="Devolver" href="@Url.Action("Novo", new { id = item.Id })" data-togle="tooltip">
+                        <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
                     </a>
                 </td>
             </tr>

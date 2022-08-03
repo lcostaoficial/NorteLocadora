@@ -308,6 +308,9 @@ namespace Locadora.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("varchar(250)");
 
+                    b.Property<int>("Quilometragem")
+                        .HasColumnType("int");
+
                     b.Property<string>("Renavam")
                         .IsRequired()
                         .HasMaxLength(255)

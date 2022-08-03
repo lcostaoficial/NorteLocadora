@@ -49,6 +49,12 @@
     @Html.ValidationMessageFor(m => m.Renavam)
 </div>
 
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Quilometragem) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Quilometragem, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Quilometragem)
+</div>
+
 @if (Model != null)
 {
     <div class="form-group col-md-12" style="margin-bottom: 0px">

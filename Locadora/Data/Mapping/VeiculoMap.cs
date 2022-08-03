@@ -17,6 +17,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.AnoDeModelo).IsRequired();
             builder.Property(X => X.Cor).IsRequired();
             builder.Property(X => X.Renavam).IsRequired();
+            builder.Property(X => X.Quilometragem).IsRequired();
             builder.Property(X => X.Ativo).IsRequired();
 
             builder.Property(x => x.TipoDeVeiculo).HasConversion(x => x.ToString(), x => (TipoDeVeiculo)Enum.Parse(typeof(TipoDeVeiculo), x));

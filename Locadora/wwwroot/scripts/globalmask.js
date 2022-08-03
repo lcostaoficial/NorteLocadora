@@ -48,6 +48,13 @@
             startDate: new Date()
         });
 
+        $('.datepicker-basic').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            language: 'pt-BR',
+            todayHighlight: true            
+        });
+
         $('.timepicker').timepicker({
             defaultTime: false,
             minuteStep: 1,
