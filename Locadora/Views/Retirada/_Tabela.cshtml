@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Locacao>
+
+<table id="example" class="table table-responsive table-striped table-bordered display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Protocolo</th>
+            <th>Cliente</th>
+            <th>Situação</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Cliente.Nome</td>
+                <td>
+                    @{
+                        if (item.Finalizada && !item.Devolvido)
+                        {
+                            @Html.Raw("<b class='text-warning'>Finalizado</b>")
+                        }
+
+                        if (item.Finalizada && item.Devolvido)
+                        {
+                            @Html.Raw("<b class='text-success'>Devolvido</b>")
+                        }
+
+                        if (!item.Finalizada && !item.Devolvido)
+                        {
+                            @Html.Raw("<b class='text-danger'>Pendente</b>")
+                        }
+                    }
+                </td>
+                <td class="text-nowrap" width="10">
+                    <a class="btn btn-circle btn-info btn-sm" title="Editar" href="@Url.Action("Editar", new { id = item.Id })" data-togle="tooltip">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

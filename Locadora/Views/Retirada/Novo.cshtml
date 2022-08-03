@@ -1,0 +1,130 @@
+﻿@model Locacao
+@{
+    ViewBag.Title = "Retirada de veículo";
+    var locacaoId = ViewBag.LocacaoId ?? 0;
+    var veiculoId = ViewBag.VeiculoId ?? 0;
+    var habilitarDocumentacao = ViewBag.HabilitarDocumentacaoParcial ?? false;
+    var habilitarDocumentacaoCompleta = ViewBag.HabilitarDocumentacaoCompleta ?? false;
+    var habilitarLocacao = ViewBag.HabilitarLocacao ?? false;
+}
+
+@section styles
+{
+    <link rel="stylesheet" href="~/plugin/bootstrap-select/css/bootstrap-select.css" />
+    <style>
+        .box-content.card .dropdown {
+            top: 0px !important;
+        }
+    </style>
+
+    <!-- FullCalendar -->
+    <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="~/plugin/fullcalendar/fullcalendar.print.css" media='print'>
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="~/plugin/datepicker/css/bootstrap-datepicker.min.css">
+
+    <!-- Timepicker -->
+    <link href="~/plugin/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    <script src="~/plugin/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/plugin/bootstrap-select/js/i18n/defaults-pt_BR.js"></script>
+    <script src="~/plugin/pdfmake/pdfmake.js"></script>
+    <script src="~/plugin/pdfmake/vfs_fonts.js"></script>
+    <script src="~/scripts/caso.js"></script>
+    <script src="~/scripts/impressao.js"></script>
+    <script src="~/scripts/estrangeiro.js"></script>
+
+    <!-- Jquery UI -->
+    <script src="~/plugin/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/plugin/jquery-ui/jquery.ui.touch-punch.min.js"></script>
+
+    <!-- FullCalendar -->
+    <script src="~/plugin/moment/moment.js"></script>
+    <script src="~/plugin/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/plugin/fullcalendar/locale/pt-br.js"></script>
+
+    <!-- Datepicker -->
+    <script src="~/plugin/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/plugin/datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <!-- Timepicker -->
+    <script src="~/plugin/timepicker/bootstrap-timepicker.min.js"></script>
+
+}
+
+@section modal
+{
+    @await Html.PartialAsync("_AnexarDocumento")
+}
+
+<div class="col-md-12 col-xs-12">
+    <div class="box-content">
+        <h4 class="box-title">@ViewBag.Title</h4>
+        <ul class="nav nav-tabs">
+            <li id="menu-dadospessoais" class="active" data-locacao-id="@locacaoId">
+                <a data-toggle="tab" href="#dadospessoais">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-dados-pessoais" class="fa fa-circle-o text-warning"></i> Dados Pessoais
+                </a>
+            </li>
+            <li id="menu-locacao" class="disabled" data-veiculo-id="@veiculoId" data-habilitar-locacao="@habilitarLocacao.ToString().ToLower()">
+                <a data-toggle="tab" href="#locacao">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-locacao" class="fa fa-circle-o text-warning"></i>  Locação
+                </a>
+            </li>
+            <li id="menu-documentacao" class="disabled" data-habilitar-documentacao-completa="@habilitarDocumentacaoCompleta.ToString().ToLower()">
+                <a data-toggle="tab" href="#documentacao">
+                    <i style="cursor: pointer" title="Aguardando preenchimento dos dados" id="icone-documentacao" class="fa fa-circle-o text-warning"></i>  Documentação
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+            <div id="dadospessoais" class="tab-pane fade in active" data-url="@Url.Action("DadosPessoais", "Retirada")">
+                <div class="row">
+                    @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDadosPessoais" }))
+                    {
+                        <input type="hidden" id="Step" name="Step" value="DadosPessoais" />
+
+                        <span class="identificador-locacao">
+                            <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                        </span>
+
+                        <input type="hidden" id="ClienteId" name="ClienteId" value="@(Model != null ? Model.ClienteId : 0)" />
+
+                        <div id="frm-conteudo-dadospessoais"></div>
+                    }
+                </div>
+            </div>
+
+            <div id="locacao" class="tab-pane fade disabled" data-url="@Url.Action("Locacao", "Retirada")">
+                @using (Html.BeginForm("SalvarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacao" }))
+                {
+                    <input type="hidden" id="Step" name="Step" value="Locacao" />
+
+                    <span class="identificador-locacao">
+                        <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                    </span>
+
+                    <div id="frm-conteudo-locacao" class="row"></div>
+                }
+            </div>
+
+            <div id="documentacao" class="tab-pane fade disabled" data-url="@Url.Action("Documentacao", "Retirada")">
+                @using (Html.BeginForm("FinalizarLocacao", "Retirada", FormMethod.Post, new { @class = "form", id = "frmSalvarLocacaoComDocumentacao" }))
+                {
+                    <input type="hidden" id="Step" name="Step" value="Documentacao" />
+
+                    <span class="identificador-locacao">
+                        <input type="hidden" id="Id" name="Id" value="@(Model != null ? Model.Id : 0)" />
+                    </span>
+
+                    <div id="frm-conteudo-documentacao" class="row"></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

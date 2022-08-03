@@ -162,6 +162,39 @@ namespace Locadora.Models
             return true;
         }
 
+        public bool PossuiAlgumaDocumentacaoAnexada()
+        {
+            if (!string.IsNullOrEmpty(DocumentoDeContrato))
+                return true;
+
+            if (!string.IsNullOrEmpty(DocumentoDeNadaConstaDetran))
+                return true;
+
+            if (!string.IsNullOrEmpty(DocumentoDeNadaConstaCriminal))
+                return true;
+
+            if (!string.IsNullOrEmpty(DocumentoDeCheckListSaida))
+                return true;
+
+            if (!string.IsNullOrEmpty(DocumentoDeIdentificacao))
+                return true;
+
+            if (!string.IsNullOrEmpty(DocumentoDeComprovanteDeEndereco))
+                return true;
+
+            return false;
+        }
+
+        public bool PossuiLocacaoPreenchidaCompleta()
+        {
+            return ValidarCamposLocacao();
+        }
+
+        public bool PossuiDocumentacaoPreenchidaCompleta()
+        {
+            return ValidarDocumentacaoRetirada();
+        }
+
         public bool ValidarCamposDevolucaoLocacao()
         {
             if (DataDeDevolucao == null)

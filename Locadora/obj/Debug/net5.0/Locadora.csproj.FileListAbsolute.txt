@@ -23,8 +23,6 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\Index.csh
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Funcionario\_Tabela.cshtml.g.cs
-C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\Index.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_AnexarDocumento.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_DadosPessoais.cshtml.g.cs
@@ -410,3 +408,6 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\Index.cshtm
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\_Tabela.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Quadro\Index.cshtml.g.cs

@@ -101,6 +101,9 @@
                 if (carregarVeiculosDisponiveis === true) {
                     Locacao.carregarVeiculosDisponiveis(veiculoId);
                 }
+                else {
+                    Locacao.carregarVeiculosDisponiveis();
+                }
             }
         });
     };
@@ -249,15 +252,37 @@
 
     Locacao.inicializar = function () {
         var locacaoId = $("#menu-dadospessoais").data("locacaoId");
+        var veiculoId = $("#menu-locacao").data("veiculoId");
+        var habilitarDocumentacaoCompleta = $("#menu-documentacao").data("habilitarDocumentacaoCompleta");
+        var habilitarLocacao = $("#menu-locacao").data("habilitarLocacao");
+
         if (locacaoId === 0) {
             Locacao.dadosPessoais();
         }
         else {
+            Locacao.iconeDeCompletoDosDadosPessoais();                 
+
+            if (habilitarDocumentacaoCompleta === true) {
+                Locacao.iconeDeCompletoDaDocumentacao();
+            }
+
+            if (habilitarLocacao === true) {
+                Locacao.iconeDeCompletoDaLocacao();
+                Locacao.habilitarEnvioDocumentacao();
+                Locacao.carregarDocumentacao(locacaoId);
+            }
+
             Locacao.dadosPessoais(locacaoId);
             Locacao.desabilitarCpf();
             Locacao.habilitarEnvioLocacao();
-            //Locacao.carregarLocacao(locacaoId);
-            //Locacao.carregarVeiculosDisponiveis();
+
+            if (veiculoId === 0) {
+                Locacao.carregarLocacao(locacaoId, false, veiculoId);                
+            }
+            else {
+                Locacao.carregarLocacao(locacaoId, true, veiculoId);
+            }
+
         }
     };
 

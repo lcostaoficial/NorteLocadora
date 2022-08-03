@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Locadora.Controllers
 {
@@ -25,7 +26,24 @@ namespace Locadora.Controllers
 
         public IActionResult Index()
         {
+            var list = _db.Locacoes.Include(x => x.Cliente);
+            return View(list);
+        }
+
+        public IActionResult Novo()
+        {
             return View();
+        }
+
+        public IActionResult Editar(int id)
+        {
+            var locacao = _db.Locacoes.Include(x => x.Veiculo).FirstOrDefault(x => x.Id == id);
+            ViewBag.LocacaoId = id;
+            ViewBag.VeiculoId = locacao.VeiculoId;
+            ViewBag.HabilitarDocumentacaoParcial = locacao.PossuiAlgumaDocumentacaoAnexada() ? true :  false;
+            ViewBag.HabilitarDocumentacaoCompleta = locacao.PossuiDocumentacaoPreenchidaCompleta() ? true :  false;
+            ViewBag.HabilitarLocacao = locacao.PossuiLocacaoPreenchidaCompleta() ? true :  false;
+            return View("Novo", locacao);
         }
 
         public ActionResult DadosPessoais(int? locacaoId = 0)
@@ -150,6 +168,11 @@ namespace Locadora.Controllers
 
                 ActionResult AtualizarLocacao()
                 {
+                    var veiculosDisponiveis = _db.Veiculos.Any(x => x.Locacoes.All(x => x.Devolvido));
+
+                    if (!veiculosDisponiveis)
+                        throw new Exception("Nenhum veículo disponível para concluir a operação!");
+
                     var novo = _db.Locacoes.First(x => x.Id == model.Id);
                     var validacao = novo.AtualizarLocacao(model);
                     if (!validacao) throw new Exception("Preencha todos os campos corretamente!");
@@ -271,13 +294,13 @@ namespace Locadora.Controllers
             }
         }
 
-        public ActionResult ObterVeiculosDisponiveis(int? veiculoId = 0)
+        public async Task<ActionResult> ObterVeiculosDisponiveis(int? veiculoId = 0)
         {
             ViewBag.VeiculoId = veiculoId;
 
             if (veiculoId == 0)
             {
-                var veiculosDisponiveis = _db.Veiculos.Include(x => x.FotosDeGaragem).Where(x => x.Locacoes.All(x => x.Devolvido));
+                var veiculosDisponiveis = await _db.Veiculos.Include(x => x.FotosDeGaragem).Where(x => x.Locacoes.All(x => x.Devolvido)).ToListAsync();
                 return PartialView("_VeiculosDisponiveis", veiculosDisponiveis);
             }
             else
