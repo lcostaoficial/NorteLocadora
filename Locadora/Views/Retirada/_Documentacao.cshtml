@@ -75,7 +75,7 @@
             <tr class="active">
                 <td>@(!string.IsNullOrEmpty(Model.DocumentoDeContratoGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Contrato de locação</td>
                 <td>
-                    <a target="_blank" href="#">Baixar modelo</a>
+                    <a href="#">Baixar modelo</a>
                 </td>
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeContratoGet))
@@ -151,7 +151,7 @@
             <tr>
                 <td>@(!string.IsNullOrEmpty(Model.DocumentoDeCheckListSaidaGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Documento de Checklist de Retirada</td>
                 <td>
-                    <a target="_blank" href="#">Baixar modelo</a>
+                    <a href="#">Baixar modelo</a>
                 </td>
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeCheckListSaidaGet))

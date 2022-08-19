@@ -411,3 +411,8 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Devolucao\_Form.cshtm
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Retirada\_Tabela.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Quadro\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\_Tabela.cshtml.g.cs

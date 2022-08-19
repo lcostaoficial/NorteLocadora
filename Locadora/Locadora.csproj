@@ -19,4 +19,11 @@
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Multa\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

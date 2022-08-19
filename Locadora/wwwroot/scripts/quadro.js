@@ -27,7 +27,11 @@
                     if (eventObj.author) {
                         $el.find(".fc-title").prepend("<i style='cursor: help' title='Responsável: " + eventObj.author + "' class='fa fa-" + "user" + "'></i> ");
                     }
-                },             
+                },  
+
+                eventClick: function (info) {
+                    window.location.replace("/Retirada/Editar/" + info.id);
+                },
 
                 header: {
                     left: 'prev,next today',
@@ -45,14 +49,14 @@
                 editable: false,
                 eventLimit: true,
                 navLinks: true,
-                droppable: false,       
+                droppable: false,      
 
                 events: {
-                    url: $("#calendar").data("url") + "?casoId=" + $("#CasoId").val(),
-                    error: function () {
-                        Caso.pararCarregamento();
-                        alert('erro');
-                    }
+                    url: $("#calendar").data("url")
+                    //error: function () {
+                    //    caso.pararcarregamento();
+                    //    alert('erro');
+                    //}
                 }
             });
         }
