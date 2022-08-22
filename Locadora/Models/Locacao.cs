@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,6 +34,8 @@ namespace Locadora.Models
 
         [Display(Name = "Observações de chegada")]
         public string ObservacoesDeChegada { get; set; }
+
+        public ICollection<Acessorio> Acessorios { get; set; }
 
         public bool LocacaoAtrasada
         {

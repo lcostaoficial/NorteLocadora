@@ -416,3 +416,8 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\Index.cshtml.g.
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Multa\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Acessorio\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Acessorio\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Acessorio\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Acessorio\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Acessorio\_Tabela.cshtml.g.cs
