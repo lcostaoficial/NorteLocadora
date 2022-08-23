@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Notificacao>
+
+<div id="notification-popup" class="notice-popup js__toggle" data-space="75">
+    <h2 class="popup-title">Notificações</h2>
+    <div class="content">
+        <ul class="notice-list">
+            @if (Model != null && Model.Any())
+            {
+
+                @foreach (var notificacao in Model)
+                {
+                    <li>
+                        <a href="#">
+                            <span class="avatar bg-@notificacao.Icone"><i class="fa fa-@notificacao.Icone"></i></span>
+                            <span class="name">Notificação</span>
+                            <span class="desc">@notificacao.Descricao</span>
+                            <span class="time">@notificacao.DataDeExibicao.ToShortDateString()</span>
+                        </a>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>
+                   <h3 class="text-center">Não há notificações</h3>
+                </li>
+            }
+        </ul>
+        <a href="#" class="notice-read-more">See more messages <i class="fa fa-angle-down"></i></a>
+    </div>
+</div>

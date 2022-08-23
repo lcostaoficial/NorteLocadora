@@ -26,6 +26,8 @@ namespace Locadora.Data
             modelBuilder.ApplyConfiguration(new MultaMap());
             modelBuilder.ApplyConfiguration(new VeiculoMap());
             modelBuilder.ApplyConfiguration(new AcessorioMap());
+            modelBuilder.ApplyConfiguration(new ManutencaoMap());
+            modelBuilder.ApplyConfiguration(new NotificacaoMap());
         }
     }
 }

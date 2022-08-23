@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Locadora.Models
 {
+    public enum TipoManutencao
+    {
+        Corretiva = 1,
+        Preventiva = 2
+    }
+
     public enum TipoDeVeiculo
     {
         Carro = 1,

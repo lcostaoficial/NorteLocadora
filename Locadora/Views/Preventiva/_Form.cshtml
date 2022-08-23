@@ -1,0 +1,42 @@
+﻿@model Locadora.Models.Manutencao
+
+@Html.AntiForgeryToken()
+
+<div class="form-group col-md-12" style="margin-bottom: 0px">
+    <h4>Preventivas</h4>
+    <hr class="my-4">
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.Data) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Data, new { @class = "form-control date datepicker-basic" })
+    @Html.ValidationMessageFor(m => m.Data)
+</div>
+
+<div class="form-group col-md-8">
+    @Html.LabelFor(m => m.VeiculoId) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.DropDownListFor(x => x.VeiculoId, new SelectList(ViewBag.Veiculos, "Id", "Placa"), "Selecione...", new { @class = "form-control selectpicker", data_live_search = "true" })
+    @Html.ValidationMessageFor(m => m.VeiculoId)
+</div>
+
+<div class="form-group col-md-12">
+    @Html.LabelFor(m => m.Descricao) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextAreaFor(m => m.Descricao, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Descricao)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Valor) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Valor, new { @class = "form-control money" })
+    @Html.ValidationMessageFor(m => m.Valor)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Quilometragem) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Quilometragem, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Quilometragem)
+</div>
+
+<div class="form-group col-md-12">
+    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light" onclick="javascript:void(0)">Salvar</button>
+</div>

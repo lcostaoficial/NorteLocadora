@@ -67,6 +67,15 @@
                         <a asp-area="" asp-controller="Acessorio" asp-action="Index" class="waves-effect"><i class="menu-icon ti ti-mobile"></i><span>Acessórios</span></a>
                     </li>
                 </ul>
+                <h5 class="title">Manutenção</h5>
+                <ul class="menu js__accordion">
+                    <li>
+                        <a asp-area="" asp-controller="Corretiva" asp-action="Index" class="waves-effect"><i class="menu-icon ti ti-hummer"></i><span>Corretiva</span></a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Preventiva" asp-action="Index" class="waves-effect"><i class="menu-icon ti ti-spray"></i><span>Preventiva</span></a>
+                    </li>
+                </ul>
                 <h5 class="title">Administrativo</h5>
                 <ul class="menu js__accordion">
                     <li>
@@ -74,6 +83,9 @@
                     </li>
                 </ul>
             </div>
+
+            @(await Component.InvokeAsync("Notificacao"))
+
         </div>
     </div>
 
@@ -84,7 +96,11 @@
                 @DateTime.Now.ToLongDateString()
             </h1>
         </div>
+
         <div class="pull-right">
+
+            <a href="#" class="ico-item ti-bell notice-alarm js__toggle_open" data-target="#notification-popup"></a>
+
             <div class="ico-item">
                 <i class="ti-user"></i>
                 <ul class="sub-ico-item">
