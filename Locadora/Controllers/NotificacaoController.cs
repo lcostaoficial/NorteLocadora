@@ -15,7 +15,7 @@ namespace Locadora.Controllers
 
         public IActionResult Index()
         {
-            var list = _db.Notificacoes.Where(x => x.Lida).OrderByDescending(x => x.Id);          
+            var list = _db.Notificacoes.Where(x => x.Lida && x.Ativa).OrderByDescending(x => x.Id);          
             return View(list);
         }
 

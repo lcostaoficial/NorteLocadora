@@ -17,6 +17,9 @@ namespace Locadora.Data
         public DbSet<Acessorio> Acessorios { get; set; }
         public DbSet<Manutencao> Manutencoes { get; set; }
         public DbSet<Notificacao> Notificacoes { get; set; }
+        public DbSet<Despesa> Despesas { get; set; }
+        public DbSet<Financiamento> Financiamentos { get; set; }
+        public DbSet<ParcelaDoFinanciamento> ParcelasDoFinanciamento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

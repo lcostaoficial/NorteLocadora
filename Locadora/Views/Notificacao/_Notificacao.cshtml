@@ -10,7 +10,10 @@
             <h4 style="text-align: justify">Descrição: @Model.Descricao</h4>
         </div>
         <div class="modal-footer">
-            <a href="@Url.Content(Model.Rota)" class="btn btn-primary btn-sm waves-effect waves-light">Acompanhar</a>
+            @if (!string.IsNullOrEmpty(Model.Rota))
+            {
+                <a href="@Url.Content(Model.Rota)" class="btn btn-primary btn-sm waves-effect waves-light">Acompanhar</a>
+            }
             <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Fechar</button>
         </div>
     </div>

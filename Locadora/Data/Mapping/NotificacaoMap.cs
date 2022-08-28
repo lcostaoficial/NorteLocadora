@@ -14,6 +14,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.Rota).IsRequired().HasMaxLength(8000);
             builder.Property(X => X.DataDeExibicao).IsRequired();
             builder.Property(X => X.Lida).IsRequired();
+            builder.Property(X => X.Ativa).IsRequired();
         }
     }
 }

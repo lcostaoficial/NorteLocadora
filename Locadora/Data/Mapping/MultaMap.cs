@@ -16,7 +16,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.Observacoes).HasMaxLength(8000).IsRequired();
             builder.Property(X => X.Ativo).IsRequired();
 
-            builder.HasOne(x => x.Veiculo).WithMany().HasForeignKey(x => x.VeiculoId).IsRequired(false);
+            builder.HasOne(x => x.Veiculo).WithMany().HasForeignKey(x => x.VeiculoId).IsRequired();
         }
     }
 }

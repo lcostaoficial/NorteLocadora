@@ -10,6 +10,7 @@ namespace Locadora.Models
         public string Rota { get; set; }
         public DateTime DataDeExibicao { get; set; }
         public bool Lida { get; set; }
+        public bool Ativa { get; set; } = true;
 
         public void LerNotificacao()
         {
