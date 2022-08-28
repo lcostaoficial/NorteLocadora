@@ -1,5 +1,10 @@
-﻿using Locadora.Data;
+﻿using Locadora.Config;
+using Locadora.Data;
+using Locadora.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Locadora.Controllers
@@ -15,88 +20,61 @@ namespace Locadora.Controllers
 
         public ActionResult Index()
         {
-            var list = _db.Financiamentos.Where(x => x.Ativo).ToList();
+            var list = _db.Financiamentos.Include(x => x.Parcelas).Include(x => x.Veiculo).Where(x => x.Ativo).ToList();
             return View(list);
         }
 
-        //public ActionResult Novo()
-        //{
-        //    ViewBag.Veiculos = _db.Veiculos.ToList();
-        //    return View();
-        //}
+        public ActionResult Novo()
+        {
+            ViewBag.Veiculos = _db.Veiculos.ToList();
+            return View();
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Novo(Multa model)
-        //{
-        //    if (!ModelState.IsValid) throw new Exception();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Novo(Financiamento model)
+        {
+            if (!ModelState.IsValid) throw new Exception();
 
-        //    model.Ativar();
+            model.Ativar();
 
-        //    _db.Multas.Add(model);
+            model.GerarParcelasDoFinanciamento();
 
-        //    var veiculo = _db.Veiculos.Find(model.VeiculoId);
+            _db.Financiamentos.Add(model);
 
-        //    var novaNotificacao = new Notificacao()
-        //    {
-        //        DataDeExibicao = model.DataDeVencimento.Date.AddDays(Configuracao.DiasDeAntecedenciasParaMulta),
-        //        Descricao = $"O veículo de placa: {veiculo.Placa} necessita de atenção ao vencimento de multa cadastrada.",
-        //        Icone = "warning",
-        //        Rota = string.Empty,
-        //        Lida = false
-        //    };
+            var veiculo = _db.Veiculos.Find(model.VeiculoId);
 
-        //    _db.Notificacoes.Add(novaNotificacao);
+            if (model.Parcelas != null && model.Parcelas.Any())
+            {
+                var notificacoes = new List<Notificacao>();
 
-        //    _db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+                foreach (var item in model.Parcelas)
+                {
+                    var novaNotificacao = new Notificacao()
+                    {
+                        DataDeExibicao = item.DataDeVencimento.Date.AddDays(-Configuracao.DiasDeAntecedenciasParaParcelasDeFinanciamento),
+                        Descricao = $"O veículo de placa: {veiculo.Placa} necessita de atenção ao vencimento da parcela do seu financiamento.",
+                        Icone = "warning",
+                        Rota = string.Empty,
+                        Lida = false
+                    };
 
-        //public ActionResult Editar(int id)
-        //{
-        //    var model = _db.Multas.FirstOrDefault(x => x.Id == id);
-        //    ViewBag.Veiculos = _db.Veiculos.ToList();
-        //    return View(model);
-        //}
+                    notificacoes.Add(novaNotificacao);
+                }
 
-        //[HttpPost]
-        //public ActionResult Editar(Multa model)
-        //{
-        //    if (!ModelState.IsValid) throw new Exception();
+                _db.Notificacoes.AddRange(notificacoes);
+            }
 
-        //    var novo = _db.Multas.Find(model.Id);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-        //    var houveAlteracaoNaDataDeVencimento = novo.DataDeVencimento.Date != model.DataDeVencimento;
-
-        //    novo.Atualizar(model);
-        //    _db.Entry(novo).State = EntityState.Modified;
-
-        //    var veiculo = _db.Veiculos.Find(model.VeiculoId);
-
-        //    if (houveAlteracaoNaDataDeVencimento)
-        //    {
-        //        var novaNotificacao = new Notificacao()
-        //        {
-        //            DataDeExibicao = model.DataDeVencimento.Date.AddDays(Configuracao.DiasDeAntecedenciasParaMulta),
-        //            Descricao = $"O veículo de placa: {veiculo.Placa} necessita de atenção ao vencimento de multa cadastrada.",
-        //            Icone = "warning",
-        //            Rota = string.Empty,
-        //            Lida = false
-        //        };
-
-        //        _db.Notificacoes.Add(novaNotificacao);
-        //    }
-
-        //    _db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //public ActionResult Remover(int id)
-        //{
-        //    var multa = _db.Multas.Find(id);
-        //    multa.Excluir();
-        //    _db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        public ActionResult Remover(int id)
+        {
+            var model = _db.Financiamentos.Find(id);
+            model.Excluir();
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

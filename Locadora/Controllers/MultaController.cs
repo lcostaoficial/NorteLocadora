@@ -43,7 +43,7 @@ namespace Locadora.Controllers
 
             var novaNotificacao = new Notificacao()
             {
-                DataDeExibicao = model.DataDeVencimento.Date.AddDays(Configuracao.DiasDeAntecedenciasParaMulta),
+                DataDeExibicao = model.DataDeVencimento.Date.AddDays(-Configuracao.DiasDeAntecedenciasParaMulta),
                 Descricao = $"O veículo de placa: {veiculo.Placa} necessita de atenção ao vencimento de multa cadastrada.",
                 Icone = "warning",
                 Rota = string.Empty,
@@ -81,7 +81,7 @@ namespace Locadora.Controllers
             {
                 var novaNotificacao = new Notificacao()
                 {
-                    DataDeExibicao = model.DataDeVencimento.Date.AddDays(Configuracao.DiasDeAntecedenciasParaMulta),
+                    DataDeExibicao = model.DataDeVencimento.Date.AddDays(-Configuracao.DiasDeAntecedenciasParaMulta),
                     Descricao = $"O veículo de placa: {veiculo.Placa} necessita de atenção ao vencimento de multa cadastrada.",
                     Icone = "warning",
                     Rota = string.Empty,
