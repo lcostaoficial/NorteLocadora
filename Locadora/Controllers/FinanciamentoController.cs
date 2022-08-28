@@ -24,6 +24,24 @@ namespace Locadora.Controllers
             return View(list);
         }
 
+        public ActionResult ParcelasDoFinanciamento(int financiamentoId)
+        {
+            var parcelas = _db.ParcelasDoFinanciamento.Where(x => x.FinanciamentoId == financiamentoId).ToList();
+            return PartialView("_Parcelas", parcelas);
+        }
+
+        public ActionResult QuitarParcela(int parcelaId, decimal valorPago)
+        {
+            var parcela = _db.ParcelasDoFinanciamento.Find(parcelaId);
+
+            if (!parcela.AtualizarValorPago(valorPago))
+                return Json(new { Error = true, Msg = "O valor pago não pode ser inferior ao valor da parcela!" });
+
+            _db.SaveChanges();
+
+            return Json(new { Success = true, FinanciamentoId = parcela.FinanciamentoId });
+        }
+
         public ActionResult Novo()
         {
             ViewBag.Veiculos = _db.Veiculos.ToList();

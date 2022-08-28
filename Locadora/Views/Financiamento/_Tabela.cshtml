@@ -17,6 +17,9 @@
             <td>@item.ParcelasVigentes</td>
             <td>@item.ValorDaParcela</td>
             <td class="text-nowrap" width="10">
+                <a onclick="ParcelasDoFinanciamento.carregar(@item.Id)" id="btn-parcelas" class="btn btn-circle btn-success btn-sm" title="Parcelas" btn-sm" href="#" data-togle="tooltip">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </a>
                 <a id="btn-excluir" class="btn btn-circle btn-danger btn-sm" title="Excluir" btn-sm" href="@Url.Action("Remover", new { id = item.Id })" data-togle="tooltip">
                     <i class="fa fa-close" aria-hidden="true"></i>
                 </a>
