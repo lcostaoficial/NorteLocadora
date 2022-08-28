@@ -99,13 +99,13 @@ else
 
     <div class="form-group col-md-4">
         @Html.LabelFor(m => m.Cliente.OrgaoExpedidorRg) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.Cliente.OrgaoExpedidorRg, new SelectList(Enum.GetValues(typeof(OrgaoExpedidorRg))), "Selecione...", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Cliente.OrgaoExpedidorRg, new SelectList(Enum.GetValues(typeof(OrgaoExpedidorRg))), "Selecione...", new { @class = "form-control", @disabled = "" })
         @Html.ValidationMessageFor(m => m.Cliente.OrgaoExpedidorRg)
     </div>
 
     <div class="form-group col-md-4">
         @Html.LabelFor(m => m.Cliente.EstadoOrgaoExpedidor) <label style="color: red" title="Este campo é obrigatório">*</label>
-        @Html.DropDownListFor(m => m.Cliente.EstadoOrgaoExpedidor, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Cliente.EstadoOrgaoExpedidor, new SelectList(Enum.GetValues(typeof(Estado))), "Selecione...", new { @class = "form-control", @disabled = "" })
         @Html.ValidationMessageFor(m => m.Cliente.EstadoOrgaoExpedidor)
     </div>
 }

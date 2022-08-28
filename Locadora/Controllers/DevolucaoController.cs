@@ -24,7 +24,7 @@ namespace Locadora.Controllers
 
         public IActionResult Novo(int id)
         {
-            var locacao = _db.Locacoes.Include(x => x.Veiculo.FotosDeGaragem).FirstOrDefault(x => x.Finalizada && !x.Devolvido && x.Id == id);
+            var locacao = _db.Locacoes.Include(x => x.Acessorios).Include(x => x.Veiculo.FotosDeGaragem).FirstOrDefault(x => x.Finalizada && !x.Devolvido && x.Id == id);
             locacao.QuilometragemDeDevolucao = locacao.Veiculo.Quilometragem;
             return View(locacao);
         }
@@ -49,7 +49,7 @@ namespace Locadora.Controllers
                 
                 veiculo.AtualizarQuilometragem(model.QuilometragemDeDevolucao.Value);
 
-                var preventiva = _db.Manutencoes.First(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (veiculo.Quilometragem >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
+                var preventiva = _db.Manutencoes.FirstOrDefault(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (veiculo.Quilometragem >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
 
                 if (preventiva != null)
                 {

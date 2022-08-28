@@ -40,9 +40,9 @@ namespace Locadora.Controllers
             var locacao = _db.Locacoes.Include(x => x.Veiculo).FirstOrDefault(x => x.Id == id);
             ViewBag.LocacaoId = id;
             ViewBag.VeiculoId = locacao.VeiculoId;
-            ViewBag.HabilitarDocumentacaoParcial = locacao.PossuiAlgumaDocumentacaoAnexada() ? true :  false;
-            ViewBag.HabilitarDocumentacaoCompleta = locacao.PossuiDocumentacaoPreenchidaCompleta() ? true :  false;
-            ViewBag.HabilitarLocacao = locacao.PossuiLocacaoPreenchidaCompleta() ? true :  false;
+            ViewBag.HabilitarDocumentacaoParcial = locacao.PossuiAlgumaDocumentacaoAnexada() ? true : false;
+            ViewBag.HabilitarDocumentacaoCompleta = locacao.PossuiDocumentacaoPreenchidaCompleta() ? true : false;
+            ViewBag.HabilitarLocacao = locacao.PossuiLocacaoPreenchidaCompleta() ? true : false;
             return View("Novo", locacao);
         }
 
@@ -64,12 +64,14 @@ namespace Locadora.Controllers
         {
             if (locacaoId != 0)
             {
-                var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+                var loc = _db.Locacoes.Include(x => x.Acessorios).Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+                loc.SetIds();
+                ViewBag.Acessorios = _db.Acessorios.Where(x => x.Ativo).ToList();
                 return PartialView("_Locacao", loc);
             }
             else
-
             {
+                ViewBag.Acessorios = _db.Acessorios.Where(x => x.Ativo).ToList();
                 return PartialView("_Locacao");
             }
         }
@@ -132,6 +134,7 @@ namespace Locadora.Controllers
 
                     if (!ModelState.IsValid) throw new Exception("Preencha todos os campos corretamente!");
                     if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
+
                     if (model.Id == 0)
                     {
                         var existemVeiculosDisponiveis = _db.Veiculos.Any(x => x.Locacoes.All(y => y.Devolvido));
@@ -161,6 +164,7 @@ namespace Locadora.Controllers
                         novo.AtualizarCliente(model);
 
                         _db.Entry(novo).State = EntityState.Modified;
+
                         _db.SaveChanges();
                         return Json(new { Success = "Os dados pessoais foram alterados com sucesso!", model.Id, novo.ClienteId, novo.VeiculoId });
                     }
@@ -179,8 +183,9 @@ namespace Locadora.Controllers
 
                     if (model.DataRetirada.Value.Date > model.DataPrevistaDeDevolucao.Value.Date) throw new Exception("A data de retirada não pode ser maior do que a data prevista para devolução!");
 
+                    if (model.AcessoriosIds != null && model.AcessoriosIds.Any())
+                        novo.Acessorios = _db.Acessorios.Where(x => model.AcessoriosIds.Contains(x.Id)).ToList();   
 
-                    _db.Entry(novo).State = EntityState.Modified;
                     _db.SaveChanges();
                     return Json(new { Success = "A locação foi salva com sucesso!", LocacaoId = novo.Id, novo.VeiculoId });
                 }
@@ -246,7 +251,7 @@ namespace Locadora.Controllers
                 return Json(new { Error = e.Message });
             }
         }
-      
+
         public ActionResult FinalizarLocacao(int locacaoId)
         {
             try
@@ -266,7 +271,7 @@ namespace Locadora.Controllers
                     if (locacao.QuilometragemAtual.HasValue)
                         veiculo.AtualizarQuilometragem(locacao.QuilometragemAtual.Value);
 
-                    var preventiva = _db.Manutencoes.First(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (locacao.QuilometragemAtual >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
+                    var preventiva = _db.Manutencoes.FirstOrDefault(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (locacao.QuilometragemAtual >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
 
                     if (preventiva != null)
                     {

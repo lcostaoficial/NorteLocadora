@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Locadora.Models
 {
@@ -217,6 +218,17 @@ namespace Locadora.Models
             QuilometragemAtual = model.QuilometragemAtual;
             ObservacoesDeSaida = model.ObservacoesDeSaida;
             VeiculoId = model.VeiculoId;
+
+            if (model.AcessoriosIds != null && model.AcessoriosIds.Any())
+            {
+                Acessorios = new List<Acessorio>();
+
+                foreach (var acessorioId in model.AcessoriosIds)
+                {                    
+                    Acessorios.Add(new Acessorio { Id = acessorioId });
+                }
+            }
+
             return ValidarCamposLocacao();
         }
 
@@ -267,5 +279,15 @@ namespace Locadora.Models
         {
             DocumentoDeComprovanteDeEndereco = rota;
         }
+
+        public void SetIds()
+        {
+            if (Acessorios != null && Acessorios.Any()) 
+                AcessoriosIds = Acessorios.Select(x => x.Id).ToArray();
+        }
+
+        [Display(Name = "Acessórios")]
+        [NotMapped]
+        public int[] AcessoriosIds { get; set; }
     }
 }
