@@ -9,6 +9,7 @@ namespace Locadora.Models
         public DateTime DataDeVencimentoDaPrimeiraParcela { get; set; }
         public int QuantidadeDeParcelas { get; set; }
         public bool Quitado { get; set; }
+        public bool Ativo { get; set; }
 
         public int VeiculoId { get; set; }
         public Veiculo Veiculo { get; set; }

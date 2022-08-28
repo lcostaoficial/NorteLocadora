@@ -14,6 +14,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.DataDePagamento).IsRequired(false);
             builder.Property(X => X.DocumentoDeComprovante).IsRequired(false);
             builder.Property(X => X.Valor).IsRequired();
+            builder.Property(X => X.Ativa).IsRequired();
 
             builder.HasOne(x => x.Veiculo).WithMany().HasForeignKey(x => x.VeiculoId).IsRequired(false);
         }

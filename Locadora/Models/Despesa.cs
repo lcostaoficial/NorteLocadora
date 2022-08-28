@@ -10,6 +10,7 @@ namespace Locadora.Models
         public DateTime? DataDePagamento { get; set; } 
         public string DocumentoDeComprovante { get; set; }
         public decimal Valor { get; set; }
+        public bool Ativa { get; set; }
 
         public int? VeiculoId { get; set; }
         public Veiculo Veiculo { get; set; }
