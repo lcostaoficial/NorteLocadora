@@ -441,3 +441,8 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Financiamento\_Tabela
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Financiamento\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Financiamento\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Financiamento\_Parcelas.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\Editar.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\Novo.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\_Form.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\_Tabela.cshtml.g.cs

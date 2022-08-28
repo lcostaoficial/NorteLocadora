@@ -12,7 +12,6 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.Descricao).IsRequired().HasMaxLength(250);
             builder.Property(X => X.DataDeVencimento).IsRequired();
             builder.Property(X => X.DataDePagamento).IsRequired(false);
-            builder.Property(X => X.DocumentoDeComprovante).IsRequired(false);
             builder.Property(X => X.Valor).IsRequired();
             builder.Property(X => X.Ativa).IsRequired();
 
