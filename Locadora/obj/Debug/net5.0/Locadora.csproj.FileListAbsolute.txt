@@ -432,3 +432,7 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Preventiva\Editar.csh
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Preventiva\Novo.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Preventiva\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Preventiva\_Tabela.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Shared\_VisualizarNotificacao.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Notificacao\_Notificacao.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Notificacao\Index.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Notificacao\_Tabela.cshtml.g.cs

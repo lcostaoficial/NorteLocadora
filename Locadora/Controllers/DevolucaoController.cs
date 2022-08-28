@@ -49,6 +49,22 @@ namespace Locadora.Controllers
                 
                 veiculo.AtualizarQuilometragem(model.QuilometragemDeDevolucao.Value);
 
+                var preventiva = _db.Manutencoes.First(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (veiculo.Quilometragem >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
+
+                if (preventiva != null)
+                {
+                    var novaNotificacao = new Notificacao()
+                    {
+                        DataDeExibicao = DateTime.Now,
+                        Descricao = $"O veículo de placa: {veiculo.Placa} necessita realizar manutenção preventiva.",
+                        Icone = "warning",
+                        Rota = $"/Preventiva/Editar?id={preventiva.Id}",
+                        Lida = false
+                    };
+
+                    _db.Notificacoes.Add(novaNotificacao);
+                }
+
                 _db.Entry(novo).State = EntityState.Modified;
 
                 _db.SaveChanges();

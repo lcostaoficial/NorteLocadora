@@ -266,6 +266,22 @@ namespace Locadora.Controllers
                     if (locacao.QuilometragemAtual.HasValue)
                         veiculo.AtualizarQuilometragem(locacao.QuilometragemAtual.Value);
 
+                    var preventiva = _db.Manutencoes.First(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (locacao.QuilometragemAtual >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
+
+                    if (preventiva != null)
+                    {
+                        var novaNotificacao = new Notificacao()
+                        {
+                            DataDeExibicao = DateTime.Now,
+                            Descricao = $"O veículo de placa: {veiculo.Placa} necessita realizar uma manutenção.",
+                            Icone = "warning",
+                            Rota = $"/Preventiva/Editar?id={preventiva.Id}",
+                            Lida = false
+                        };
+
+                        _db.Notificacoes.Add(novaNotificacao);
+                    }
+
                     _db.SaveChanges();
 
                     return Json(new { Success = "Locação finalizada com sucesso!" });

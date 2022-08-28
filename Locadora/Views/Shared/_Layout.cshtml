@@ -36,7 +36,7 @@
     <div class="main-menu">
 
         <header class="header">
-            <a href="@Url.Action("Index", "Caso")" class="logo">
+            <a href="@Url.Action("Index", "Quadro")" class="logo">
                 <span style="color:#a5bb94"></span> Norte Locadora
             </a>
             <button type="button" class="button-close fa fa-times js__menu_close"></button>
@@ -47,7 +47,7 @@
                 <h5 class="title">Operacional</h5>
                 <ul class="menu js__accordion">
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect"><i class="menu-icon ti-calendar"></i><span>Monitoramento</span></a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect"><i class="menu-icon ti-calendar"></i><span>Agenda</span></a>
                     </li>
                     <li>
                         <a asp-area="" asp-controller="Retirada" asp-action="Index" class="waves-effect"><i class="menu-icon ti-pencil-alt"></i><span>Retirada</span></a>
@@ -172,10 +172,36 @@
                 $("#modalAlterarSenha").modal("show");
             };
         });
+
+        $(function () {
+
+            "use strict";
+
+            window.Notificacao = window.Notificacao || {};         
+
+            Notificacao.abrir = function () {
+                $("#modal-visualizar-notificacao").modal("show");
+            };
+
+            Notificacao.exibir = function (id) {  
+                var url = $("#modal-visualizar-notificacao").data("url");
+                $.ajax({
+                    method: "GET",
+                    url: url,
+                    data: { id: id },
+                    success: function (result) {                      
+                        $("#modal-visualizar-notificacao").html(result);
+                        Notificacao.abrir();
+                    },
+                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                        swal("Mensagem", errorThrown, "error");
+                    }
+                });
+            };
+        });
     </script>
     @await RenderSectionAsync("scripts", required: false)
     @await RenderSectionAsync("modal", required: false)
-    @*<partial name="_Message" />*@
-    @*<partial name="_AlterarSenha" />*@
+    @await Html.PartialAsync("_VisualizarNotificacao")
 </body>
 </html>

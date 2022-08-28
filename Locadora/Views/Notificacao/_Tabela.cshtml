@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Notificacao>
+
+<table id="example" class="table table-responsive table-striped table-bordered display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Lida</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Descricao</td>
+            <td>@item.DataDeExibicao</td>
+            <td>@(item.Lida ? "Sim" : "Não")</td>
+        </tr>
+        }
+    </tbody>
+</table>
