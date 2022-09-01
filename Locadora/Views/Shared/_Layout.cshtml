@@ -186,19 +186,19 @@
 
             "use strict";
 
-            window.Notificacao = window.Notificacao || {};         
+            window.Notificacao = window.Notificacao || {};
 
             Notificacao.abrir = function () {
                 $("#modal-visualizar-notificacao").modal("show");
             };
 
-            Notificacao.exibir = function (id) {  
+            Notificacao.exibir = function (id) {
                 var url = $("#modal-visualizar-notificacao").data("url");
                 $.ajax({
                     method: "GET",
                     url: url,
                     data: { id: id },
-                    success: function (result) {                      
+                    success: function (result) {
                         $("#modal-visualizar-notificacao").html(result);
                         Notificacao.abrir();
                     },
@@ -212,5 +212,6 @@
     @await RenderSectionAsync("scripts", required: false)
     @await RenderSectionAsync("modal", required: false)
     @await Html.PartialAsync("_VisualizarNotificacao")
+    @await Html.PartialAsync("_AlterarSenha")
 </body>
 </html>
