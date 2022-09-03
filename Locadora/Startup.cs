@@ -1,10 +1,13 @@
 using Locadora.Data;
+using Locadora.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace Locadora
 {
@@ -23,6 +26,8 @@ namespace Locadora
             services.AddControllersWithViews();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<MainContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-37BFH3E\SQLEXPRESS_2017;Initial Catalog=Locadora;Persist Security Info=True;User ID=sa;Password=123456;"));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.LoginPath = "/Conta/Login"; });
+            services.Configure<List<LoginVm>>(Configuration.GetSection("Users"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +48,9 @@ namespace Locadora
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseAuthorization();  
 
             app.UseEndpoints(endpoints =>
             {

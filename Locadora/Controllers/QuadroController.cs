@@ -1,10 +1,12 @@
 ﻿using Locadora.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Locadora.Controllers
 {
+    [Authorize]
     public class QuadroController : Controller
     {
         private readonly MainContext _db;

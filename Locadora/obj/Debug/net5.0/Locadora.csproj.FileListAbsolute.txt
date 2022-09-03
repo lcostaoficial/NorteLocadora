@@ -447,3 +447,5 @@ C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\Novo.cshtml.g
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\_Form.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Despesa\_Tabela.cshtml.g.cs
 C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Shared\_AlterarSenha.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Conta\Login.cshtml.g.cs
+C:\Git\NorteLocadora\Locadora\obj\Debug\net5.0\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs

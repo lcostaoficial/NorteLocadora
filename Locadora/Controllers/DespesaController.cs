@@ -1,6 +1,7 @@
 ﻿using Locadora.Config;
 using Locadora.Data;
 using Locadora.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace Locadora.Controllers
 {
+    [Authorize]
     public class DespesaController : Controller
     {
         private readonly MainContext _db;

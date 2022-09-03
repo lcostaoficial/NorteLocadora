@@ -1,9 +1,11 @@
 ﻿using Locadora.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace Locadora.Controllers
 {
+    [Authorize]
     public class NotificacaoController : Controller
     {
         private readonly MainContext _db;
