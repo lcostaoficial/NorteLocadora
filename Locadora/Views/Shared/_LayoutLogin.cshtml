@@ -25,5 +25,14 @@
     <script src="~/plugin/sweet-alert/sweetalert.min.js?v=1"></script>
     <script src="~/plugin/jquery-mask/jquery.mask.js?v=1"></script>
     <script src="~/scripts/globalmask.js?v=1"></script>  
+
+    <script>
+        let searchParams = new URLSearchParams(window.location.search);
+
+        if (searchParams.has('falha')) {
+            let param = searchParams.get('msg');
+            swal("Mensagem", param, "warning");
+        }
+    </script>
 </body>
 </html>

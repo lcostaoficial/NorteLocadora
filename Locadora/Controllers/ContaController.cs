@@ -24,6 +24,9 @@ namespace Locadora.Controllers
 
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("~/Home/Index");
+
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace Locadora.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim("UserId", usuario.Nome),
+                        new Claim("UserId", usuario.FuncionarioId.ToString()),
                         new Claim(ClaimTypes.Name, usuario.Nome),
                         new Claim("FullName", usuario.Nome),
                         new Claim(ClaimTypes.Role, usuario.Perfil.ToString()),

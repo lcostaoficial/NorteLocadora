@@ -144,44 +144,9 @@
     <script src="~/scripts/main.min.js?v=1"></script>
     <script src="~/scripts/global.js?v=1"></script>
     <script src="~/plugin/jquery-mask/jquery.mask.js?v=1"></script>
-    <script src="~/scripts/globalmask.js?v=1"></script>
+    <script src="~/scripts/globalmask.js?v=1"></script> 
 
-    <script>
-        $(function () {
-
-            "use strict";
-
-            window.AlterarSenha = window.AlterarSenha || {};
-
-            AlterarSenha.abrirModal = function () {
-                $("#modalAlterarSenha").modal("show");
-            };
-
-            AlterarSenha.salvarSenha = function () {
-                var novaSenha = $("#NovaSenha").val();
-                var url = $("#modalAlterarSenha").data("url");
-                $.ajax({
-                    method: "POST",
-                    url: url,
-                    data: { novaSenha: novaSenha },
-                    success: function (result) {
-                        if (result.Success) {
-                            swal("Mensagem", result.Success, "success");
-                            $("#modalAlterarSenha").modal("hide");
-                        }
-                        if (result.Error) {
-                            swal("Mensagem", result.Error, "warning");
-                        }
-                    },
-                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
-                        swal("Mensagem", errorThrown, "error");
-                    }
-                });
-
-                $("#modalAlterarSenha").modal("show");
-            };
-        });
-
+    <script>    
         $(function () {
 
             "use strict";
@@ -208,6 +173,45 @@
                 });
             };
         });
+
+        $(function () {
+
+            "use strict";
+
+            window.AlterarSenha = window.AlterarSenha || {};
+
+            AlterarSenha.abrirModal = function () {
+                $("#modalAlterarSenha").modal("show");
+            };
+
+            AlterarSenha.salvarSenha = function () {                
+
+                var novaSenha = $("#NovaSenha").val();
+
+                var url = $("#modalAlterarSenha").data("url");
+                
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: { novaSenha: novaSenha },
+                    success: function (result) {
+                        if (result.success) {
+                            swal("Mensagem", result.success, "success");
+                            $("#modalAlterarSenha").modal("hide");
+                        }
+                        if (result.error) {
+                            swal("Mensagem", result.error, "warning");
+                        }
+                    },
+                    error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                        swal("Mensagem", errorThrown, "error");
+                    }
+                });
+
+                $("#modalAlterarSenha").modal("show");
+            };
+        });
+
     </script>
     @await RenderSectionAsync("scripts", required: false)
     @await RenderSectionAsync("modal", required: false)
