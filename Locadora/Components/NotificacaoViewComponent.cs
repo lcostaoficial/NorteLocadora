@@ -17,7 +17,7 @@ namespace Locadora.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var notificacoes = _db.Notificacoes.Where(x => !x.Lida && x.DataDeExibicao.Date >= DateTime.Now.Date && x.Ativa).ToList();
+            var notificacoes = _db.Notificacoes.Where(x => !x.Lida && x.DataDeExibicao.Date <= DateTime.Now.Date && x.Ativa).ToList();
             return await Task.FromResult((IViewComponentResult)View("Exibir", notificacoes));
         }
     }
