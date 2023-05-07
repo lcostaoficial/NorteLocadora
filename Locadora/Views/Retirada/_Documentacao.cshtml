@@ -30,16 +30,21 @@
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeIdentificacaoGet))
                     {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeIdentificacaoGet}")">Visualizar</a>
+                        <a target="_blank" href="@Url.Content(Model.DocumentoDeIdentificacaoGet)">Visualizar</a>
                     }
                     else
                     {
-                        @Html.Raw("Nenhum documento anexado");
+                        @Html.Raw("Nenhum documento anexado")
+                        ;
                     }
                 </td>
                 @if (!Model.Finalizada)
                 {
                     <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-success btn-sm" title="Trazer documento da locação passada" href="#" onclick="Locacao.reaproveitarDocumentacaoDaLocacaoAnterior('@Model.LocacaoId', '@IdentificadoDocumentacaoVm.DocumentoDeIdentificacao')">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </a>
+
                         <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeIdentificacao')">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </a>
@@ -55,16 +60,21 @@
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeComprovanteDeEnderecoGet))
                     {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeComprovanteDeEnderecoGet}")">Visualizar</a>
+                        <a target="_blank" href="@Url.Content(Model.DocumentoDeComprovanteDeEnderecoGet)">Visualizar</a>
                     }
                     else
                     {
-                        @Html.Raw("Nenhum documento anexado");
+                        @Html.Raw("Nenhum documento anexado")
+                        ;
                     }
                 </td>
                 @if (!Model.Finalizada)
                 {
                     <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-success btn-sm" title="Trazer documento da locação passada" href="#" onclick="Locacao.reaproveitarDocumentacaoDaLocacaoAnterior('@Model.LocacaoId', '@IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco')">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </a>
+
                         <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco')">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </a>
@@ -75,22 +85,26 @@
             <tr class="active">
                 <td>@(!string.IsNullOrEmpty(Model.DocumentoDeContratoGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Contrato de locação</td>
                 <td>
-                    <a href="#">Baixar modelo</a>
+                    <a href="#" onclick="Contrato.imprimirContrato(@Model.LocacaoId)">Baixar contrato</a>
                 </td>
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeContratoGet))
                     {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeContratoGet}")">Visualizar</a>
-
+                        <a target="_blank" href="@Url.Content(Model.DocumentoDeContratoGet)">Visualizar</a>
                     }
                     else
                     {
-                        @Html.Raw("Nenhum documento anexado");
+                        @Html.Raw("Nenhum documento anexado")
+                        ;
                     }
                 </td>
                 @if (!Model.Finalizada)
                 {
                     <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-success btn-sm" title="Trazer documento da locação passada" href="#" onclick="Locacao.reaproveitarDocumentacaoDaLocacaoAnterior('@Model.LocacaoId', '@IdentificadoDocumentacaoVm.DocumentoDeContrato')">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </a>
+
                         <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeContrato')">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </a>
@@ -106,7 +120,7 @@
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeNadaConstaDetranGet))
                     {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeNadaConstaDetranGet}")">Visualizar</a>
+                        <a target="_blank" href="@Url.Content(Model.DocumentoDeNadaConstaDetranGet)">Visualizar</a>
                     }
                     else
                     {
@@ -116,6 +130,10 @@
                 @if (!Model.Finalizada)
                 {
                     <td class="text-nowrap" width="10">
+                        <a class="btn btn-circle btn-success btn-sm" title="Trazer documento da locação passada" href="#" onclick="Locacao.reaproveitarDocumentacaoDaLocacaoAnterior('@Model.LocacaoId', '@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran')">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </a>
+
                         <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran')">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </a>
@@ -131,7 +149,7 @@
                 <td>
                     @if (!string.IsNullOrEmpty(Model.DocumentoDeNadaConstaCriminalGet))
                     {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeNadaConstaCriminalGet}")">Visualizar</a>
+                        <a target="_blank" href="@Url.Content(Model.DocumentoDeNadaConstaCriminalGet)">Visualizar</a>
                     }
                     else
                     {
@@ -141,32 +159,11 @@
                 @if (!Model.Finalizada)
                 {
                     <td class="text-nowrap" width="10">
-                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal')">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                        <a class="btn btn-circle btn-success btn-sm" title="Trazer documento da locação passada" href="#" onclick="Locacao.reaproveitarDocumentacaoDaLocacaoAnterior('@Model.LocacaoId', '@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal')">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
                         </a>
-                    </td>
-                }
-            </tr>
 
-            <tr>
-                <td>@(!string.IsNullOrEmpty(Model.DocumentoDeCheckListSaidaGet) ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>") : Html.Raw("<i title=\"Aguardando anexo\" class=\"fa fa-close text-danger\"></i>")) Documento de Checklist de Retirada</td>
-                <td>
-                    <a href="#">Baixar modelo</a>
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(Model.DocumentoDeCheckListSaidaGet))
-                    {
-                        <a target="_blank" href="@Url.Content($"~/Uploads/Locacao/{Model.LocacaoId}/{Model.DocumentoDeCheckListSaidaGet}")">Visualizar</a>
-                    }
-                    else
-                    {
-                        @Html.Raw("Nenhum documento anexado");
-                    }
-                </td>
-                @if (!Model.Finalizada)
-                {
-                    <td class="text-nowrap" width="10">
-                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeCheckListSaida')">
+                        <a class="btn btn-circle btn-info btn-sm" title="Anexar documento" href="#" onclick="Locacao.anexarArquivo('@IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal')">
                             <i class="fa fa-paperclip" aria-hidden="true"></i>
                         </a>
                     </td>

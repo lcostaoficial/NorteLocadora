@@ -16,9 +16,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.QuilometragemDeDevolucao).IsRequired(false);
             builder.Property(X => X.DocumentoDeContrato).IsRequired(false);
             builder.Property(X => X.DocumentoDeNadaConstaDetran).IsRequired(false);
-            builder.Property(X => X.DocumentoDeNadaConstaCriminal).IsRequired(false);
-            builder.Property(X => X.DocumentoDeCheckListSaida).IsRequired(false);
-            builder.Property(X => X.DocumentoDeCheckListChegada).IsRequired(false);
+            builder.Property(X => X.DocumentoDeNadaConstaCriminal).IsRequired(false);    
             builder.Property(X => X.ObservacoesDeSaida).IsRequired(false);
             builder.Property(X => X.ObservacoesDeChegada).IsRequired(false);
             builder.Property(X => X.DocumentoDeIdentificacao).IsRequired(false);

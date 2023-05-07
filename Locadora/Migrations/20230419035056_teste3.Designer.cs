@@ -4,14 +4,16 @@ using Locadora.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Locadora.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20230419035056_teste3")]
+    partial class teste3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,21 +36,6 @@ namespace Locadora.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<bool>("CategoriaCnhA")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhB")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhC")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhD")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhE")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Cep")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -62,17 +49,10 @@ namespace Locadora.Migrations
                     b.Property<bool>("ClienteEstrangeiro")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Cnh")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
-
-                    b.Property<DateTime>("DataDeVencimentoDaCnh")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
@@ -147,18 +127,6 @@ namespace Locadora.Migrations
 
                     b.Property<string>("TelefoneMovel")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("TelefoneMovel1")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("TelefoneMovel2")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("TelefoneMovel3")
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 

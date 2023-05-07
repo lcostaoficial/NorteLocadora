@@ -2,6 +2,24 @@
 
 @Html.AntiForgeryToken()
 
+@Html.HiddenFor(m => m.ImageBase64String)
+
+<div class="span3 well">
+    <center>
+        <a href="#image-perfil" data-toggle="modal" data-target="#modal-fotografia">
+            <img src="@Url.Action("MostrarFotoDePerfil", new { cpf = Model?.Cpf })" id="image-perfil" name="image-perfil" width="140" height="140" class="img-circle">
+        </a>
+        @if (Model != null)
+        {
+            <h3>@Model.Nome</h3>
+        }
+        else
+        {
+            <h3>Fotografia do cliente</h3>
+        }
+    </center>
+</div>
+
 <div class="form-group col-md-12" style="margin-bottom: 0px">
     <h4>Dados Gerais</h4>
     <hr class="my-4">
@@ -9,6 +27,7 @@
 
 @if (!string.IsNullOrEmpty(Model?.Cpf) && Model?.ClienteId != 0)
 {
+    @Html.HiddenFor(m => m.Cpf)
     <div class="form-group col-md-2">
         @Html.LabelFor(m => m.Cpf) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control", @disabled = "" })
@@ -77,9 +96,9 @@ else
     @Html.DropDownListFor(m => m.ClienteEstrangeiro, new SelectList(
     new[]
     {
-        new { Value = "", Text = "Selecione..." },
-        new { Value = "true", Text = "Sim" },
-        new { Value = "false", Text = "Não" },
+    new { Value = "", Text = "Selecione..." },
+    new { Value = "true", Text = "Sim" },
+    new { Value = "false", Text = "Não" },
     }, "Value", "Text"),
     new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.ClienteEstrangeiro)
@@ -139,6 +158,29 @@ else
 }
 
 <div class="form-group col-md-12" style="margin-bottom: 0px">
+    <h4>Documento de Habilitação</h4>
+    <hr class="my-4">
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.Cnh) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Cnh, new { @class = "form-control", placeholder = "Número da CNH" })
+    @Html.ValidationMessageFor(m => m.Cnh)
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.DataDeVencimentoDaCnh) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.DataDeVencimentoDaCnh, new { @class = "form-control date" })
+    @Html.ValidationMessageFor(m => m.DataDeVencimentoDaCnh)
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.CatCnh) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.ListBoxFor(m => m.CatCnh, new MultiSelectList(Enum.GetValues(typeof(CategoriaHabilitacao))), new { @class = "selectpicker form-control", multiple = "multiple", title = "Selecionar categoria..." })
+    @Html.ValidationMessageFor(m => m.CatCnh)
+</div>
+
+<div class="form-group col-md-12" style="margin-bottom: 0px">
     <h4>Contatos</h4>
     <hr class="my-4">
 </div>
@@ -159,6 +201,24 @@ else
     @Html.LabelFor(m => m.Email) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Email)
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.TelefoneMovel1)
+    @Html.TextBoxFor(m => m.TelefoneMovel1, new { @class = "form-control telefonemovel" })
+    @Html.ValidationMessageFor(m => m.TelefoneMovel1)
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.TelefoneMovel2)
+    @Html.TextBoxFor(m => m.TelefoneMovel2, new { @class = "form-control telefonemovel" })
+    @Html.ValidationMessageFor(m => m.TelefoneMovel2)
+</div>
+
+<div class="form-group col-md-4">
+    @Html.LabelFor(m => m.TelefoneMovel3)
+    @Html.TextBoxFor(m => m.TelefoneMovel3, new { @class = "form-control telefonemovel" })
+    @Html.ValidationMessageFor(m => m.TelefoneMovel3)
 </div>
 
 <div class="form-group col-md-12" style="margin-bottom: 0px">

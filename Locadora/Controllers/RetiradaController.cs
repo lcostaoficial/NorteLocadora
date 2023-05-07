@@ -1,4 +1,5 @@
 ﻿using Locadora.Data;
+using Locadora.Helpers;
 using Locadora.Models;
 using Locadora.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +54,9 @@ namespace Locadora.Controllers
             if (locacaoId != 0)
             {
                 var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+
+                loc.Cliente.CarrregarCategoriaDaCnh();
+
                 return PartialView("_DadosPessoais", loc);
             }
             else
@@ -66,15 +70,98 @@ namespace Locadora.Controllers
         {
             if (locacaoId != 0)
             {
-                var loc = _db.Locacoes.Include(x => x.Acessorios).Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
-                loc.SetIds();
-                ViewBag.Acessorios = _db.Acessorios.Where(x => x.Ativo).ToList();
+                var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
                 return PartialView("_Locacao", loc);
             }
             else
             {
-                ViewBag.Acessorios = _db.Acessorios.Where(x => x.Ativo).ToList();
                 return PartialView("_Locacao");
+            }
+        }
+
+        public ActionResult ReaproveitarDocumentacaoDaLocacaoAnterior(int locacaoId = 0, IdentificadoDocumentacaoVm tipoDocumento = 0)
+        {
+            try
+            {
+                if (locacaoId != 0 && tipoDocumento != IdentificadoDocumentacaoVm.Nenhum)
+                {
+                    var loc = _db.Locacoes.Include(x => x.Cliente).FirstOrDefault(x => x.Id == locacaoId);
+
+                    var locAnterior = _db.Locacoes.OrderByDescending(x => x.Id).FirstOrDefault(x => x.Id != loc.Id && x.ClienteId == loc.ClienteId);
+
+                    if (locAnterior != null)
+                    {
+                        switch (tipoDocumento)
+                        {
+                            case IdentificadoDocumentacaoVm.Nenhum:
+                                break;
+                            case IdentificadoDocumentacaoVm.DocumentoDeContrato:
+
+                                if (string.IsNullOrEmpty(locAnterior.DocumentoDeContrato))
+                                    throw new Exception("Sem documentação anterior!");
+
+                                loc.DocumentoDeContrato = locAnterior.DocumentoDeContrato;
+                                _db.SaveChanges();
+                                break;
+                            case IdentificadoDocumentacaoVm.DocumentoDeNadaConstaDetran:
+
+                                if (string.IsNullOrEmpty(locAnterior.DocumentoDeNadaConstaDetran))
+                                    throw new Exception("Sem documentação anterior!");
+
+                                loc.DocumentoDeNadaConstaDetran = locAnterior.DocumentoDeNadaConstaDetran;
+                                _db.SaveChanges();
+                                break;
+                            case IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal:
+
+                                if (string.IsNullOrEmpty(locAnterior.DocumentoDeNadaConstaCriminal))
+                                    throw new Exception("Sem documentação anterior!");
+
+                                loc.DocumentoDeNadaConstaCriminal = locAnterior.DocumentoDeNadaConstaCriminal;
+                                _db.SaveChanges();
+                                break;
+                            case IdentificadoDocumentacaoVm.DocumentoDeIdentificacao:
+
+                                if (string.IsNullOrEmpty(locAnterior.DocumentoDeIdentificacao))
+                                    throw new Exception("Sem documentação anterior!");
+
+                                loc.DocumentoDeIdentificacao = locAnterior.DocumentoDeIdentificacao;
+                                _db.SaveChanges();
+                                break;
+                            case IdentificadoDocumentacaoVm.DocumentoDeComprovanteDeEndereco:
+
+                                if (string.IsNullOrEmpty(locAnterior.DocumentoDeComprovanteDeEndereco))
+                                    throw new Exception("Sem documentação anterior!");
+
+                                loc.DocumentoDeComprovanteDeEndereco = locAnterior.DocumentoDeComprovanteDeEndereco;
+                                _db.SaveChanges();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Não existem locações anteriores finalizadas para o cliente em tela");
+                    }
+
+                    var documentacaoVm = new DocumentacaoVm();
+
+                    documentacaoVm.IncluirRotasSaida(loc.DocumentoDeContrato, loc.DocumentoDeNadaConstaDetran, loc.DocumentoDeNadaConstaCriminal, loc.DocumentoDeIdentificacao, loc.DocumentoDeComprovanteDeEndereco);
+
+                    documentacaoVm.LocacaoId = loc.Id;
+
+                    documentacaoVm.Finalizada = loc.Finalizada;
+
+                    return Json(new { Success = "Ok" });
+                }
+                else
+                {
+                    throw new Exception("Ocorreu um erro ao carregar a documentação");
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { Error = e.Message });
             }
         }
 
@@ -86,7 +173,7 @@ namespace Locadora.Controllers
 
                 var documentacaoVm = new DocumentacaoVm();
 
-                documentacaoVm.IncluirRotasSaida(loc.DocumentoDeContrato, loc.DocumentoDeNadaConstaDetran, loc.DocumentoDeNadaConstaCriminal, loc.DocumentoDeCheckListSaida, loc.DocumentoDeIdentificacao, loc.DocumentoDeComprovanteDeEndereco);
+                documentacaoVm.IncluirRotasSaida(loc.DocumentoDeContrato, loc.DocumentoDeNadaConstaDetran, loc.DocumentoDeNadaConstaCriminal, loc.DocumentoDeIdentificacao, loc.DocumentoDeComprovanteDeEndereco);
 
                 documentacaoVm.LocacaoId = loc.Id;
 
@@ -110,6 +197,11 @@ namespace Locadora.Controllers
 
                 ActionResult AtualizarDadosPessoais()
                 {
+                    if (model.Cliente.CatCnh == null || !model.Cliente.CatCnh.Any())
+                        throw new Exception("Categoria da CNH não preenchida!");
+
+                    ProcessarImagemBase64String(model.Cliente.ImageBase64String, model.Cliente.Cpf);
+
                     ValidarEstrangeiro(model);
 
                     ModelState.Remove("Nome");
@@ -134,8 +226,11 @@ namespace Locadora.Controllers
                         ModelState.Remove("DocumentoEstrangeiro");
                     }
 
-                    if (!ModelState.IsValid) throw new Exception("Preencha todos os campos corretamente!");
-                    if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) throw new Exception("O CPF informado é inválido!");
+                    if (!ModelState.IsValid) 
+                        throw new Exception("Preencha todos os campos corretamente!");
+
+                    if (model.ClienteId == 0 && !model.Cliente.ValidarCpf()) 
+                        throw new Exception("O CPF informado é inválido!");
 
                     if (model.Id == 0)
                     {
@@ -144,10 +239,13 @@ namespace Locadora.Controllers
                         if (!existemVeiculosDisponiveis)
                             throw new Exception("Não existem veículos disponíveis no sistema!");
 
+                        model.Cliente.ProcessarCategoriaDaCnh();
+
                         var cliente = model.ClienteId != 0 ? _db.Clientes.Find(model.ClienteId) : null;
 
                         if (model.ClienteId != 0)
                         {
+                            cliente.ProcessarCategoriaDaCnh(model.Cliente.CatCnh);
                             cliente.Atualizar(model.Cliente);
                             _db.Entry(cliente).State = EntityState.Modified;
                             model.Cliente = null;
@@ -160,10 +258,14 @@ namespace Locadora.Controllers
                         return Json(new { Success = "Os dados pessoais foram salvos com sucesso!", model.Id, veiculoId = model.VeiculoId ?? 0 });
                     }
                     else
-                    {
+                    {     
                         var novo = _db.Locacoes.Include(x => x.Cliente).First(x => x.Id == model.Id);
 
+                        novo.Cliente.CatCnh = model.Cliente.CatCnh;
+
                         novo.AtualizarCliente(model);
+
+                        novo.Cliente.ProcessarCategoriaDaCnh();
 
                         _db.Entry(novo).State = EntityState.Modified;
 
@@ -184,9 +286,6 @@ namespace Locadora.Controllers
                     if (!validacao) throw new Exception("Preencha todos os campos corretamente!");
 
                     if (model.DataRetirada.Value.Date > model.DataPrevistaDeDevolucao.Value.Date) throw new Exception("A data de retirada não pode ser maior do que a data prevista para devolução!");
-
-                    if (model.AcessoriosIds != null && model.AcessoriosIds.Any())
-                        novo.Acessorios = _db.Acessorios.Where(x => model.AcessoriosIds.Contains(x.Id)).ToList();   
 
                     _db.SaveChanges();
                     return Json(new { Success = "A locação foi salva com sucesso!", LocacaoId = novo.Id, novo.VeiculoId });
@@ -231,12 +330,6 @@ namespace Locadora.Controllers
                     case IdentificadoDocumentacaoVm.DocumentoDeNadaConstaCriminal:
                         locacao.AtualizarNadaConstaCriminal(rota);
                         break;
-                    case IdentificadoDocumentacaoVm.DocumentoDeCheckListSaida:
-                        locacao.AtualizarCheckListSaida(rota);
-                        break;
-                    case IdentificadoDocumentacaoVm.DocumentoDeCheckListChegada:
-                        locacao.AtualizarCheckListChegada(rota);
-                        break;
                     case IdentificadoDocumentacaoVm.DocumentoDeIdentificacao:
                         locacao.AtualizarDocumentoDeIdentificacao(rota);
                         break;
@@ -273,21 +366,21 @@ namespace Locadora.Controllers
                     if (locacao.QuilometragemAtual.HasValue)
                         veiculo.AtualizarQuilometragem(locacao.QuilometragemAtual.Value);
 
-                    var preventiva = _db.Manutencoes.FirstOrDefault(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (locacao.QuilometragemAtual >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
+                    //var preventiva = _db.Manutencoes.FirstOrDefault(x => (x.TipoManutencao == TipoManutencao.Preventiva || x.Data.Date >= DateTime.Now.Date) && (locacao.QuilometragemAtual >= x.Quilometragem && x.Data.Date >= DateTime.Now.Date) && x.VeiculoId == veiculo.Id && x.Ativo);
 
-                    if (preventiva != null)
-                    {
-                        var novaNotificacao = new Notificacao()
-                        {
-                            DataDeExibicao = DateTime.Now,
-                            Descricao = $"O veículo de placa: {veiculo.Placa} necessita realizar uma manutenção.",
-                            Icone = "warning",
-                            Rota = $"/Preventiva/Editar?id={preventiva.Id}",
-                            Lida = false
-                        };
+                    //if (preventiva != null)
+                    //{
+                    //    var novaNotificacao = new Notificacao()
+                    //    {
+                    //        DataDeExibicao = DateTime.Now,
+                    //        Descricao = $"O veículo de placa: {veiculo.Placa} necessita realizar uma manutenção.",
+                    //        Icone = "warning",
+                    //        Rota = $"/Preventiva/Editar?id={preventiva.Id}",
+                    //        Lida = false
+                    //    };
 
-                        _db.Notificacoes.Add(novaNotificacao);
-                    }
+                    //    _db.Notificacoes.Add(novaNotificacao);
+                    //}
 
                     _db.SaveChanges();
 
@@ -309,6 +402,10 @@ namespace Locadora.Controllers
             try
             {
                 var cliente = _db.Clientes.FirstOrDefault(x => x.Cpf == cpf);
+
+                if (cliente != null)
+                    cliente.CarrregarCategoriaDaCnh();
+
                 return Json(new { Success = "Dados da impressão carregados com sucesso!", JaExiste = cliente != null, Model = cliente });
             }
             catch (Exception e)
@@ -374,11 +471,43 @@ namespace Locadora.Controllers
                 {
                     arquivoBinario.CopyTo(stream);
                 }
-                return fileName;
+
+                return $@"~/Uploads/Locacao/{locacaoId}/{fileName}";
             }
             else
             {
                 throw new Exception("Foto não anexada");
+            }
+        }
+
+        private void ProcessarImagemBase64String(string imageBase64String, string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf))
+                return;
+
+            if (!string.IsNullOrEmpty(imageBase64String))
+            {
+                string base64 = imageBase64String.Substring("data:image/jpeg;base64,".Length);
+
+                if (IsValidBase64(base64))
+                {
+                    byte[] imageBytes = Convert.FromBase64String(base64);
+                    var physicalPath = $"{_hostEnvironment.WebRootPath}\\Uploads\\Perfis\\{cpf.Replace(".", string.Empty).Replace("-", string.Empty)}.jpeg";
+                    System.IO.File.WriteAllBytes(physicalPath, imageBytes);
+                }
+            }
+        }
+
+        private bool IsValidBase64(string base64String)
+        {
+            try
+            {
+                byte[] bytes = Convert.FromBase64String(base64String);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
             }
         }
     }

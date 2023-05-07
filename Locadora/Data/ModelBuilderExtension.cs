@@ -23,14 +23,8 @@ namespace Locadora.Data
             modelBuilder.ApplyConfiguration(new ClienteMap());
             modelBuilder.ApplyConfiguration(new FuncionarioMap());
             modelBuilder.ApplyConfiguration(new LocacaoMap());
-            modelBuilder.ApplyConfiguration(new MultaMap());
             modelBuilder.ApplyConfiguration(new VeiculoMap());
-            modelBuilder.ApplyConfiguration(new AcessorioMap());
             modelBuilder.ApplyConfiguration(new ManutencaoMap());
-            modelBuilder.ApplyConfiguration(new NotificacaoMap());
-            modelBuilder.ApplyConfiguration(new DespesaMap());
-            modelBuilder.ApplyConfiguration(new FinanciamentoMap());
-            modelBuilder.ApplyConfiguration(new ParcelaDoFinanciamentoMap());
         }
     }
 }

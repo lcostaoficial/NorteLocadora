@@ -13,7 +13,7 @@ using System.Linq;
 namespace Locadora.Controllers
 {
     [Authorize]
-    public class VeiculoController : Controller
+    public class VeiculoController : BaseController
     {
         private readonly MainContext _db;
         private IWebHostEnvironment _hostEnvironment;
@@ -95,32 +95,44 @@ namespace Locadora.Controllers
         [HttpPost]
         public ActionResult SalvarFoto(FotoDeGaragem model, IFormFile arquivoBinario)
         {
-            if (!ModelState.IsValid) throw new Exception();
-            if (arquivoBinario == null) throw new Exception("Por favor anexe o arquivo!");
-            model = AnexarDocumento(model, arquivoBinario);
-            model.DataDeRegistro = DateTime.Now;
-            model.Ativo = true;
-
-            if (model.Principal == true)
+            
+            try
             {
-                var fotosExistentes = _db.FotosDeGaragem.Where(x => x.Principal && x.VeiculoId == model.VeiculoId && x.Ativo);
+                if (!ModelState.IsValid) throw new Exception();
 
-                foreach (var item in fotosExistentes)
+                if (arquivoBinario == null)
+                    throw new Exception("Por favor anexe o arquivo!");
+
+                model = AnexarDocumento(model, arquivoBinario);
+                model.DataDeRegistro = DateTime.Now;
+                model.Ativo = true;
+
+                if (model.Principal == true)
                 {
-                    item.TornarFotoNaoPrincipal();
+                    var fotosExistentes = _db.FotosDeGaragem.Where(x => x.Principal && x.VeiculoId == model.VeiculoId && x.Ativo);
+
+                    foreach (var item in fotosExistentes)
+                    {
+                        item.TornarFotoNaoPrincipal();
+                    }
                 }
+                else
+                {
+                    var existePrincipal = _db.FotosDeGaragem.Any(x => x.Principal && x.VeiculoId == model.VeiculoId && x.Ativo);
+
+                    if (!existePrincipal)
+                        model.Principal = true;
+                }
+
+                _db.FotosDeGaragem.Add(model);
+                _db.SaveChanges();
+                return RedirectToAction("Editar", new { id = model.VeiculoId });
             }
-            else
+            catch (Exception e)
             {
-                var existePrincipal = _db.FotosDeGaragem.Any(x => x.Principal && x.VeiculoId == model.VeiculoId && x.Ativo);
-
-                if (!existePrincipal)
-                    model.Principal = true;
+                Message(e.Message, MessageType.error);
+                return RedirectToAction("Editar", new { id = model.VeiculoId });
             }
-
-            _db.FotosDeGaragem.Add(model);
-            _db.SaveChanges();
-            return RedirectToAction("Editar", new { id = model.VeiculoId });
         }
 
         private FotoDeGaragem AnexarDocumento(FotoDeGaragem model, IFormFile arquivoBinario)

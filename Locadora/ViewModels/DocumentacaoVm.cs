@@ -8,8 +8,6 @@ namespace Locadora.ViewModels
         DocumentoDeContrato,
         DocumentoDeNadaConstaDetran,
         DocumentoDeNadaConstaCriminal,
-        DocumentoDeCheckListSaida,
-        DocumentoDeCheckListChegada,
         DocumentoDeIdentificacao,
         DocumentoDeComprovanteDeEndereco
     }
@@ -26,12 +24,6 @@ namespace Locadora.ViewModels
 
         public IFormFile DocumentoDeNadaConstaCriminal { get; set; }
         public string DocumentoDeNadaConstaCriminalGet { get; private set; }
-
-        public IFormFile DocumentoDeCheckListSaida { get; set; }
-        public string DocumentoDeCheckListSaidaGet { get; private set; }
-
-        public IFormFile DocumentoDeCheckListChegada { get; set; }
-        public string DocumentoDeCheckListChegadaGet { get; private set; }
 
         public IFormFile DocumentoDeIdentificacao { get; set; }
         public string DocumentoDeIdentificacaoGet { get; private set; }
@@ -52,9 +44,6 @@ namespace Locadora.ViewModels
             if (string.IsNullOrEmpty(DocumentoDeNadaConstaCriminalGet))
                 return false;
 
-            if (string.IsNullOrEmpty(DocumentoDeCheckListSaidaGet))
-                return false;
-
             if (string.IsNullOrEmpty(DocumentoDeIdentificacaoGet))
                 return false;
 
@@ -64,12 +53,11 @@ namespace Locadora.ViewModels
             return true;
         }
 
-        public void IncluirRotasSaida(string contrato, string ndConstaDetran, string ndConstaCriminal, string docCheckListaSaida, string docIdentificacao, string comprovanteEndereco)
+        public void IncluirRotasSaida(string contrato, string ndConstaDetran, string ndConstaCriminal, string docIdentificacao, string comprovanteEndereco)
         {
             DocumentoDeContratoGet = contrato;
             DocumentoDeNadaConstaDetranGet = ndConstaDetran;
             DocumentoDeNadaConstaCriminalGet = ndConstaCriminal;
-            DocumentoDeCheckListSaidaGet = docCheckListaSaida;
             DocumentoDeIdentificacaoGet = docIdentificacao;
             DocumentoDeComprovanteDeEnderecoGet = comprovanteEndereco;
         }

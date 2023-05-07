@@ -14,7 +14,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr @{ if (!item.Ativo) { @Html.Raw("style=\"background-color: #fdeef2\"")  ; } }>
                 <td>@item.Nome</td>
                 <td>@item.Cpf</td>
                 <td>@item.TelefoneMovel</td>
@@ -23,7 +23,7 @@
                     <a class="btn btn-circle btn-info btn-sm" title="Editar" href="@Url.Action("Editar", new { id = item.ClienteId })" data-togle="tooltip">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
-                    <a id="btn-excluir" class="btn btn-circle btn-danger btn-sm" title="Excluir" btn-sm" href="#" data-url="@Url.Action("Remover", new { id = item.ClienteId })" data-togle="tooltip">
+                    <a id="btn-excluir" class="btn btn-circle @(item.Ativo ? "btn-warning" : "btn-success") btn-sm" title="@(item.Ativo ? "Desativar" : "Ativar")" btn-sm" href="#" data-url="@Url.Action("Remover", new { id = item.ClienteId })" data-togle="tooltip">
                         <i class="fa fa-close" aria-hidden="true"></i>
                     </a>
                 </td>

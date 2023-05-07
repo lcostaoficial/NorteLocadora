@@ -36,8 +36,6 @@ namespace Locadora.Models
         [Display(Name = "Observações de chegada")]
         public string ObservacoesDeChegada { get; set; }
 
-        public ICollection<Acessorio> Acessorios { get; set; }
-
         public bool LocacaoAtrasada
         {
             get
@@ -101,8 +99,6 @@ namespace Locadora.Models
         public string DocumentoDeContrato { get; set; }
         public string DocumentoDeNadaConstaDetran { get; set; }
         public string DocumentoDeNadaConstaCriminal { get; set; }
-        public string DocumentoDeCheckListSaida { get; set; }
-        public string DocumentoDeCheckListChegada { get; set; }
         public string DocumentoDeIdentificacao { get; set; }
         public string DocumentoDeComprovanteDeEndereco { get; set; }
 
@@ -154,9 +150,6 @@ namespace Locadora.Models
             if (string.IsNullOrEmpty(DocumentoDeNadaConstaCriminal))
                 return false;
 
-            if (string.IsNullOrEmpty(DocumentoDeCheckListSaida))
-                return false;
-
             if (string.IsNullOrEmpty(DocumentoDeIdentificacao))
                 return false;
 
@@ -175,9 +168,6 @@ namespace Locadora.Models
                 return true;
 
             if (!string.IsNullOrEmpty(DocumentoDeNadaConstaCriminal))
-                return true;
-
-            if (!string.IsNullOrEmpty(DocumentoDeCheckListSaida))
                 return true;
 
             if (!string.IsNullOrEmpty(DocumentoDeIdentificacao))
@@ -218,17 +208,6 @@ namespace Locadora.Models
             QuilometragemAtual = model.QuilometragemAtual;
             ObservacoesDeSaida = model.ObservacoesDeSaida;
             VeiculoId = model.VeiculoId;
-
-            if (model.AcessoriosIds != null && model.AcessoriosIds.Any())
-            {
-                Acessorios = new List<Acessorio>();
-
-                foreach (var acessorioId in model.AcessoriosIds)
-                {                    
-                    Acessorios.Add(new Acessorio { Id = acessorioId });
-                }
-            }
-
             return ValidarCamposLocacao();
         }
 
@@ -260,16 +239,6 @@ namespace Locadora.Models
             DocumentoDeNadaConstaCriminal = rota;
         }
 
-        public void AtualizarCheckListSaida(string rota)
-        {
-            DocumentoDeCheckListSaida = rota;
-        }
-
-        public void AtualizarCheckListChegada(string rota)
-        {
-            DocumentoDeCheckListChegada = rota;
-        }
-
         public void AtualizarDocumentoDeIdentificacao(string rota)
         {
             DocumentoDeIdentificacao = rota;
@@ -279,15 +248,5 @@ namespace Locadora.Models
         {
             DocumentoDeComprovanteDeEndereco = rota;
         }
-
-        public void SetIds()
-        {
-            if (Acessorios != null && Acessorios.Any()) 
-                AcessoriosIds = Acessorios.Select(x => x.Id).ToArray();
-        }
-
-        [Display(Name = "Acessórios")]
-        [NotMapped]
-        public int[] AcessoriosIds { get; set; }
     }
 }

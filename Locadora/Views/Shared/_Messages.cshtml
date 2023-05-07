@@ -1,0 +1,23 @@
+﻿@using System.Text.Json;
+@using Locadora.Models;
+@using Locadora.Controllers;
+
+@{
+
+    if (TempData.ContainsKey("msg") && TempData["msg"] != null && !string.IsNullOrEmpty((string)TempData["msg"]))
+    {
+        var list = JsonSerializer.Deserialize<List<Alert>>(TempData["msg"].ToString());
+
+        if (list != null)
+        {
+            <script>
+                @{
+                    foreach (var item in list)
+                    {
+                        @Html.Raw("swal('Mensagem','" + item.Message + "', '" + item.Type + "'); ")
+                    }
+                }
+            </script>
+        }
+    }
+}

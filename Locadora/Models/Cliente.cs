@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Locadora.Models
 {
@@ -100,16 +101,54 @@ namespace Locadora.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Cpf { get; set; }
 
+        [Display(Name = "CNH")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public string Cnh { get; set; }
+
+        [Display(Name = "Data de Venc. CNH")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public DateTime DataDeVencimentoDaCnh{ get; set; }
+
+        [Display(Name = "Cat. A")]
+        public bool CategoriaCnhA { get; set; }
+
+        [Display(Name = "Cat. B")]
+        public bool CategoriaCnhB { get; set; }
+
+        [Display(Name = "Cat. C")]
+        public bool CategoriaCnhC { get; set; }
+
+        [Display(Name = "Cat. D")]
+        public bool CategoriaCnhD { get; set; }
+
+        [Display(Name = "Cat. E")]
+        public bool CategoriaCnhE { get; set; }
+
+        [Display(Name = "Telefone fixo")]
+        [MinLength(14, ErrorMessage = "Mínimo 14 caractere")]
+        [MaxLength(14, ErrorMessage = "Máximo 14 caracteres")]
+        public string TelefoneFixo { get; set; }
+
         [Display(Name = "Telefone móvel")]
         [MinLength(15, ErrorMessage = "Mínimo 15 caractere")]
         [MaxLength(15, ErrorMessage = "Máximo 15 caracteres")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public string TelefoneMovel { get; set; }
 
-        [Display(Name = "Telefone fixo")]
-        [MinLength(14, ErrorMessage = "Mínimo 14 caractere")]
-        [MaxLength(14, ErrorMessage = "Máximo 14 caracteres")]
-        public string TelefoneFixo { get; set; }
+        [Display(Name = "Telefone móvel 1")]
+        [MinLength(15, ErrorMessage = "Mínimo 15 caractere")]
+        [MaxLength(15, ErrorMessage = "Máximo 15 caracteres")]
+        public string TelefoneMovel1 { get; set; }
+
+        [Display(Name = "Telefone móvel 2")]
+        [MinLength(15, ErrorMessage = "Mínimo 15 caractere")]
+        [MaxLength(15, ErrorMessage = "Máximo 15 caracteres")]
+        public string TelefoneMovel2 { get; set; }
+
+        [Display(Name = "Telefone móvel 3")]
+        [MinLength(15, ErrorMessage = "Mínimo 15 caractere")]
+        [MaxLength(15, ErrorMessage = "Máximo 15 caracteres")]
+        public string TelefoneMovel3 { get; set; }
 
         [Display(Name = "E-mail")]
         [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
@@ -132,9 +171,99 @@ namespace Locadora.Models
 
         public bool Ativo { get; set; } = true;
 
-        public void Inativar()
+        [NotMapped]
+        [Display(Name = "Cat. CNH")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public CategoriaHabilitacao[] CatCnh { get; set; }
+
+        [NotMapped]
+        public string ImageBase64String { get; set; }
+
+        public void ProcessarCategoriaDaCnh(CategoriaHabilitacao[] catCnh)
         {
-            Ativo = false;
+            if (catCnh != null && catCnh.Any())
+            {
+                CategoriaCnhA = false;
+                CategoriaCnhB = false;
+                CategoriaCnhC = false;
+                CategoriaCnhD = false;
+                CategoriaCnhE = false;
+
+                foreach (var item in catCnh)
+                {
+                    if (item.ToString() == "a")
+                        CategoriaCnhA = true;
+
+                    if (item.ToString() == "b")
+                        CategoriaCnhB = true;
+
+                    if (item.ToString() == "c")
+                        CategoriaCnhC = true;
+
+                    if (item.ToString() == "d")
+                        CategoriaCnhD = true;
+
+                    if (item.ToString() == "e")
+                        CategoriaCnhE = true;
+                }
+            }
+        }
+
+        public void ProcessarCategoriaDaCnh()
+        {
+            if (CatCnh != null && CatCnh.Any())
+            {
+                CategoriaCnhA = false;
+                CategoriaCnhB = false;
+                CategoriaCnhC = false;
+                CategoriaCnhD = false;
+                CategoriaCnhE = false;
+
+                foreach (var item in CatCnh)
+                {
+                    if (item.ToString() == "a")
+                        CategoriaCnhA = true;
+
+                    if (item.ToString() == "b")
+                        CategoriaCnhB = true;
+
+                    if (item.ToString() == "c")
+                        CategoriaCnhC = true;
+
+                    if (item.ToString() == "d")
+                        CategoriaCnhD = true;
+
+                    if (item.ToString() == "e")
+                        CategoriaCnhE = true;
+                }
+            }
+        }
+
+        public void CarrregarCategoriaDaCnh()
+        {
+            var list = new List<CategoriaHabilitacao>();
+
+            if (CategoriaCnhA)
+                list.Add(CategoriaHabilitacao.a);
+
+            if (CategoriaCnhB)
+                list.Add(CategoriaHabilitacao.b);
+
+            if (CategoriaCnhC)
+                list.Add(CategoriaHabilitacao.c);
+
+            if (CategoriaCnhD)
+                list.Add(CategoriaHabilitacao.d);
+
+            if (CategoriaCnhE)
+                list.Add(CategoriaHabilitacao.e);
+
+            CatCnh = list.ToArray();
+        }
+
+        public void AlterarAtivo()
+        {
+            Ativo = !Ativo;
         }
 
         public string EstadoCivilFormatado => EstadoCivil.ToString();
@@ -143,6 +272,7 @@ namespace Locadora.Models
         public string OrgaoExpedidorRgFormatado => OrgaoExpedidorRg.ToString();
         public string EstadoOrgaoExpedidorFormatado => EstadoOrgaoExpedidor.ToString();
         public string DataNascimentoFormatado => DataNascimento.ToString("dd/MM/yyyy");
+        public string DataDeVencimentoDaCnhFormatado => DataDeVencimentoDaCnh.ToString("dd/MM/yyyy");
         public string PortadorDocumento => ClienteEstrangeiro ? $"portador do documento de identificação {DocumentoIdentificacaoEstrangeiro}" : $"portador do RG {Rg} {OrgaoExpedidorRgFormatado}/{EstadoOrgaoExpedidor}";
 
         [NotMapped]
@@ -164,8 +294,16 @@ namespace Locadora.Models
             ClienteEstrangeiro = model.ClienteEstrangeiro;
             TelefoneMovel = model.TelefoneMovel;
             TelefoneFixo = model.TelefoneFixo;
+            TelefoneMovel1 = model.TelefoneMovel1;
+            TelefoneMovel2 = model.TelefoneMovel2;
+            TelefoneMovel3 = model.TelefoneMovel3;
             Email = model.Email;
             EstadoCivil = model.EstadoCivil;
+            CategoriaCnhA = model.CategoriaCnhA;
+            CategoriaCnhB = model.CategoriaCnhB;
+            CategoriaCnhC = model.CategoriaCnhC;
+            CategoriaCnhD = model.CategoriaCnhD;
+            CategoriaCnhE = model.CategoriaCnhE;
             SetEstrangeiro(model);
         }
 

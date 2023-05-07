@@ -55,6 +55,27 @@
         swal.close();
     };
 
+    Locacao.reaproveitarDocumentacaoDaLocacaoAnterior = function (locacaoId, tipoDocumento) {
+        $.ajax({
+            method: "GET",
+            data: { locacaoId: locacaoId, tipoDocumento: tipoDocumento },
+            url: "/Retirada/ReaproveitarDocumentacaoDaLocacaoAnterior",
+            dataType: "json",
+            success: function success(result) {
+                if (result.success) {
+                    Locacao.carregarDocumentacao(locacaoId);
+                }
+
+                if (result.error) {
+                    swal("Mensagem", result.error, "error");
+                }
+            },
+            error: function error(XMLHttpRequest, textStatus, errorThrown) {
+                swal("Mensagem", errorThrown, "error");
+            }           
+        });
+    }
+
     Locacao.dadosPessoais = function (locacaoId = 0) {
         Locacao.iniciarCarregamento();
         var url = $("#dadospessoais").data("url");
@@ -68,6 +89,7 @@
                 $("#frm-conteudo-dadospessoais").html(result);
                 $(".selectpicker").selectpicker();
                 GlobalMask.carregarMascaras();
+                eventosDaWebcam();
             },
             error: function error(XMLHttpRequest, textStatus, errorThrown) {
                 swal("Mensagem", errorThrown, "error");
@@ -223,6 +245,22 @@
                         $("input[name='Cliente.Bairro']").val(result.model.bairro);
                         $("input[name='Cliente.Cidade']").val(result.model.cidade);
                         $("select[name='Cliente.Estado']").val(result.model.estadoFormatado).change();
+
+                        $("input[name='Cliente.Cnh']").val(result.model.cnh);
+                        $("input[name='Cliente.DataDeVencimentoDaCnh']").val(result.model.dataDeVencimentoDaCnhFormatado);
+
+                        $.each(result.model.catCnh, function (index, value) {
+                            $('#Cliente_CatCnh option:eq(' + value + ')').prop('selected', true);
+                        });
+
+                        $('.selectpicker').selectpicker('render');
+
+                        $("input[name='Cliente.TelefoneMovel1']").val(result.model.telefoneMovel1);
+                        $("input[name='Cliente.TelefoneMovel2']").val(result.model.telefoneMovel2);
+                        $("input[name='Cliente.TelefoneMovel3']").val(result.model.telefoneMovel3);
+
+                        $('#image-perfil').attr('src', '/Cliente/MostrarFotoDePerfil?' + 'cpf=' + result.model.cpf + "&v=" + Math.random());
+
                         Locacao.desabilitarCpf();
                     }
                     else {
@@ -260,7 +298,7 @@
             Locacao.dadosPessoais();
         }
         else {
-            Locacao.iconeDeCompletoDosDadosPessoais();                 
+            Locacao.iconeDeCompletoDosDadosPessoais();
 
             if (habilitarDocumentacaoCompleta === true) {
                 Locacao.iconeDeCompletoDaDocumentacao();
@@ -277,7 +315,7 @@
             Locacao.habilitarEnvioLocacao();
 
             if (veiculoId === 0) {
-                Locacao.carregarLocacao(locacaoId, false, veiculoId);                
+                Locacao.carregarLocacao(locacaoId, false, veiculoId);
             }
             else {
                 Locacao.carregarLocacao(locacaoId, true, veiculoId);
@@ -409,7 +447,7 @@
                     contentType: false,
                     processData: false,
                     success: function success(result) {
-                        
+
 
                         if (result.success) {
                             $("#modalAnexarDocumento").modal("hide");
@@ -461,7 +499,7 @@
                 });
             });
 
-            $(".modal").on("hidden.bs.modal", function () {
+            $("#modalAnexarDocumento").on("hidden.bs.modal", function () {
                 $(this).find('form')[0].reset();
             });
         }

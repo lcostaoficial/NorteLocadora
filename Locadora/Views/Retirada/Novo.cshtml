@@ -9,7 +9,7 @@
 }
 
 @section styles
-{
+    {
     <link rel="stylesheet" href="~/plugin/bootstrap-select/css/bootstrap-select.css" />
     <style>
         .box-content.card .dropdown {
@@ -35,8 +35,9 @@
     <script src="~/plugin/pdfmake/pdfmake.js"></script>
     <script src="~/plugin/pdfmake/vfs_fonts.js"></script>
     <script src="~/scripts/caso.js"></script>
-    <script src="~/scripts/impressao.js"></script>
     <script src="~/scripts/estrangeiro.js"></script>
+    <script src="~/scripts/contrato.js"></script>
+
 
     <!-- Jquery UI -->
     <script src="~/plugin/jquery-ui/jquery-ui.min.js"></script>
@@ -54,11 +55,70 @@
     <!-- Timepicker -->
     <script src="~/plugin/timepicker/bootstrap-timepicker.min.js"></script>
 
+    <!-- Webcam -->
+    <script src="~/plugin/webcamjs/webcam.min.js"></script>
+
+    <script language="JavaScript">
+
+        function eventosDaWebcam() {
+            $('#modal-fotografia').on('shown.bs.modal', function () {
+                iniciarCamera();
+            });
+
+            $('#modal-fotografia').on('hidden.bs.modal', function () {
+                pararCamera();
+            });
+        }
+
+        function iniciarCamera() {
+            Webcam.set({
+                width: 480,
+                height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 100
+            });
+
+            Webcam.attach('#camera');
+        }
+
+        function pararCamera() {
+            Webcam.reset();
+        }
+
+        function capturarCamera() {
+            Webcam.snap(function (data_uri) {
+                var img = $("#image-perfil");
+                img.attr('src', data_uri);
+                $("#modal-fotografia").modal("hide");
+                $("#ImageBase64String").val(data_uri);
+            });
+        }
+    </script>
 }
 
-@section modal
-{
+@section modal {
+
     @await Html.PartialAsync("_AnexarDocumento")
+
+    <div class="modal fade" id="modal-fotografia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="camera" style="display: flex; justify-content: center; align-items: center; margin: 0 auto;"></div>
+                </div>
+                <div class="modal-footer">
+                    <center>
+                        <button type="button" class="btn btn-success" onclick="capturarCamera()">Capturar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 <div class="col-md-12 col-xs-12">

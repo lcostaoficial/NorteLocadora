@@ -3,9 +3,79 @@
     ViewBag.Title = "Editar Cliente";
 }
 
-@section scripts
-{
+@section styles {
+    <link href="~/plugin/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <style>
+        .box-content.card .dropdown {
+            top: 0px !important;
+        }
+    </style>
+}
+
+@section scripts {
     <script src="~/scripts/estrangeiro.js"></script>
+    <script src="~/plugin/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/plugin/webcamjs/webcam.min.js"></script>
+
+    <script language="JavaScript">
+
+        $(window).on('shown.bs.modal', function () {
+            $('#modal-fotografia').modal('show');
+            iniciarCamera();
+        });
+
+        $(window).on('hidden.bs.modal', function () {
+            $('#modal-fotografia').modal('hide');
+            pararCamera();
+        });
+
+        function iniciarCamera() {
+            Webcam.set({
+                width: 480,
+                height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 100
+            });
+
+            Webcam.attach('#camera');
+        }
+
+        function pararCamera() {
+            Webcam.reset();
+        }
+
+        function capturarCamera() {
+            Webcam.snap(function (data_uri) {
+                var img = $("#image-perfil");
+                img.attr('src', data_uri);
+                $("#modal-fotografia").modal("hide");
+                $("#ImageBase64String").val(data_uri);
+            });
+        }
+    </script>
+}
+
+@section modal {
+
+    <div class="modal fade" id="modal-fotografia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="camera" style="display: flex; justify-content: center; align-items: center; margin: 0 auto;"></div>
+                </div>
+                <div class="modal-footer">
+                    <center>
+                        <button type="button" class="btn btn-success" onclick="capturarCamera()">Capturar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 <div class="row small-spacing">

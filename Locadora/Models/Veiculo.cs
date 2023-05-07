@@ -11,8 +11,11 @@ namespace Locadora.Models
         {
             Ativar();
         }
-
         public int Id { get; set; }
+
+        [Display(Name = "Tipo de Veículo")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public TipoDeVeiculo TipoDeVeiculo { get; set; }
 
         [Display(Name = "Marca")]
         [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
@@ -26,9 +29,6 @@ namespace Locadora.Models
         [MaxLength(255, ErrorMessage = "Máximo 255 caracteres")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Modelo { get; set; }
-
-        [Display(Name = "Tipo de Veículo")]
-        public TipoDeVeiculo TipoDeVeiculo { get; set; }
 
         [Display(Name = "Placa")]
         [MinLength(1, ErrorMessage = "Mínimo 1 caractere")]
@@ -60,7 +60,11 @@ namespace Locadora.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public int Quilometragem { get; set; }
 
-        public bool Ativo { get; set; }
+        [Display(Name = "Valor Fipe")]
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public decimal ValorFipe { get; set; }
+
+        public bool Ativo { get; set; }    
 
         public void AtualizarQuilometragem(int quilometragemAtual)
         {

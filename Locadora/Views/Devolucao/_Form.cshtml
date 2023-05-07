@@ -21,26 +21,6 @@
     </a>
 </div>
 
-@if (Model.Acessorios != null && Model.Acessorios.Any())
-{
-    <div class="form-group col-md-12">
-        <div class="box-content card">
-            <h4 class="box-title"><i class="fa fa-motorcycle ico"></i> Acessórios</h4>
-            <div class="card-content">
-                <ul class="dot-list">
-                    @foreach (var acessorio in Model.Acessorios)
-                    {
-                        <li>
-                            <a href="@Url.Action("Editar", "Acessorio", new { id = acessorio.Id })">@acessorio.Descricao</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-}
-
-
 <div class="form-group col-md-6">
     @Html.LabelFor(m => m.DataDeDevolucao) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.DataDeDevolucao, new { @class = "form-control date datepicker-basic", autocomplete = "off" })

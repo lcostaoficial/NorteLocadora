@@ -8,6 +8,18 @@
 </div>
 
 <div class="form-group col-md-6">
+    @Html.LabelFor(m => m.TipoDeVeiculo) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.DropDownListFor(m => m.TipoDeVeiculo, new SelectList(Enum.GetValues(typeof(TipoDeVeiculo))), "Selecione...", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.TipoDeVeiculo)
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(m => m.Placa) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.Placa, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Placa)
+</div>
+
+<div class="form-group col-md-6">
     @Html.LabelFor(m => m.Marca) <label style="color: red" title="Este campo é obrigatório">*</label>
     @Html.TextBoxFor(m => m.Marca, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Marca)
@@ -32,9 +44,9 @@
 </div>
 
 <div class="form-group col-md-6">
-    @Html.LabelFor(m => m.Placa) <label style="color: red" title="Este campo é obrigatório">*</label>
-    @Html.TextBoxFor(m => m.Placa, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Placa)
+    @Html.LabelFor(m => m.ValorFipe) <label style="color: red" title="Este campo é obrigatório">*</label>
+    @Html.TextBoxFor(m => m.ValorFipe, new { @class = "form-control money" })
+    @Html.ValidationMessageFor(m => m.ValorFipe)
 </div>
 
 <div class="form-group col-md-6">

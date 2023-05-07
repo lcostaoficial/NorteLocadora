@@ -10,6 +10,7 @@ namespace Locadora.Data.Mapping
         public void Configure(EntityTypeBuilder<Veiculo> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(X => X.TipoDeVeiculo).IsRequired();
             builder.Property(X => X.Placa).IsRequired().HasMaxLength(250);
             builder.Property(X => X.Marca).IsRequired().HasMaxLength(250);
             builder.Property(X => X.Modelo).IsRequired().HasMaxLength(250);
@@ -18,6 +19,7 @@ namespace Locadora.Data.Mapping
             builder.Property(X => X.Cor).IsRequired();
             builder.Property(X => X.Renavam).IsRequired();
             builder.Property(X => X.Quilometragem).IsRequired();
+            builder.Property(X => X.ValorFipe).IsRequired();
             builder.Property(X => X.Ativo).IsRequired();
 
             builder.Property(x => x.TipoDeVeiculo).HasConversion(x => x.ToString(), x => (TipoDeVeiculo)Enum.Parse(typeof(TipoDeVeiculo), x));

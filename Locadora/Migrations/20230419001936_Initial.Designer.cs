@@ -4,20 +4,61 @@ using Locadora.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Locadora.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20230419001936_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AcessorioLocacao", b =>
+                {
+                    b.Property<int>("AcessoriosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocacoesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AcessoriosId", "LocacoesId");
+
+                    b.HasIndex("LocacoesId");
+
+                    b.ToTable("AcessorioLocacao");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Acessorio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<decimal>("PrecoDeCusto")
+                        .HasMaxLength(250)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Acessorios");
+                });
 
             modelBuilder.Entity("Locadora.Models.Cliente", b =>
                 {
@@ -34,21 +75,6 @@ namespace Locadora.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<bool>("CategoriaCnhA")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhB")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhC")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhD")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CategoriaCnhE")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Cep")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -62,17 +88,10 @@ namespace Locadora.Migrations
                     b.Property<bool>("ClienteEstrangeiro")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Cnh")
-                        .IsRequired()
-                        .HasColumnType("varchar(200)");
-
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
-
-                    b.Property<DateTime>("DataDeVencimentoDaCnh")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
@@ -150,21 +169,75 @@ namespace Locadora.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<string>("TelefoneMovel1")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("TelefoneMovel2")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("TelefoneMovel3")
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
-
                     b.HasKey("ClienteId");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Despesa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataDePagamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataDeVencimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Despesas");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Financiamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataDeVencimentoDaPrimeiraParcela")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuantidadeDeParcelas")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Quitado")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("ValorDaParcela")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Financiamentos");
                 });
 
             modelBuilder.Entity("Locadora.Models.FotoDeGaragem", b =>
@@ -344,6 +417,115 @@ namespace Locadora.Migrations
                     b.ToTable("Manutencoes");
                 });
 
+            modelBuilder.Entity("Locadora.Models.Multa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CpfInfrator")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("varchar(14)");
+
+                    b.Property<DateTime>("DataDeVencimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomeInfrator")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Observacoes")
+                        .IsRequired()
+                        .HasMaxLength(8000)
+                        .HasColumnType("varchar(8000)");
+
+                    b.Property<decimal>("ValorMulta")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Multas");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Notificacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataDeExibicao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Icone")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<bool>("Lida")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Rota")
+                        .IsRequired()
+                        .HasMaxLength(8000)
+                        .HasColumnType("varchar(8000)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notificacoes");
+                });
+
+            modelBuilder.Entity("Locadora.Models.ParcelaDoFinanciamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("DataDePagamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataDeVencimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FinanciamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Paga")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("ValorDaParcela")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValorPago")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FinanciamentoId");
+
+                    b.ToTable("ParcelasDoFinanciamento");
+                });
+
             modelBuilder.Entity("Locadora.Models.Veiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -392,12 +574,45 @@ namespace Locadora.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ValorFipe")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Veiculos");
+                });
+
+            modelBuilder.Entity("AcessorioLocacao", b =>
+                {
+                    b.HasOne("Locadora.Models.Acessorio", null)
+                        .WithMany()
+                        .HasForeignKey("AcessoriosId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Locadora.Models.Locacao", null)
+                        .WithMany()
+                        .HasForeignKey("LocacoesId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Locadora.Models.Despesa", b =>
+                {
+                    b.HasOne("Locadora.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Financiamento", b =>
+                {
+                    b.HasOne("Locadora.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Veiculo");
                 });
 
             modelBuilder.Entity("Locadora.Models.FotoDeGaragem", b =>
@@ -439,9 +654,36 @@ namespace Locadora.Migrations
                     b.Navigation("Veiculo");
                 });
 
+            modelBuilder.Entity("Locadora.Models.Multa", b =>
+                {
+                    b.HasOne("Locadora.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("Locadora.Models.ParcelaDoFinanciamento", b =>
+                {
+                    b.HasOne("Locadora.Models.Financiamento", "Financiamento")
+                        .WithMany("Parcelas")
+                        .HasForeignKey("FinanciamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Financiamento");
+                });
+
             modelBuilder.Entity("Locadora.Models.Cliente", b =>
                 {
                     b.Navigation("Locacoes");
+                });
+
+            modelBuilder.Entity("Locadora.Models.Financiamento", b =>
+                {
+                    b.Navigation("Parcelas");
                 });
 
             modelBuilder.Entity("Locadora.Models.Veiculo", b =>

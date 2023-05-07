@@ -28,8 +28,8 @@ namespace Locadora.Controllers
                 id = x.Id,
                 title = $"Veículo {x.Veiculo.Marca} {x.Veiculo.Modelo} - Placa: {x.Veiculo.Placa} ",
                 description = "",
-                start = x.DataRetirada?.ToString("yyyy-MM-dd"),
-                end = x.DataPrevistaDeDevolucao?.ToString("yyyy-MM-dd"),
+                start = x.DataRetirada?.ToString("yyyy-MM-dd HH:mm:ss"),
+                end = x.DataPrevistaDeDevolucao?.ToString("yyyy-MM-dd HH:mm:ss"),
                 className = x.LocacaoAtrasada ? "bg-warning" : "bg-success",
                 author = x.Cliente.Nome
             });

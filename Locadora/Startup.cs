@@ -25,7 +25,7 @@ namespace Locadora
         {
             services.AddControllersWithViews();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddDbContext<MainContext>(options => options.UseSqlServer(@"Data Source=DESKTOP-37BFH3E\SQLEXPRESS_2017;Initial Catalog=Locadora;Persist Security Info=True;User ID=sa;Password=123456;"));
+            services.AddDbContext<MainContext>(options => options.UseSqlServer(@"Server=NOTEBOOK\SQLEXPRESS;Database=Locadora2;Integrated Security=SSPI;Trusted_Connection=True;TrustServerCertificate=True;"));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.LoginPath = "/Conta/Login"; });
             services.Configure<List<LoginVm>>(Configuration.GetSection("Users"));
         }

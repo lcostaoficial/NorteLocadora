@@ -7,12 +7,6 @@
 
 @if (!Model.ValidarCamposLocacao())
 {
-    <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.AcessoriosIds)
-        @Html.ListBoxFor(x => x.AcessoriosIds, new MultiSelectList(ViewBag.Acessorios, "Id", "Descricao"), new { @class = "form-control selectpicker", data_live_search = "true", title = "Selecione os acessórios...", data_size = "5" })
-        @Html.ValidationMessageFor(m => m.AcessoriosIds)
-    </div>
-
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataRetirada) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataRetirada, new { @class = "form-control date datepicker", autocomplete = "off" })
@@ -57,12 +51,6 @@
 }
 else
 {
-    <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.AcessoriosIds)
-        @Html.ListBoxFor(x => x.AcessoriosIds, new MultiSelectList(ViewBag.Acessorios, "Id", "Descricao"), new { @class = "form-control selectpicker", data_live_search = "true", title = "Selecione os acessórios...", data_size = "5", disabled = "" })
-        @Html.ValidationMessageFor(m => m.AcessoriosIds)
-    </div>
-
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.DataRetirada) <label style="color: red" title="Este campo é obrigatório">*</label>
         @Html.TextBoxFor(m => m.DataRetirada, new { @class = "form-control date datepicker", autocomplete = "off", disabled = "" })
